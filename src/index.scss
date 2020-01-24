@@ -15,3 +15,11 @@ body {
   padding-bottom: 3rem;
   min-height: 100vh;
 }
+
+.p-hyperlink-color {
+  color: #00b9ff;
+  background-color: transparent;
+  text-decoration-line: underline;
+  font-style: italic;
+  &:hover {color: $secondary;}
+}
