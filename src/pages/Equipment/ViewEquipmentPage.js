@@ -1,10 +1,12 @@
 import React,{useEffect,useState} from 'react';
+import {Link} from "react-router-dom";
 import PageTitle from "../../atoms/PageTitle";
 import firebase from "../../firebase/firebase";
 import PageLoading from "../../atoms/PageLoading";
 import CodexFilter from "../../atoms/CodexFilter";
-import AddtoDatabaseButton from "../../atoms/AddtoDatabaseButton";
+import RedirectButton from "../../atoms/RedirectButton";
 import store from '../../Redux/store';
+import DeleteButton from "../../atoms/DeleteButton";
 
 function ViewEquipmentPage () {
     const [isLoading, setisLoading] = useState(false);
@@ -32,24 +34,29 @@ function ViewEquipmentPage () {
         <div className="container-fluid p-padding text-center">
             <PageTitle Title="View Equipment Page" />
             <CodexFilter/>
-            <AddtoDatabaseButton redirect={"/equipment/new"} buttontext={"Add Equipment"}/>
-            <div className="row justify-content-center ">
-                <table className="table table-striped table-bordered text-white my-4 col-md-10 col-lg-6 bg-secondary">
-                    <thead className="h5 text-warning">
-                        <tr>
-                            <td>Name</td>
-                            <td>Cost</td>
-                        </tr>
-                    </thead>
-                    <tbody>
+            <RedirectButton redirect={"/equipment/new"} buttontext={"Add Equipment"}/>
+            <div className="row justify-content-center text-warning h3 mt-4">
+                <div className="col-md-10 col-xl-8">
+                    <div className="row">
+                        <div className="col-2"></div>
+                        <div className="col-4">Name</div>
+                        <div className="col-4">Cost</div>
+                        <div className="col-2"></div>
+                    </div>
+                </div>
+            </div>
+            <div className="row justify-content-center text-white">
+                <div className="col-md-10 col-xl-8">
                     {filteredEquipment.map((item)=>(
-                        <tr key={item.id}>
-                            <td className="align-middle">{item.Name}</td>
-                            <td className="align-middle">{item.Cost}</td>
-                        </tr>
+                        <div key={item.id} className="row">
+                            <div className="col-2"></div>
+                            <Link to={`/equipment/edit/${item.id}`}
+                                  className="col-4 border border-secondary p-hyperlink-color">{item.Name}</Link>
+                            <div className="col-4 border border-secondary">{item.Cost}</div>
+                            <div className="col-2 text-left"><DeleteButton collectionName={"equipment"} uniqueID={item.id}/></div>
+                        </div>
                     ))}
-                    </tbody>
-                </table>
+                </div>
             </div>
         </div>
     )

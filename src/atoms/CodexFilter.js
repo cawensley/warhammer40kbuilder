@@ -33,7 +33,7 @@ function CodexFilter () {
 
     return (
             <label htmlFor="Codex" className="text-warning">
-                Codex Filter:
+                Codex:
                 <select
                     id="PageSelection"
                     className="bg-white ml-2"

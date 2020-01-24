@@ -12,6 +12,7 @@ import NewEquipmentPage from "./pages/Equipment/NewEquipmentPage";
 import NewUnitsPage from "./pages/Units/NewUnitsPage";
 import NewSquadsPage from "./pages/Squads/NewSquadsPage";
 import NewArmiesPage from "./pages/Armies/NewArmiesPage";
+import EditEquipmentPage from "./pages/Equipment/EditEquipmentPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import store from "./Redux/store";
@@ -30,6 +31,7 @@ function App () {
                 <Route path="/units/new" component={NewUnitsPage}/>
                 <Route path="/equipment/view" component={ViewEquipmentPage}/>
                 <Route path="/equipment/new" component={NewEquipmentPage}/>
+                <Route path="/equipment/edit/:ID" component={EditEquipmentPage}/>
                 <Route path="/userprofile" component={ViewProfilePage}/>
                 <Route path="/" component={HomePage}/>
             </Switch>

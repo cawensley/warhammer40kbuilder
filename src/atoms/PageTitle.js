@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const PageTitle = ({ Title }) => <h1 className="text-white pb-3"><u>{Title}</u></h1>;
+function PageTitle ({ Title }) {
+    return <h1 className="text-white pb-3"><u>{Title}</u></h1>
+}
 
 PageTitle.propTypes = {
     Title: PropTypes.string,
