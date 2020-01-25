@@ -37,7 +37,7 @@ function ViewUnitsPage () {
             <CodexFilter/>
             <RedirectButton redirect={"/units/new"} buttontext={"Add Units"}/>
             <div className="row justify-content-center mt-4">
-                <div className="col-xl-8">
+                <div className="col-xl-6 col-md-10">
                     <div className="row h3 text-warning">
                         <div className="col-3">Name</div>
                         <div className="col-3">Cost</div>
@@ -52,7 +52,7 @@ function ViewUnitsPage () {
                             <div className="col-3">
                                 {item.Gear.map((item)=><IDtoName key={item} collectionName={"equipment"} uniqueID={item}/>)}
                             </div>
-                            <div className="col-3 text-left"><DeleteButton collectionName={"units"} uniqueID={item.id}/></div>
+                            <div className="col-3"><DeleteButton collectionName={"units"} uniqueID={item.id}/></div>
                         </div>
                     ))}
                 </div>
