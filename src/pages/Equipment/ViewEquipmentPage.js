@@ -36,20 +36,18 @@ function ViewEquipmentPage () {
             <CodexFilter/>
             <RedirectButton redirect={"/equipment/new"} buttontext={"Add Equipment"}/>
             <div className="row justify-content-center mt-4">
-                <div className="col-xl-8">
+                <div className="col-xl-6 col-md-10">
                     <div className="row h3 text-warning">
-                        <div className="col-md-2"/>
-                        <div className="col-5 col-md-4">Name</div>
-                        <div className="col-4 col-md-4">Cost</div>
-                        <div className="col-3 col-md-2"></div>
+                        <div className="col-5">Name</div>
+                        <div className="col-4">Cost</div>
+                        <div className="col-3"></div>
                     </div>
                     {filteredEquipment.map((item)=>(
-                        <div key={item.id} className="row text-white">
-                            <div className="col-md-2"/>
+                        <div key={item.id} className="row text-white border border-secondary">
                             <Link to={`/equipment/edit/${item.id}`}
-                                  className="col-5 col-md-4 border border-secondary p-hyperlink-color">{item.Name}</Link>
-                            <div className="col-4 col-md-4 border border-secondary">{item.Cost}</div>
-                            <div className="col-3 col-md-2 text-left"><DeleteButton collectionName={"equipment"} uniqueID={item.id}/></div>
+                                  className="col-5 p-hyperlink-color">{item.Name}</Link>
+                            <div className="col-4">{item.Cost}</div>
+                            <div className="col-3"><DeleteButton collectionName={"equipment"} uniqueID={item.id}/></div>
                         </div>
                     ))}
                 </div>

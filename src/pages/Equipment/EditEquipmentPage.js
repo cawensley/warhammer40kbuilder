@@ -13,6 +13,11 @@ function EditEquipmentPage ({match}) {
     const [isLoading, setisLoading] = useState(false);
     const [originalName,setOriginalName]=useState(null);
     const [originalCost,setOriginalCost]=useState(null);
+    const [newEquipmentName,setNewEquipmentName] = useState(null);
+    const [newEquipmentCost,setNewEquipmentCost] = useState(null);
+
+    function handleNameInput(input) {setNewEquipmentName(input)}
+    function handleCostInput(input) {setNewEquipmentCost(input)}
 
     function getEditItemInfo () {
         setisLoading(true);
@@ -20,8 +25,8 @@ function EditEquipmentPage ({match}) {
             .then(doc=>{
                 setOriginalName(doc.data().Name);
                 setOriginalCost(doc.data().Cost);
-                localStorage.setItem("Name",doc.data().Name);
-                localStorage.setItem("Cost",doc.data().Cost)
+                setNewEquipmentName(doc.data().Name);
+                setNewEquipmentCost(doc.data().Cost)
             });
         setisLoading(false);
     }
@@ -32,8 +37,8 @@ function EditEquipmentPage ({match}) {
     function handleEditItemSubmission () {
         const EditItem = {
             Codex: store.getState().codexSelection,
-            Name: localStorage.getItem("Name"),
-            Cost: JSON.parse(localStorage.getItem("Cost"))
+            Name: newEquipmentName,
+            Cost: newEquipmentCost
         };
         firebase.db.collection("equipment").doc(editEquipmentID).set(EditItem);
         window.location.hash = '/equipment/view';
@@ -47,9 +52,9 @@ function EditEquipmentPage ({match}) {
             <form onSubmit={handleEditItemSubmission}>
                 <CodexFilter/>
                 <TextRow left="Current Name:" right={originalName}/>
-                <InputRow left="New Name:" right="Name" type="text"/>
+                <InputRow type="text" left="Equipment Name:" onInputChange={handleNameInput}/>
                 <TextRow left="Current Cost:" right={originalCost}/>
-                <InputRow left="New Cost:" right="Cost" type="number"/>
+                <InputRow type="number" left="Equipment Cost:" onInputChange={handleCostInput}/>
                 <SubmitButton buttontext={"Save Changes to Equipment"}/>
             </form>
         </div>
