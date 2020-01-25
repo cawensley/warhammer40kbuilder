@@ -12,7 +12,7 @@ function ViewEquipmentPage () {
     const [isLoading, setisLoading] = useState(false);
     const [filteredEquipment,setFilteredEquipment]=useState([]);
 
-    function getInitialData () {
+    function getEquipmentData () {
         setisLoading(true);
         firebase.db.collection("equipment").get().then(snapshot => {
             const rawdata = snapshot.docs.map(doc => {
@@ -25,7 +25,7 @@ function ViewEquipmentPage () {
     }
 
     // eslint-disable-next-line
-    useEffect(()=>{getInitialData()},[]);
+    useEffect(()=>{getEquipmentData()},[]);
 
 
     if (isLoading) { return (<PageLoading />); }
@@ -35,25 +35,21 @@ function ViewEquipmentPage () {
             <PageTitle Title="View Equipment Page" />
             <CodexFilter/>
             <RedirectButton redirect={"/equipment/new"} buttontext={"Add Equipment"}/>
-            <div className="row justify-content-center text-warning h3 mt-4">
-                <div className="col-md-10 col-xl-8">
-                    <div className="row">
-                        <div className="col-2"></div>
-                        <div className="col-4">Name</div>
-                        <div className="col-4">Cost</div>
-                        <div className="col-2"></div>
+            <div className="row justify-content-center mt-4">
+                <div className="col-xl-8">
+                    <div className="row h3 text-warning">
+                        <div className="col-md-2"/>
+                        <div className="col-5 col-md-4">Name</div>
+                        <div className="col-4 col-md-4">Cost</div>
+                        <div className="col-3 col-md-2"></div>
                     </div>
-                </div>
-            </div>
-            <div className="row justify-content-center text-white">
-                <div className="col-md-10 col-xl-8">
                     {filteredEquipment.map((item)=>(
-                        <div key={item.id} className="row">
-                            <div className="col-2"></div>
+                        <div key={item.id} className="row text-white">
+                            <div className="col-md-2"/>
                             <Link to={`/equipment/edit/${item.id}`}
-                                  className="col-4 border border-secondary p-hyperlink-color">{item.Name}</Link>
-                            <div className="col-4 border border-secondary">{item.Cost}</div>
-                            <div className="col-2 text-left"><DeleteButton collectionName={"equipment"} uniqueID={item.id}/></div>
+                                  className="col-5 col-md-4 border border-secondary p-hyperlink-color">{item.Name}</Link>
+                            <div className="col-4 col-md-4 border border-secondary">{item.Cost}</div>
+                            <div className="col-3 col-md-2 text-left"><DeleteButton collectionName={"equipment"} uniqueID={item.id}/></div>
                         </div>
                     ))}
                 </div>
