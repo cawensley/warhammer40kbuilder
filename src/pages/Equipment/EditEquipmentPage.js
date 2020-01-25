@@ -52,9 +52,9 @@ function EditEquipmentPage ({match}) {
             <form onSubmit={handleEditItemSubmission}>
                 <CodexFilter/>
                 <TextRow left="Current Name:" right={originalName}/>
-                <InputRow type="text" left="Equipment Name:" onInputChange={handleNameInput}/>
+                <InputRow type="text" left="New Equipment Name:" onInputChange={handleNameInput}/>
                 <TextRow left="Current Cost:" right={originalCost}/>
-                <InputRow type="number" left="Equipment Cost:" onInputChange={handleCostInput}/>
+                <InputRow type="number" left="New Equipment Cost:" onInputChange={handleCostInput}/>
                 <SubmitButton buttontext={"Save Changes to Equipment"}/>
             </form>
         </div>

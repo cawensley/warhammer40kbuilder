@@ -12,8 +12,9 @@ import IDtoName from "../../atoms/IDtoName";
 function ViewUnitsPage () {
     const [isLoading, setisLoading] = useState(false);
     const [filteredUnits,setFilteredUnits]=useState([]);
+    const [filteredEquipment,setFilteredEquipment]=useState([]);
 
-    function getUnitsData () {
+    function getInitialData () {
         setisLoading(true);
         firebase.db.collection("units").get().then(snapshot => {
             const rawdata = snapshot.docs.map(doc => {
@@ -22,12 +23,18 @@ function ViewUnitsPage () {
             const filterArray = rawdata.filter((item)=>item.Codex.includes(store.getState().codexSelection));
             setFilteredUnits(filterArray);
         });
+        firebase.db.collection("equipment").get().then(snapshot => {
+            const rawdata = snapshot.docs.map(doc => {
+                return {id: doc.id,...doc.data()}
+            });
+            const filterArray = rawdata.filter((item)=>item.Codex.includes(store.getState().codexSelection));
+            setFilteredEquipment(filterArray);
+        });
         setisLoading(false);
     }
 
     // eslint-disable-next-line
-    useEffect(()=>{getUnitsData()},[]);
-
+    useEffect(()=>{getInitialData()},[]);
 
     if (isLoading) { return (<PageLoading />); }
 
@@ -50,7 +57,7 @@ function ViewUnitsPage () {
                                   className="col-3 p-hyperlink-color">{item.Name}</Link>
                             <div className="col-3">{item.Cost}</div>
                             <div className="col-3">
-                                {item.Gear.map((item)=><IDtoName key={item} collectionName={"equipment"} uniqueID={item}/>)}
+                                {item.Gear.map((item)=><IDtoName searchArray={filteredEquipment} uniqueID={item}/>)}
                             </div>
                             <div className="col-3"><DeleteButton collectionName={"units"} uniqueID={item.id}/></div>
                         </div>

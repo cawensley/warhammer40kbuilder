@@ -12,11 +12,12 @@ function NewUnitsPage () {
     const [newUnitName,setNewUnitName] = useState(null);
     const [newUnitCost,setNewUnitCost] = useState(null);
     const [newUnitGear,setNewUnitGear] = useState([]);
+    const [refresh,setRefresh] = useState(false);
 
     function handleNameInput(input) {setNewUnitName(input)}
     function handleCostInput(input) {setNewUnitCost(input)}
-    function handleGearRemove () {var NewGear = newUnitGear;NewGear.pop();setNewUnitGear(NewGear);}
-    function handleGearAdd(input) {var NewGear = newUnitGear;NewGear.push(input);setNewUnitGear(NewGear);}
+    function handleGearRemove () {var NewGear = newUnitGear;NewGear.pop();setNewUnitGear(NewGear);setRefresh(!refresh)}
+    function handleGearAdd(input) {var NewGear = newUnitGear;NewGear.push(input);setNewUnitGear(NewGear);setRefresh(!refresh)}
 
     function handleNewUnitSubmission () {
         const newUnit = {
