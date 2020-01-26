@@ -57,7 +57,7 @@ function ViewUnitsPage () {
                                   className="col-3 p-hyperlink-color">{item.Name}</Link>
                             <div className="col-3">{item.Cost}</div>
                             <div className="col-3">
-                                {item.Gear.map((item)=><IDtoName searchArray={filteredEquipment} uniqueID={item}/>)}
+                                {item.Gear.map((item)=><IDtoName key={item} searchArray={filteredEquipment} uniqueID={item}/>)}
                             </div>
                             <div className="col-3"><DeleteButton collectionName={"units"} uniqueID={item.id}/></div>
                         </div>
