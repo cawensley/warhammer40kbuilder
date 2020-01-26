@@ -29,7 +29,7 @@ function DisplayArray ({collectionName,left,array}) {
             <div className="text-warning col-6 text-right">{left}</div>
             <div className="text-white col-6 text-left">
                 {array.length === 0
-                    ? "No Gear Selected"
+                    ? "Nothing Selected"
                     : array.map((item)=><IDtoName searchArray={filteredCollection} uniqueID={item}/>)
                 }
             </div>
