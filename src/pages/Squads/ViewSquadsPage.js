@@ -7,41 +7,37 @@ import CodexFilter from "../../atoms/CodexFilter";
 import RedirectButton from "../../atoms/RedirectButton";
 import store from '../../Redux/store';
 import DeleteButton from "../../atoms/DeleteButton";
-import IDtoName from "../../atoms/IDtoName";
+import compareFunction from "../../utilities/compareFunction";
 
 function ViewSquadsPage () {
     const [isLoading, setisLoading] = useState(false);
-    const [filteredUnits,setFilteredUnits]=useState([]);
     const [filteredSquads,setFilteredSquads]=useState([]);
-    const [roles,setRoles]=useState([]);
+    const [refresh,setRefresh] = useState(false);
 
     function getInitialData () {
         setisLoading(true);
-        firebase.db.collection("units").get().then(snapshot => {
+        firebase.db.collection("squads").where('Codex','==',store.getState().codexSelection)
+            .get().then(snapshot => {
             const rawdata = snapshot.docs.map(doc => {
                 return {id: doc.id,...doc.data()}
             });
-            const filterArray = rawdata.filter((item)=>item.Codex.includes(store.getState().codexSelection));
-            setFilteredUnits(filterArray);
-        });
-        firebase.db.collection("squads").get().then(snapshot => {
-            const rawdata = snapshot.docs.map(doc => {
-                return {id: doc.id,...doc.data()}
-            });
-            const filterArray = rawdata.filter((item)=>item.Codex.includes(store.getState().codexSelection));
-            setFilteredSquads(filterArray);
-        });
-        firebase.db.collection("Roles").get().then(snapshot => {
-            const rawdata = snapshot.docs.map(doc => {
-                return {id: doc.id,...doc.data()}
-            });
-            setRoles(rawdata);
+            rawdata.sort(compareFunction);
+            setFilteredSquads(rawdata);
         });
         setisLoading(false);
     }
 
     // eslint-disable-next-line
     useEffect(()=>{getInitialData()},[]);
+
+    function spliceThing (input) {
+        const currentArray = filteredSquads;
+        for (let i = 0; i < currentArray.length; i += 1) {
+            if (input === currentArray[i].id) { currentArray.splice(i, 1); }
+        }
+        setFilteredSquads(currentArray);
+        setRefresh(!refresh)
+    }
 
     if (isLoading) { return (<PageLoading />); }
 
@@ -64,13 +60,13 @@ function ViewSquadsPage () {
                         <div key={item.id} className="row text-white align-items-center border border-secondary">
                             <Link to={`/squads/edit/${item.id}`}
                                   className="col-3 p-hyperlink-color">{item.Name}</Link>
-                            <div className="col-2"><IDtoName searchArray={roles} uniqueID={item.Role}/></div>
+                            <div className="col-2">{item.Role}</div>
                             <div className="col-2">{item.MinSize}</div>
                             <div className="col-2">{item.MaxSize}</div>
                             <div className="col-2">
-                                {item.Units.map((item)=><IDtoName key={item} searchArray={filteredUnits} uniqueID={item}/>)}
+                                {item.Units.map((item)=><div key={item}>{item}</div>)}
                             </div>
-                            <div className="col-1"><DeleteButton collectionName={"squads"} uniqueID={item.id}/></div>
+                            <div className="col-1"><DeleteButton collectionName={"squads"} uniqueID={item.id} onDelete={spliceThing}/></div>
                         </div>
                     ))}
                 </div>

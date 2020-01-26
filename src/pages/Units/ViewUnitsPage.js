@@ -7,34 +7,40 @@ import CodexFilter from "../../atoms/CodexFilter";
 import RedirectButton from "../../atoms/RedirectButton";
 import store from '../../Redux/store';
 import DeleteButton from "../../atoms/DeleteButton";
-import IDtoName from "../../atoms/IDtoName";
+import compareFunction from "../../utilities/compareFunction";
 
 function ViewUnitsPage () {
     const [isLoading, setisLoading] = useState(false);
     const [filteredUnits,setFilteredUnits]=useState([]);
-    const [filteredEquipment,setFilteredEquipment]=useState([]);
+    const [refresh,setRefresh] = useState(false);
 
     function getInitialData () {
         setisLoading(true);
-        firebase.db.collection("units").get().then(snapshot => {
+        firebase.db.collection("units").where('Codex','==',store.getState().codexSelection)
+            .get().then(snapshot => {
             const rawdata = snapshot.docs.map(doc => {
                 return {id: doc.id,...doc.data()}
             });
-            const filterArray = rawdata.filter((item)=>item.Codex.includes(store.getState().codexSelection));
-            setFilteredUnits(filterArray);
-        });
-        firebase.db.collection("equipment").get().then(snapshot => {
-            const rawdata = snapshot.docs.map(doc => {
-                return {id: doc.id,...doc.data()}
-            });
-            const filterArray = rawdata.filter((item)=>item.Codex.includes(store.getState().codexSelection));
-            setFilteredEquipment(filterArray);
+            rawdata.sort(compareFunction);
+            setFilteredUnits(rawdata);
         });
         setisLoading(false);
     }
 
     // eslint-disable-next-line
     useEffect(()=>{getInitialData()},[]);
+
+    function spliceThing (input) {
+        const currentArray = filteredUnits;
+        console.log("Original Units to display are = ",currentArray);
+        console.log("ID to splice is = ",input);
+        for (let i = 0; i < currentArray.length; i += 1) {
+            if (input === currentArray[i].id) { currentArray.splice(i, 1); }
+        }
+        setFilteredUnits(currentArray);
+        console.log("New array =",currentArray);
+        setRefresh(!refresh)
+    }
 
     if (isLoading) { return (<PageLoading />); }
 
@@ -57,9 +63,9 @@ function ViewUnitsPage () {
                                   className="col-3 p-hyperlink-color">{item.Name}</Link>
                             <div className="col-3">{item.Cost}</div>
                             <div className="col-3">
-                                {item.Gear.map((item)=><IDtoName key={item} searchArray={filteredEquipment} uniqueID={item}/>)}
+                                {item.Gear.map((item)=><div key={item}>{item}</div>)}
                             </div>
-                            <div className="col-3"><DeleteButton collectionName={"units"} uniqueID={item.id}/></div>
+                            <div className="col-3"><DeleteButton collectionName={"units"} uniqueID={item.id} onDelete={spliceThing}/></div>
                         </div>
                     ))}
                 </div>
