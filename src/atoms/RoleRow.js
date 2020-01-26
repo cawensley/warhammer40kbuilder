@@ -2,13 +2,13 @@ import React, {useEffect, useState} from 'react';
 import firebase from "../firebase/firebase";
 import PageLoading from "./PageLoading";
 
-function RoleRow ({left,onInputChange}) {
+function RoleRow ({left,onInputChange,initialRole}) {
     const [allRoles,setAllRoles] = useState([]);
-    const [role,setRole]=useState('');
+    const [role,setRole]=useState(initialRole);
     const [isLoading, setisLoading] = useState(false);
 
     // eslint-disable-next-line
-    useEffect(()=>{getInitialData()},[]);
+    useEffect(()=>{getInitialData();onInputChange(initialRole)},[]);
 
     function getInitialData () {
         setisLoading(true);
@@ -17,12 +17,11 @@ function RoleRow ({left,onInputChange}) {
                 return {id: doc.id,...doc.data()}
             });
             setAllRoles(rawdata);
-            if (rawdata.length>0) {onRoleChange(rawdata[0].id)}
         });
         setisLoading(false);
     }
 
-    function onRoleChange (roleID) {setRole(roleID);onInputChange(roleID);}
+    function onRoleChange (roleID) {setRole(roleID);onInputChange(roleID)}
 
     if (isLoading) { return (<PageLoading />); }
 

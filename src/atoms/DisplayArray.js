@@ -30,7 +30,7 @@ function DisplayArray ({collectionName,left,array}) {
             <div className="text-white col-6 text-left">
                 {array.length === 0
                     ? "Nothing Selected"
-                    : array.map((item)=><IDtoName searchArray={filteredCollection} uniqueID={item}/>)
+                    : array.map((item)=><IDtoName key={item} searchArray={filteredCollection} uniqueID={item}/>)
                 }
             </div>
         </div>

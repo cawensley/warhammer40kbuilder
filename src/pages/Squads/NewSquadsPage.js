@@ -43,7 +43,7 @@ function NewSquadsPage () {
             <form onSubmit={handleNewSquadSubmission}>
                 <CodexFilter/>
                 <InputRow type="text" left="Squad Name:" onInputChange={handleNameInput}/>
-                <RoleRow left="Army Role:" onInputChange={handleRoleInput}/>
+                <RoleRow left="Army Role:" onInputChange={handleRoleInput} initialRole={"g5ffh3LG3s8zZqUZKw9y"}/>
                 <InputRow type="number" left="Min Squad Size:" onInputChange={handleMinSizeInput}/>
                 <InputRow type="number" left="Max Squad Size:" onInputChange={handleMaxSizeInput}/>
                 <SelectArray collectionName="units" left="Units in Squad:" onItemAdd={handleUnitAdd} onItemRemove={handleUnitRemove}/>
