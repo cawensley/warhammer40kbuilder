@@ -20,7 +20,9 @@ function NewEquipmentPage () {
             Cost: newEquipmentCost
         };
         firebase.db.collection("equipment").add(newItem);
-        window.location.hash = '/equipment/view';
+        window.alert("New equipment added");
+        setNewEquipmentName(null);
+        setNewEquipmentCost(null);
     }
 
     return (

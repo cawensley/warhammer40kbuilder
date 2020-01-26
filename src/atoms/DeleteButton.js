@@ -1,11 +1,11 @@
 import React from 'react';
 import firebase from "../firebase/firebase";
 
-function DeleteButton ({ collectionName,uniqueID }) {
+function DeleteButton ({ collectionName,uniqueID,onDelete }) {
 
     function RemoveItem () {
         const linkRef = firebase.db.collection(`${collectionName}`).doc(uniqueID);
-        linkRef.delete().then(()=>{window.location.reload(true)})
+        linkRef.delete().then(()=>{onDelete(uniqueID)})
             .catch(error=>{console.log("Error deleting document:",error)});
     }
 

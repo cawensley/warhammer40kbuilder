@@ -34,7 +34,12 @@ function NewSquadsPage () {
             Units: newSquadUnits
         };
         firebase.db.collection("squads").add(newSquad);
-        window.location.hash = '/squads/view';
+        window.alert("New squad added");
+        setNewSquadName(null);
+        setNewSquadRole(null);
+        setNewSquadMinSize(null);
+        setNewSquadMaxSize(null);
+        setNewSquadUnits([]);
     }
 
     return (

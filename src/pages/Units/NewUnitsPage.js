@@ -27,7 +27,10 @@ function NewUnitsPage () {
             Gear: newUnitGear
         };
         firebase.db.collection("units").add(newUnit);
-        window.location.hash = '/units/view';
+        window.alert("New unit added");
+        setNewUnitName(null);
+        setNewUnitCost(null);
+        setNewUnitGear([]);
     }
 
     return (

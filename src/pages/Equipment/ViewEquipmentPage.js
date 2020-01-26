@@ -7,26 +7,37 @@ import CodexFilter from "../../atoms/CodexFilter";
 import RedirectButton from "../../atoms/RedirectButton";
 import store from '../../Redux/store';
 import DeleteButton from "../../atoms/DeleteButton";
+import compareFunction from "../../utilities/compareFunction";
 
 function ViewEquipmentPage () {
     const [isLoading, setisLoading] = useState(false);
     const [filteredEquipment,setFilteredEquipment]=useState([]);
+    const [refresh,setRefresh] = useState(false);
 
-    function getEquipmentData () {
+    function getInitialData () {
         setisLoading(true);
-        firebase.db.collection("equipment").get().then(snapshot => {
+        firebase.db.collection("equipment").where('Codex','==',store.getState().codexSelection)
+            .get().then(snapshot => {
             const rawdata = snapshot.docs.map(doc => {
                 return {id: doc.id,...doc.data()}
             });
-            const filterArray = rawdata.filter((item)=>item.Codex.includes(store.getState().codexSelection));
-            setFilteredEquipment(filterArray);
+            rawdata.sort(compareFunction);
+            setFilteredEquipment(rawdata);
         });
         setisLoading(false);
     }
 
     // eslint-disable-next-line
-    useEffect(()=>{getEquipmentData()},[]);
+    useEffect(()=>{getInitialData()},[]);
 
+    function spliceThing (input) {
+        const currentArray = filteredEquipment;
+        for (let i = 0; i < currentArray.length; i += 1) {
+            if (input === currentArray[i].id) { currentArray.splice(i, 1); }
+        }
+        setFilteredEquipment(currentArray);
+        setRefresh(!refresh)
+    }
 
     if (isLoading) { return (<PageLoading />); }
 
@@ -47,7 +58,7 @@ function ViewEquipmentPage () {
                             <Link to={`/equipment/edit/${item.id}`}
                                   className="col-5 p-hyperlink-color">{item.Name}</Link>
                             <div className="col-4">{item.Cost}</div>
-                            <div className="col-3"><DeleteButton collectionName={"equipment"} uniqueID={item.id}/></div>
+                            <div className="col-3"><DeleteButton collectionName={"equipment"} uniqueID={item.id} onDelete={spliceThing}/></div>
                         </div>
                     ))}
                 </div>
