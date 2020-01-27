@@ -1,7 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import PageTitle from "../../atoms/PageTitle";
 import CodexFilter from "../../atoms/CodexFilter";
-import store from "../../Redux/store";
 import firebase from "../../firebase/firebase";
 import PageLoading from "../../atoms/PageLoading";
 import SubmitButton from "../../atoms/SubmitButton";
@@ -10,9 +9,10 @@ import InputRow from "../../atoms/InputRow";
 import SelectArray from "../../atoms/SelectArray";
 import DisplayArray from "../../atoms/DisplayArray";
 import RoleRow from "../../atoms/RoleRow";
-import IDtoName from "../../atoms/IDtoName";
+import FirebaseContext from "../../firebase/FirebaseContext";
 
 function EditSquadsPage ({match}) {
+    const {codex,role}=useContext(FirebaseContext);
     const editSquadID = match.params.ID;
     const [isLoading, setisLoading] = useState(false);
     const [originalName,setOriginalName]=useState(null);
@@ -20,15 +20,12 @@ function EditSquadsPage ({match}) {
     const [originalMinSize,setOriginalMinSize]=useState(null);
     const [originalMaxSize,setOriginalMaxSize]=useState(null);
     const [newSquadName,setNewSquadName] = useState(null);
-    const [newSquadRole,setNewSquadRole] = useState(null);
     const [newSquadMinSize,setNewSquadMinSize] = useState(null);
     const [newSquadMaxSize,setNewSquadMaxSize] = useState(null);
     const [newSquadUnits,setNewSquadUnits] = useState([]);
     const [refresh,setRefresh] = useState(false);
-    const [roles,setRoles]=useState([]);
 
     function handleNameInput(input) {setNewSquadName(input)}
-    function handleRoleInput(input) {setNewSquadRole(input)}
     function handleMinSizeInput(input) {setNewSquadMinSize(input)}
     function handleMaxSizeInput(input) {setNewSquadMaxSize(input)}
     function handleUnitRemove () {var NewUnit = newSquadUnits;NewUnit.pop();setNewSquadUnits(NewUnit);setRefresh(!refresh)}
@@ -47,12 +44,6 @@ function EditSquadsPage ({match}) {
                 setNewSquadMaxSize(doc.data().MaxSize);
                 setNewSquadUnits(doc.data().Units);
             });
-        firebase.db.collection("Roles").get().then(snapshot => {
-            const rawdata = snapshot.docs.map(doc => {
-                return {id: doc.id,...doc.data()}
-            });
-            setRoles(rawdata);
-        });
         setisLoading(false);
     }
 
@@ -61,9 +52,9 @@ function EditSquadsPage ({match}) {
 
     function handleEditSquadSubmission () {
         const EditSquad = {
-            Codex: store.getState().codexSelection,
+            Codex: codex,
             Name: newSquadName,
-            Role: newSquadRole,
+            Role: role,
             MinSize: newSquadMinSize,
             MaxSize: newSquadMaxSize,
             Units: newSquadUnits
@@ -81,14 +72,14 @@ function EditSquadsPage ({match}) {
                 <CodexFilter/>
                 <TextRow left="Current Name:" right={originalName}/>
                 <InputRow type="text" left="New Squad Name:" onInputChange={handleNameInput}/>
-                <TextRow left="Current Role:" right={<IDtoName searchArray={roles} uniqueID={originalRole}/>}/>
-                <RoleRow left="New Army Role:" onInputChange={handleRoleInput} initialRole={"g5ffh3LG3s8zZqUZKw9y"}/>
+                <TextRow left="Current Role:" right={originalRole}/>
+                <RoleRow left="New Army Role:"/>
                 <TextRow left="Current Min. Size:" right={originalMinSize}/>
                 <InputRow type="number" left="New Min Squad Size:" onInputChange={handleMinSizeInput}/>
                 <TextRow left="Current Max. Size:" right={originalMaxSize}/>
                 <InputRow type="number" left="New Max Squad Size:" onInputChange={handleMaxSizeInput}/>
                 <SelectArray collectionName="units" left="Units in Squad:" onItemAdd={handleUnitAdd} onItemRemove={handleUnitRemove}/>
-                <DisplayArray collectionName="units" left="Units Added:" array={newSquadUnits}/>
+                <DisplayArray left="Units Added:" array={newSquadUnits}/>
                 <SubmitButton buttontext="Save Changes to Squad"/>
             </form>
         </div>

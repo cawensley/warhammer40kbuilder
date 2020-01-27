@@ -1,12 +1,13 @@
-import React,{useState} from 'react';
+import React, {useContext, useState} from 'react';
 import PageTitle from "../../atoms/PageTitle";
 import firebase from "../../firebase/firebase";
 import CodexFilter from "../../atoms/CodexFilter";
-import store from "../../Redux/store";
 import SubmitButton from "../../atoms/SubmitButton";
 import InputRow from "../../atoms/InputRow";
+import FirebaseContext from "../../firebase/FirebaseContext";
 
 function NewEquipmentPage () {
+    const {codex}=useContext(FirebaseContext);
     const [newEquipmentName,setNewEquipmentName] = useState(null);
     const [newEquipmentCost,setNewEquipmentCost] = useState(null);
 
@@ -15,7 +16,7 @@ function NewEquipmentPage () {
 
     function newEquipmentSubmission () {
         const newItem = {
-            Codex: store.getState().codexSelection,
+            Codex: codex,
             Name: newEquipmentName,
             Cost: newEquipmentCost
         };

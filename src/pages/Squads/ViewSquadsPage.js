@@ -1,22 +1,23 @@
-import React,{useEffect,useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
 import PageTitle from "../../atoms/PageTitle";
 import firebase from "../../firebase/firebase";
 import PageLoading from "../../atoms/PageLoading";
 import CodexFilter from "../../atoms/CodexFilter";
 import RedirectButton from "../../atoms/RedirectButton";
-import store from '../../Redux/store';
 import DeleteButton from "../../atoms/DeleteButton";
 import compareFunction from "../../utilities/compareFunction";
+import FirebaseContext from "../../firebase/FirebaseContext";
 
 function ViewSquadsPage () {
+    const {codex}=useContext(FirebaseContext);
     const [isLoading, setisLoading] = useState(false);
     const [filteredSquads,setFilteredSquads]=useState([]);
     const [refresh,setRefresh] = useState(false);
 
     function getInitialData () {
         setisLoading(true);
-        firebase.db.collection("squads").where('Codex','==',store.getState().codexSelection)
+        firebase.db.collection("squads").where('Codex','==',codex)
             .get().then(snapshot => {
             const rawdata = snapshot.docs.map(doc => {
                 return {id: doc.id,...doc.data()}
@@ -28,14 +29,13 @@ function ViewSquadsPage () {
     }
 
     // eslint-disable-next-line
-    useEffect(()=>{getInitialData()},[]);
+    useEffect(()=>{getInitialData()},[codex]);
 
     function spliceThing (input) {
-        const currentArray = filteredSquads;
-        for (let i = 0; i < currentArray.length; i += 1) {
-            if (input === currentArray[i].id) { currentArray.splice(i, 1); }
+        for (let i = 0; i < filteredSquads.length; i += 1) {
+            if (input === filteredSquads[i].id) { filteredSquads.splice(i, 1); }
         }
-        setFilteredSquads(currentArray);
+        setFilteredSquads(filteredSquads);
         setRefresh(!refresh)
     }
 

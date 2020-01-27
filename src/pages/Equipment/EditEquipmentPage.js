@@ -1,14 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import PageTitle from "../../atoms/PageTitle";
 import CodexFilter from "../../atoms/CodexFilter";
-import store from "../../Redux/store";
 import firebase from "../../firebase/firebase";
 import PageLoading from "../../atoms/PageLoading";
 import SubmitButton from "../../atoms/SubmitButton";
 import TextRow from "../../atoms/TextRow";
 import InputRow from "../../atoms/InputRow";
+import FirebaseContext from "../../firebase/FirebaseContext";
 
 function EditEquipmentPage ({match}) {
+    const {codex}=useContext(FirebaseContext);
     const editEquipmentID = match.params.ID;
     const [isLoading, setisLoading] = useState(false);
     const [originalName,setOriginalName]=useState(null);
@@ -36,7 +37,7 @@ function EditEquipmentPage ({match}) {
 
     function handleEditItemSubmission () {
         const EditItem = {
-            Codex: store.getState().codexSelection,
+            Codex: codex,
             Name: newEquipmentName,
             Cost: newEquipmentCost
         };

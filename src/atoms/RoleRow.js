@@ -1,29 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import firebase from "../firebase/firebase";
-import PageLoading from "./PageLoading";
+import React, {useContext} from 'react';
+import FirebaseContext from "../firebase/FirebaseContext";
 
-function RoleRow ({left,onInputChange,initialRole}) {
-    const [allRoles,setAllRoles] = useState([]);
-    const [role,setRole]=useState(initialRole);
-    const [isLoading, setisLoading] = useState(false);
-
-    // eslint-disable-next-line
-    useEffect(()=>{getInitialData();onInputChange(initialRole)},[]);
-
-    function getInitialData () {
-        setisLoading(true);
-        firebase.db.collection("Roles").get().then(snapshot => {
-            const rawdata = snapshot.docs.map(doc => {
-                return {id: doc.id,...doc.data()}
-            });
-            setAllRoles(rawdata);
-        });
-        setisLoading(false);
-    }
-
-    function onRoleChange (roleID) {setRole(roleID);onInputChange(roleID)}
-
-    if (isLoading) { return (<PageLoading />); }
+function RoleRow ({left}) {
+    const {role,setRole,roles} = useContext(FirebaseContext);
 
     return (
         <div className="row mt-4">
@@ -33,8 +12,8 @@ function RoleRow ({left,onInputChange,initialRole}) {
                     id="Role"
                     className="bg-white"
                     value={role}
-                    onChange={event => onRoleChange(event.target.value)}>
-                    {allRoles.map((choice) => (<option key={choice.id} value={choice.id}>{choice.Name}</option>))}
+                    onChange={event => setRole(event.target.value)}>
+                    {roles.map((choice) => (<option key={choice.id} value={choice.id}>{choice.Name}</option>))}
                 </select>
             </div>
         </div>
