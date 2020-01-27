@@ -12,36 +12,28 @@ function EditEquipmentPage ({match}) {
     const {codex}=useContext(FirebaseContext);
     const editEquipmentID = match.params.ID;
     const [isLoading, setisLoading] = useState(false);
-    const [originalName,setOriginalName]=useState(null);
-    const [originalCost,setOriginalCost]=useState(null);
-    const [newEquipmentName,setNewEquipmentName] = useState(null);
-    const [newEquipmentCost,setNewEquipmentCost] = useState(null);
+    const [originalEquipment,setOriginalEquipment]=useState({Name: null,Cost:null});
+    const [editEquipment,setEditEquipment] = useState({Codex: codex,Name: null,Cost:null});
 
-    function handleNameInput(input) {setNewEquipmentName(input)}
-    function handleCostInput(input) {setNewEquipmentCost(input)}
+    function handleNameInput(input) {setEditEquipment({...editEquipment,Name:input})}
+    function handleCostInput(input) {setEditEquipment({...editEquipment,Cost:input})}
 
     function getEditItemInfo () {
         setisLoading(true);
         firebase.db.collection("equipment").doc(editEquipmentID).get()
             .then(doc=>{
-                setOriginalName(doc.data().Name);
-                setOriginalCost(doc.data().Cost);
-                setNewEquipmentName(doc.data().Name);
-                setNewEquipmentCost(doc.data().Cost)
+                setOriginalEquipment({Name: doc.data().Name, Cost:doc.data().Cost});
             });
         setisLoading(false);
     }
 
     // eslint-disable-next-line
     useEffect(()=>{getEditItemInfo()},[]);
+    // eslint-disable-next-line
+    useEffect(()=>setEditEquipment({...editEquipment,Codex:codex}),[codex]);
 
     function handleEditItemSubmission () {
-        const EditItem = {
-            Codex: codex,
-            Name: newEquipmentName,
-            Cost: newEquipmentCost
-        };
-        firebase.db.collection("equipment").doc(editEquipmentID).set(EditItem);
+        firebase.db.collection("equipment").doc(editEquipmentID).set(editEquipment);
         window.location.hash = '/equipment/view';
     }
 
@@ -52,9 +44,9 @@ function EditEquipmentPage ({match}) {
             <PageTitle Title="Edit Equipment Page" />
             <form onSubmit={handleEditItemSubmission}>
                 <CodexFilter/>
-                <TextRow left="Current Name:" right={originalName}/>
+                <TextRow left="Current Name:" right={originalEquipment.Name}/>
                 <InputRow type="text" left="New Equipment Name:" onInputChange={handleNameInput}/>
-                <TextRow left="Current Cost:" right={originalCost}/>
+                <TextRow left="Current Cost:" right={originalEquipment.Cost}/>
                 <InputRow type="number" left="New Equipment Cost:" onInputChange={handleCostInput}/>
                 <SubmitButton buttontext={"Save Changes to Equipment"}/>
             </form>

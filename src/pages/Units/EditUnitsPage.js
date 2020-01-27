@@ -7,49 +7,38 @@ import SubmitButton from "../../atoms/SubmitButton";
 import TextRow from "../../atoms/TextRow";
 import InputRow from "../../atoms/InputRow";
 import SelectArray from "../../atoms/SelectArray";
-import DisplayArray from "../../atoms/DisplayArray";
 import FirebaseContext from "../../firebase/FirebaseContext";
 
 function EditUnitsPage ({match}) {
     const editUnitID = match.params.ID;
     const {codex}=useContext(FirebaseContext);
     const [isLoading, setisLoading] = useState(false);
-    const [originalName,setOriginalName]=useState(null);
-    const [originalCost,setOriginalCost]=useState(null);
-    const [newUnitName,setNewUnitName] = useState(null);
-    const [newUnitCost,setNewUnitCost] = useState(null);
-    const [newUnitGear,setNewUnitGear] = useState([]);
-    const [refresh,setRefresh] = useState(false);
+    const [originalUnit,setOriginalUnit]=useState({Name: null,Cost: null});
+    const [editUnit,setEditUnit] = useState({Codex: codex,Name: null,Cost: null,Gear: []});
 
-    function handleNameInput(input) {setNewUnitName(input)}
-    function handleCostInput(input) {setNewUnitCost(input)}
-    function handleGearRemove () {var NewGear = newUnitGear;NewGear.pop();setNewUnitGear(NewGear);setRefresh(!refresh)}
-    function handleGearAdd(input) {var NewGear = newUnitGear;NewGear.push(input);setNewUnitGear(NewGear);setRefresh(!refresh)}
+    function handleNameInput(input) {setEditUnit({...editUnit,Name:input})}
+    function handleCostInput(input) {setEditUnit({...editUnit,Cost:input})}
+    function handleGearRemove () {var NewGear = editUnit.Gear;NewGear.pop();setEditUnit({...editUnit,Gear:NewGear})}
+    function handleGearAdd(input) {var NewGear = editUnit.Gear;NewGear.push(input);setEditUnit({...editUnit,Gear:NewGear})}
 
     function getEditItemInfo () {
         setisLoading(true);
         firebase.db.collection("units").doc(editUnitID).get()
             .then(doc=>{
-                setOriginalName(doc.data().Name);
-                setOriginalCost(doc.data().Cost);
-                setNewUnitName(doc.data().Name);
-                setNewUnitCost(doc.data().Cost);
-                setNewUnitGear(doc.data().Gear);
+                setOriginalUnit({Name: doc.data().Name,Cost: doc.data().Cost});
+                setEditUnit({...editUnit,Gear:doc.data().Gear});
             });
         setisLoading(false);
     }
 
     // eslint-disable-next-line
     useEffect(()=>{getEditItemInfo()},[]);
+    // eslint-disable-next-line
+    useEffect(()=>setEditUnit({...editUnit,Codex:codex}),[codex]);
 
     function handleEditUnitSubmission () {
-        const EditUnit = {
-            Codex: codex,
-            Name: newUnitName,
-            Cost: newUnitCost,
-            Gear: newUnitGear
-        };
-        firebase.db.collection("units").doc(editUnitID).set(EditUnit);
+        setEditUnit({...editUnit,Codex:codex});
+        firebase.db.collection("units").doc(editUnitID).set(editUnit);
         window.location.hash = '/units/view';
     }
 
@@ -60,12 +49,17 @@ function EditUnitsPage ({match}) {
             <PageTitle Title="Edit Units Page" />
             <form onSubmit={handleEditUnitSubmission}>
                 <CodexFilter/>
-                <TextRow left="Current Name:" right={originalName}/>
+                <TextRow left="Current Name:" right={originalUnit.Name}/>
                 <InputRow type="text" left="New Unit Name:" onInputChange={handleNameInput}/>
-                <TextRow left="Current Cost:" right={originalCost}/>
+                <TextRow left="Current Cost:" right={originalUnit.Cost}/>
                 <InputRow type="number" left="New Unit Cost:" onInputChange={handleCostInput}/>
-                <SelectArray collectionName="equipment" left="Unit Gear:" onItemAdd={handleGearAdd} onItemRemove={handleGearRemove}/>
-                <DisplayArray left="Gear Selected:" array={newUnitGear}/>
+                <SelectArray
+                    collectionName="equipment"
+                    left="Gear:"
+                    onItemAdd={handleGearAdd}
+                    onItemRemove={handleGearRemove}
+                    arrayDisplay={editUnit.Gear}
+                />
                 <SubmitButton buttontext={"Save Changes to Unit"}/>
             </form>
         </div>
