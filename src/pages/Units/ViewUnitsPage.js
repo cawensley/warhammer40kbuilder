@@ -1,22 +1,23 @@
-import React,{useEffect,useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
 import PageTitle from "../../atoms/PageTitle";
 import firebase from "../../firebase/firebase";
 import PageLoading from "../../atoms/PageLoading";
 import CodexFilter from "../../atoms/CodexFilter";
 import RedirectButton from "../../atoms/RedirectButton";
-import store from '../../Redux/store';
 import DeleteButton from "../../atoms/DeleteButton";
 import compareFunction from "../../utilities/compareFunction";
+import FirebaseContext from "../../firebase/FirebaseContext";
 
 function ViewUnitsPage () {
+    const {codex}=useContext(FirebaseContext);
     const [isLoading, setisLoading] = useState(false);
     const [filteredUnits,setFilteredUnits]=useState([]);
     const [refresh,setRefresh] = useState(false);
 
     function getInitialData () {
         setisLoading(true);
-        firebase.db.collection("units").where('Codex','==',store.getState().codexSelection)
+        firebase.db.collection("units").where('Codex','==',codex)
             .get().then(snapshot => {
             const rawdata = snapshot.docs.map(doc => {
                 return {id: doc.id,...doc.data()}
@@ -28,17 +29,13 @@ function ViewUnitsPage () {
     }
 
     // eslint-disable-next-line
-    useEffect(()=>{getInitialData()},[]);
+    useEffect(()=>{getInitialData()},[codex]);
 
     function spliceThing (input) {
-        const currentArray = filteredUnits;
-        console.log("Original Units to display are = ",currentArray);
-        console.log("ID to splice is = ",input);
-        for (let i = 0; i < currentArray.length; i += 1) {
-            if (input === currentArray[i].id) { currentArray.splice(i, 1); }
+        for (let i = 0; i < filteredUnits.length; i += 1) {
+            if (input === filteredUnits[i].id) { filteredUnits.splice(i, 1); }
         }
-        setFilteredUnits(currentArray);
-        console.log("New array =",currentArray);
+        setFilteredUnits(filteredUnits);
         setRefresh(!refresh)
     }
 

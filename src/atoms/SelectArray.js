@@ -1,31 +1,34 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import firebase from "../firebase/firebase";
-import store from "../Redux/store";
 import PageLoading from "./PageLoading";
+import FirebaseContext from "../firebase/FirebaseContext";
+import compareFunction from "../utilities/compareFunction";
 
 function SelectArray ({collectionName, left, onItemAdd, onItemRemove}) {
+    const {codex}=useContext(FirebaseContext);
     const [isLoading, setisLoading] = useState(false);
     const [filteredCollection,setFilteredCollection]=useState([]);
     const [thingSelected,setThingSelected]=useState('');
 
-    function getArrayData () {
+    function getInitialData () {
         setisLoading(true);
-        firebase.db.collection(`${collectionName}`).get().then(snapshot => {
+        firebase.db.collection(`${collectionName}`).where('Codex','==',codex)
+            .get().then(snapshot => {
             const rawdata = snapshot.docs.map(doc => {
                 return {id: doc.id,...doc.data()}
             });
-            const filterArray = rawdata.filter((item)=>item.Codex.includes(store.getState().codexSelection));
-            setFilteredCollection(filterArray);
-            if (filterArray.length>0) {setThingSelected(filterArray[0].id)}
+            rawdata.sort(compareFunction);
+            setFilteredCollection(rawdata);
+            if (rawdata.length > 0) {setThingSelected(rawdata[0].id)}
+            else {setThingSelected('')}
         });
         setisLoading(false);
     }
 
     // eslint-disable-next-line
-    useEffect(()=>{getArrayData()},[]);
+    useEffect(()=>{getInitialData()},[codex]);
 
     function onThingAdd () {onItemAdd(thingSelected)}
-
     function onThingRemove () {onItemRemove()}
 
     if (isLoading) { return (<PageLoading />); }

@@ -1,24 +1,23 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import PageTitle from "../../atoms/PageTitle";
 import firebase from "../../firebase/firebase";
 import CodexFilter from "../../atoms/CodexFilter";
-import store from "../../Redux/store";
 import SubmitButton from "../../atoms/SubmitButton";
 import InputRow from "../../atoms/InputRow";
 import SelectArray from "../../atoms/SelectArray";
 import DisplayArray from "../../atoms/DisplayArray";
 import RoleRow from "../../atoms/RoleRow";
+import FirebaseContext from "../../firebase/FirebaseContext";
 
 function NewSquadsPage () {
+    const {codex,role}=useContext(FirebaseContext);
     const [newSquadName,setNewSquadName] = useState(null);
-    const [newSquadRole,setNewSquadRole] = useState(null);
     const [newSquadMinSize,setNewSquadMinSize] = useState(null);
     const [newSquadMaxSize,setNewSquadMaxSize] = useState(null);
     const [newSquadUnits,setNewSquadUnits] = useState([]);
     const [refresh,setRefresh] = useState(false);
 
     function handleNameInput(input) {setNewSquadName(input)}
-    function handleRoleInput(input) {setNewSquadRole(input)}
     function handleMinSizeInput(input) {setNewSquadMinSize(input)}
     function handleMaxSizeInput(input) {setNewSquadMaxSize(input)}
     function handleUnitRemove () {var NewUnit = newSquadUnits;NewUnit.pop();setNewSquadUnits(NewUnit);setRefresh(!refresh)}
@@ -26,9 +25,9 @@ function NewSquadsPage () {
 
     function handleNewSquadSubmission () {
         const newSquad = {
-            Codex: store.getState().codexSelection,
+            Codex: codex,
             Name: newSquadName,
-            Role: newSquadRole,
+            Role: role,
             MinSize: newSquadMinSize,
             MaxSize: newSquadMaxSize,
             Units: newSquadUnits
@@ -36,7 +35,6 @@ function NewSquadsPage () {
         firebase.db.collection("squads").add(newSquad);
         window.alert("New squad added");
         setNewSquadName(null);
-        setNewSquadRole(null);
         setNewSquadMinSize(null);
         setNewSquadMaxSize(null);
         setNewSquadUnits([]);
@@ -48,11 +46,11 @@ function NewSquadsPage () {
             <form onSubmit={handleNewSquadSubmission}>
                 <CodexFilter/>
                 <InputRow type="text" left="Squad Name:" onInputChange={handleNameInput}/>
-                <RoleRow left="Army Role:" onInputChange={handleRoleInput} initialRole={"g5ffh3LG3s8zZqUZKw9y"}/>
+                <RoleRow left="Army Role:"/>
                 <InputRow type="number" left="Min Squad Size:" onInputChange={handleMinSizeInput}/>
                 <InputRow type="number" left="Max Squad Size:" onInputChange={handleMaxSizeInput}/>
                 <SelectArray collectionName="units" left="Units in Squad:" onItemAdd={handleUnitAdd} onItemRemove={handleUnitRemove}/>
-                <DisplayArray collectionName="units" left="Units Added:" array={newSquadUnits}/>
+                <DisplayArray left="Units Added:" array={newSquadUnits}/>
                 <SubmitButton buttontext="Add Squad to Database"/>
             </form>
         </div>
