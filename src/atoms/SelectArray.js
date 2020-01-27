@@ -3,8 +3,9 @@ import firebase from "../firebase/firebase";
 import PageLoading from "./PageLoading";
 import FirebaseContext from "../firebase/FirebaseContext";
 import compareFunction from "../utilities/compareFunction";
+import IDtoName from "./IDtoName";
 
-function SelectArray ({collectionName, left, onItemAdd, onItemRemove}) {
+function SelectArray ({collectionName, left, onItemAdd, onItemRemove,arrayDisplay}) {
     const {codex}=useContext(FirebaseContext);
     const [isLoading, setisLoading] = useState(false);
     const [filteredCollection,setFilteredCollection]=useState([]);
@@ -47,6 +48,15 @@ function SelectArray ({collectionName, left, onItemAdd, onItemRemove}) {
                     </select>
                     <button type="button" className="btn btn-success ml-2" onClick={onThingAdd}>Add</button>
                     <button type="button" className="btn btn-danger ml-2" onClick={onThingRemove}>Remove Last</button>
+                </div>
+            </div>
+            <div className="row mt-4">
+                <div className="text-warning col-6 text-right">Selected&nbsp;{left}</div>
+                <div className="text-white col-6 text-left">
+                    {arrayDisplay.length === 0
+                        ? "Nothing Selected"
+                        : arrayDisplay.map((item)=><IDtoName key={item} searchArray={filteredCollection} uniqueID={item}/>)
+                    }
                 </div>
             </div>
         </div>

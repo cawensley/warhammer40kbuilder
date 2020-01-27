@@ -1,5 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
+import FirebaseContext from "./firebase/FirebaseContext";
 import MainNavBar from './organisms/MainNavBar';
 import Footer from './organisms/footer';
 import HomePage from "./pages/HomePage";
@@ -17,43 +18,11 @@ import EditUnitsPage from "./pages/Units/EditUnitsPage";
 import EditSquadsPage from "./pages/Squads/EditSquadsPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import FirebaseContext from "./firebase/FirebaseContext";
-import firebase from "./firebase/firebase";
-import PageLoading from "./atoms/PageLoading";
 
 function App () {
-    const [isLoading, setisLoading] = useState(false);
-    const [codices,setCodices] = useState([]);
-    const [codex,setCodex]=useState("75354kSpFNsaDqTqIT6i");
-    const [roles,setRoles] = useState([]);
-    const [role,setRole] = useState("g5ffh3LG3s8zZqUZKw9y");
-    const [isLoggedIn,setisLoggedIn]=useState(false);
-
-    function getInitialData () {
-        setisLoading(true);
-        firebase.db.collection("codices").get().then(snapshot => {
-            const rawdata = snapshot.docs.map(doc => {
-                return {id: doc.id,...doc.data()}
-            });
-            setCodices(rawdata);
-        });
-        setisLoading(true);
-        firebase.db.collection("Roles").get().then(snapshot => {
-            const rawdata = snapshot.docs.map(doc => {
-                return {id: doc.id,...doc.data()}
-            });
-            setRoles(rawdata);
-        });
-        setisLoading(false);
-    }
-
-    // eslint-disable-next-line
-    useEffect(()=>{getInitialData()},[]);
-
-    if (isLoading) { return (<PageLoading />); }
+    const {isLoggedIn}=useContext(FirebaseContext);
 
     return (isLoggedIn) ? (
-        <FirebaseContext.Provider value={{isLoggedIn,setisLoggedIn,codex,setCodex,codices,role,setRole,roles}}>
             <Router>
                 <MainNavBar/>
                 <Switch>
@@ -73,9 +42,7 @@ function App () {
                 </Switch>
                 <Footer/>
             </Router>
-        </FirebaseContext.Provider>
     ) : (
-        <FirebaseContext.Provider value={{isLoggedIn,setisLoggedIn}}>
             <Router>
                 <MainNavBar/>
                 <Switch>
@@ -85,7 +52,6 @@ function App () {
                 </Switch>
                 <Footer/>
             </Router>
-        </FirebaseContext.Provider>
     )
 }
 

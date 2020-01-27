@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import PageTitle from "../../atoms/PageTitle";
 import firebase from "../../firebase/firebase";
 import CodexFilter from "../../atoms/CodexFilter";
@@ -8,23 +8,18 @@ import FirebaseContext from "../../firebase/FirebaseContext";
 
 function NewEquipmentPage () {
     const {codex}=useContext(FirebaseContext);
-    const [newEquipmentName,setNewEquipmentName] = useState(null);
-    const [newEquipmentCost,setNewEquipmentCost] = useState(null);
+    const [newEquipment,setNewEquipment] = useState({Codex: codex,Name: null,Cost:null});
 
-    function handleNameInput(input) {setNewEquipmentName(input)}
-    function handleCostInput(input) {setNewEquipmentCost(input)}
+    function handleNameInput(input) {setNewEquipment({...newEquipment,Name:input})}
+    function handleCostInput(input) {setNewEquipment({...newEquipment,Cost:input})}
 
     function newEquipmentSubmission () {
-        const newItem = {
-            Codex: codex,
-            Name: newEquipmentName,
-            Cost: newEquipmentCost
-        };
-        firebase.db.collection("equipment").add(newItem);
+        firebase.db.collection("equipment").add(newEquipment);
         window.alert("New equipment added");
-        setNewEquipmentName(null);
-        setNewEquipmentCost(null);
     }
+
+    // eslint-disable-next-line
+    useEffect(()=>setNewEquipment({...newEquipment,Codex:codex}),[codex]);
 
     return (
         <div className="container-fluid p-padding text-center">

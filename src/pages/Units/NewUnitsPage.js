@@ -1,38 +1,28 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import PageTitle from "../../atoms/PageTitle";
 import firebase from "../../firebase/firebase";
 import CodexFilter from "../../atoms/CodexFilter";
 import SubmitButton from "../../atoms/SubmitButton";
 import InputRow from "../../atoms/InputRow";
 import SelectArray from "../../atoms/SelectArray";
-import DisplayArray from "../../atoms/DisplayArray";
 import FirebaseContext from "../../firebase/FirebaseContext";
 
 function NewUnitsPage () {
     const {codex}=useContext(FirebaseContext);
-    const [newUnitName,setNewUnitName] = useState(null);
-    const [newUnitCost,setNewUnitCost] = useState(null);
-    const [newUnitGear,setNewUnitGear] = useState([]);
-    const [refresh,setRefresh] = useState(false);
+    const [newUnit,setNewUnit] = useState({Codex: codex,Name: null,Cost: null,Gear: []});
 
-    function handleNameInput(input) {setNewUnitName(input)}
-    function handleCostInput(input) {setNewUnitCost(input)}
-    function handleGearRemove () {var NewGear = newUnitGear;NewGear.pop();setNewUnitGear(NewGear);setRefresh(!refresh)}
-    function handleGearAdd(input) {var NewGear = newUnitGear;NewGear.push(input);setNewUnitGear(NewGear);setRefresh(!refresh)}
+    function handleNameInput(input) {setNewUnit({...newUnit,Name:input})}
+    function handleCostInput(input) {setNewUnit({...newUnit,Cost:input})}
+    function handleGearRemove () {var NewGear = newUnit.Gear;NewGear.pop();setNewUnit({...newUnit,Gear:NewGear})}
+    function handleGearAdd(input) {var NewGear = newUnit.Gear;NewGear.push(input);setNewUnit({...newUnit,Gear:NewGear})}
 
     function handleNewUnitSubmission () {
-        const newUnit = {
-            Codex: codex,
-            Name: newUnitName,
-            Cost: newUnitCost,
-            Gear: newUnitGear
-        };
         firebase.db.collection("units").add(newUnit);
         window.alert("New unit added");
-        setNewUnitName(null);
-        setNewUnitCost(null);
-        setNewUnitGear([]);
     }
+
+    // eslint-disable-next-line
+    useEffect(()=>setNewUnit({...newUnit,Codex:codex}),[codex]);
 
     return (
         <div className="container-fluid p-padding text-center">
@@ -41,8 +31,13 @@ function NewUnitsPage () {
                 <CodexFilter/>
                 <InputRow type="text" left="Unit Name:" onInputChange={handleNameInput}/>
                 <InputRow type="number" left="Unit Cost:" onInputChange={handleCostInput}/>
-                <SelectArray collectionName="equipment" left="Unit Gear:" onItemAdd={handleGearAdd} onItemRemove={handleGearRemove}/>
-                <DisplayArray left="Gear Selected:" array={newUnitGear}/>
+                <SelectArray
+                    collectionName="equipment"
+                    left="Gear:"
+                    onItemAdd={handleGearAdd}
+                    onItemRemove={handleGearRemove}
+                    arrayDisplay={newUnit.Gear}
+                />
                 <SubmitButton buttontext="Add Unit to Database"/>
             </form>
         </div>

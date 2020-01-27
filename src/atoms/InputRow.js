@@ -9,6 +9,9 @@ function InputRow ({type,left,onInputChange}) {
             <div className="text-warning col-6 text-right">{left}</div>
             <div className="text-white col-6 text-left">
                 <input
+                    min="1"
+                    size="20"
+                    required
                     onChange={event=>handleInputChange(event)}
                     placeholder={`Enter ${type}`}
                     type={`${type}`}>

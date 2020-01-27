@@ -8,9 +8,10 @@ import RedirectButton from "../../atoms/RedirectButton";
 import DeleteButton from "../../atoms/DeleteButton";
 import compareFunction from "../../utilities/compareFunction";
 import FirebaseContext from "../../firebase/FirebaseContext";
+import IDtoName from "../../atoms/IDtoName";
 
 function ViewSquadsPage () {
-    const {codex}=useContext(FirebaseContext);
+    const {codex,roles}=useContext(FirebaseContext);
     const [isLoading, setisLoading] = useState(false);
     const [filteredSquads,setFilteredSquads]=useState([]);
     const [refresh,setRefresh] = useState(false);
@@ -60,7 +61,7 @@ function ViewSquadsPage () {
                         <div key={item.id} className="row text-white align-items-center border border-secondary">
                             <Link to={`/squads/edit/${item.id}`}
                                   className="col-3 p-hyperlink-color">{item.Name}</Link>
-                            <div className="col-2">{item.Role}</div>
+                            <div className="col-2"><IDtoName searchArray={roles} uniqueID={item.Role}/></div>
                             <div className="col-2">{item.MinSize}</div>
                             <div className="col-2">{item.MaxSize}</div>
                             <div className="col-2">
