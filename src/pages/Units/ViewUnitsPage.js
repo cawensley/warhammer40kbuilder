@@ -16,18 +16,20 @@ function ViewUnitsPage () {
             <CodexFilter/>
             <RedirectButton redirect={"/units/new"} buttontext={"Add Units"}/>
             <div className="row justify-content-center mt-4">
-                <div className="col-xl-6 col-md-10">
+                <div className="col-xl-8">
                     <div className="row h3 text-warning">
-                        <div className="col-3">Name</div>
-                        <div className="col-3">Cost</div>
+                        <div className="col-2">Name</div>
+                        <div className="col-2">Cost</div>
+                        <div className="col-2">Abilities</div>
                         <div className="col-3">Gear</div>
                         <div className="col-3"></div>
                     </div>
                     {codexUnits.map((item)=>(
                         <div key={item.id} className="row text-white align-items-center border border-secondary">
                             <Link to={`/units/edit/${item.id}`}
-                                  className="col-3 p-hyperlink-color">{item.Name}</Link>
-                            <div className="col-3">{item.Cost}</div>
+                                  className="col-2 p-hyperlink-color">{item.Name}</Link>
+                            <div className="col-2">{item.Cost}</div>
+                            <div className="col-2">{item.Abilities}</div>
                             <div className="col-3">
                                 {item.Gear.map((item)=><IDtoName key={item} searchArray={codexEquipment} uniqueID={item}/>)}
                             </div>

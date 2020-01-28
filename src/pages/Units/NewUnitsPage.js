@@ -9,10 +9,11 @@ import FirebaseContext from "../../firebase/FirebaseContext";
 
 function NewUnitsPage () {
     const {codex,codexEquipment}=useContext(FirebaseContext);
-    const [newUnit,setNewUnit] = useState({Codex: codex,Name: null,Cost: null,Gear: []});
+    const [newUnit,setNewUnit] = useState({Codex: codex,Name: '',Cost: '',Abilities:'None',Gear: []});
 
     function handleNameInput(input) {setNewUnit({...newUnit,Name:input})}
     function handleCostInput(input) {setNewUnit({...newUnit,Cost:+input})}
+    function handleAbilitiesInput(input) {setNewUnit({...newUnit,Abilities:input})}
     function handleGearRemove () {var NewGear = newUnit.Gear;NewGear.pop();setNewUnit({...newUnit,Gear:NewGear})}
     function handleGearAdd(input) {var NewGear = newUnit.Gear;NewGear.push(input);setNewUnit({...newUnit,Gear:NewGear})}
 
@@ -29,8 +30,9 @@ function NewUnitsPage () {
             <PageTitle Title="New Units Page" />
             <form onSubmit={handleNewUnitSubmission}>
                 <CodexFilter/>
-                <InputRow type="text" left="Unit Name:" onInputChange={handleNameInput}/>
-                <InputRow type="number" left="Unit Cost:" onInputChange={handleCostInput}/>
+                <InputRow type="text" left="New Unit Name:" startValue={newUnit.Name} onInputChange={handleNameInput}/>
+                <InputRow type="number" left="New Unit Cost:" startValue={newUnit.Cost} onInputChange={handleCostInput}/>
+                <InputRow type="text" left="New Unit Abilities:" startValue={newUnit.Abilities} onInputChange={handleAbilitiesInput}/>
                 <SelectArray
                     codexArray={codexEquipment}
                     left="Gear:"

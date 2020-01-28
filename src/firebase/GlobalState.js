@@ -17,16 +17,15 @@ const GlobalState = ({children}) => {
 
     function getInitialData () {
         setisLoading(true);
-        firebase.db.collection("codices").onSnapshot(function(snapshot) {
+        firebase.db.collection("codices").get().then(snapshot => {
             const rawdata = snapshot.docs.map(doc => {return {id: doc.id,...doc.data()}});
             setCodices(rawdata);
         });
         setisLoading(true);
-        firebase.db.collection("Roles").onSnapshot(function(snapshot) {
+        firebase.db.collection("Roles").get().then(snapshot => {
             const rawdata = snapshot.docs.map(doc => {return {id: doc.id,...doc.data()}});
             setRoles(rawdata);
         });
-        console.log("Finished loading initial data of Codeces and Roles.")
         setisLoading(false);
     }
 
@@ -43,17 +42,14 @@ const GlobalState = ({children}) => {
             .onSnapshot(function(snapshot) {
             const rawdata = snapshot.docs.map(doc => {return {id: doc.id,...doc.data()}});
             rawdata.sort(compareFunction);
-            console.log(rawdata);
             setCodexUnits(rawdata);
         });
         firebase.db.collection("squads").where('Codex','==',codex)
             .onSnapshot(function(snapshot) {
             const rawdata = snapshot.docs.map(doc => {return {id: doc.id,...doc.data()}});
             rawdata.sort(compareFunction);
-            console.log(rawdata);
             setCodexSquads(rawdata);
         });
-        console.log("Finished loading initial data for Squads, Units, and Equipment.");
         setisLoading(false);
     }
 

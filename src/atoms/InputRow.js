@@ -1,6 +1,6 @@
 import React from 'react';
 
-function InputRow ({type,left,onInputChange}) {
+function InputRow ({type,left,onInputChange,startValue}) {
 
     function handleInputChange(event) {onInputChange(event.target.value)}
 
@@ -9,8 +9,9 @@ function InputRow ({type,left,onInputChange}) {
             <div className="text-warning col-6 text-right">{left}</div>
             <div className="text-white col-6 text-left">
                 <input
-                    min="1"
+                    min="0"
                     size="20"
+                    value={startValue}
                     required
                     onChange={event=>handleInputChange(event)}
                     placeholder={`Enter ${type}`}

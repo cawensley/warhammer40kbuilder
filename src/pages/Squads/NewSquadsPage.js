@@ -10,7 +10,7 @@ import FirebaseContext from "../../firebase/FirebaseContext";
 
 function NewSquadsPage () {
     const {codex,role,codexUnits}=useContext(FirebaseContext);
-    const [newSquad,setNewSquad] = useState({Codex: codex,Name: null,Role: role,MinSize: null,MaxSize: null,Units: []});
+    const [newSquad,setNewSquad] = useState({Codex: codex,Name: '',Role: role,MinSize: '',MaxSize: '',Units: []});
 
     function handleNameInput(input) {setNewSquad({...newSquad,Name:input})}
     function handleMinSizeInput(input) {setNewSquad({...newSquad,MinSize:+input})}
@@ -34,10 +34,10 @@ function NewSquadsPage () {
             <PageTitle Title="New Squads Page" />
             <form onSubmit={handleNewSquadSubmission}>
                 <CodexFilter/>
-                <InputRow type="text" left="Squad Name:" onInputChange={handleNameInput}/>
+                <InputRow type="text" left="New Squad Name:" startValue={newSquad.Name} onInputChange={handleNameInput}/>
                 <RoleRow left="Army Role:"/>
-                <InputRow type="number" left="Min Squad Size:" onInputChange={handleMinSizeInput}/>
-                <InputRow type="number" left="Max Squad Size:" onInputChange={handleMaxSizeInput}/>
+                <InputRow type="number" left="Min Squad Size:" startValue={newSquad.MinSize} onInputChange={handleMinSizeInput}/>
+                <InputRow type="number" left="Max Squad Size:" startValue={newSquad.MaxSize} onInputChange={handleMaxSizeInput}/>
                 <SelectArray
                     codexArray={codexUnits}
                     left="Units in Squad:"
