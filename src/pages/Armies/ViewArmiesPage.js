@@ -1,6 +1,6 @@
 import React from 'react';
 import PageTitle from "../../atoms/PageTitle";
-import CodexFilter from "../../atoms/CodexFilter";
+import CodexFilter from "../../molecules/CodexFilter";
 import RedirectButton from "../../atoms/RedirectButton";
 
 function ViewArmiesPage () {

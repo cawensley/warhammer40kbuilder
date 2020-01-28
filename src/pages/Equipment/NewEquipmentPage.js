@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import PageTitle from "../../atoms/PageTitle";
 import firebase from "../../firebase/firebase";
-import CodexFilter from "../../atoms/CodexFilter";
+import CodexFilter from "../../molecules/CodexFilter";
 import SubmitButton from "../../atoms/SubmitButton";
 import InputRow from "../../atoms/InputRow";
 import FirebaseContext from "../../firebase/FirebaseContext";
@@ -11,11 +11,13 @@ function NewEquipmentPage () {
     const [newEquipment,setNewEquipment] = useState({Codex: codex,Name: null,Cost:null});
 
     function handleNameInput(input) {setNewEquipment({...newEquipment,Name:input})}
-    function handleCostInput(input) {setNewEquipment({...newEquipment,Cost:input})}
+    function handleCostInput(input) {setNewEquipment({...newEquipment,Cost:+input});
+        console.log("Equipment Cost value is: ",newEquipment.Cost)}
 
     function newEquipmentSubmission () {
+        console.log("Item to be added is:",newEquipment);
         firebase.db.collection("equipment").add(newEquipment);
-        window.alert("New equipment added");
+        window.location.hash = '/equipment/view';
     }
 
     // eslint-disable-next-line

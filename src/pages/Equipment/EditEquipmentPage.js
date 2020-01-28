@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import PageTitle from "../../atoms/PageTitle";
-import CodexFilter from "../../atoms/CodexFilter";
+import CodexFilter from "../../molecules/CodexFilter";
 import firebase from "../../firebase/firebase";
 import PageLoading from "../../atoms/PageLoading";
 import SubmitButton from "../../atoms/SubmitButton";
@@ -16,7 +16,7 @@ function EditEquipmentPage ({match}) {
     const [editEquipment,setEditEquipment] = useState({Codex: codex,Name: null,Cost:null});
 
     function handleNameInput(input) {setEditEquipment({...editEquipment,Name:input})}
-    function handleCostInput(input) {setEditEquipment({...editEquipment,Cost:input})}
+    function handleCostInput(input) {setEditEquipment({...editEquipment,Cost:+input})}
 
     function getEditItemInfo () {
         setisLoading(true);

@@ -1,26 +1,26 @@
 import React, {useContext, useEffect, useState} from 'react';
 import PageTitle from "../../atoms/PageTitle";
-import CodexFilter from "../../atoms/CodexFilter";
+import CodexFilter from "../../molecules/CodexFilter";
 import firebase from "../../firebase/firebase";
 import PageLoading from "../../atoms/PageLoading";
 import SubmitButton from "../../atoms/SubmitButton";
 import TextRow from "../../atoms/TextRow";
 import InputRow from "../../atoms/InputRow";
-import SelectArray from "../../atoms/SelectArray";
-import RoleRow from "../../atoms/RoleRow";
+import SelectArray from "../../molecules/SelectArray";
+import RoleRow from "../../molecules/RoleRow";
 import FirebaseContext from "../../firebase/FirebaseContext";
 import IDtoName from "../../atoms/IDtoName";
 
 function EditSquadsPage ({match}) {
-    const {codex,role,roles}=useContext(FirebaseContext);
+    const {codex,role,roles,codexUnits}=useContext(FirebaseContext);
     const editSquadID = match.params.ID;
     const [isLoading, setisLoading] = useState(false);
     const [originalSquad,setOriginalSquad]=useState({Name: null,Role: null,MinSize:null,MaxSize:null});
     const [editSquad,setEditSquad] = useState({Codex: codex,Name: null,Role: role,MinSize: null,MaxSize: null,Units: []});
 
     function handleNameInput(input) {setEditSquad({...editSquad,Name:input})}
-    function handleMinSizeInput(input) {setEditSquad({...editSquad,MinSize:input})}
-    function handleMaxSizeInput(input) {setEditSquad({...editSquad,MaxSize:input})}
+    function handleMinSizeInput(input) {setEditSquad({...editSquad,MinSize:+input})}
+    function handleMaxSizeInput(input) {setEditSquad({...editSquad,MaxSize:+input})}
     function handleUnitRemove () {var NewUnit = editSquad.Units;NewUnit.pop();setEditSquad({...editSquad,Units:NewUnit})}
     function handleUnitAdd(input) {var NewUnit = editSquad.Units;NewUnit.push(input);setEditSquad({...editSquad,Units:NewUnit})}
 
@@ -66,7 +66,7 @@ function EditSquadsPage ({match}) {
                 <TextRow left="Current Max. Size:" right={originalSquad.MaxSize}/>
                 <InputRow type="number" left="New Max Squad Size:" onInputChange={handleMaxSizeInput}/>
                 <SelectArray
-                    collectionName="units"
+                    codexArray={codexUnits}
                     left="Units in Squad:"
                     onItemAdd={handleUnitAdd}
                     onItemRemove={handleUnitRemove}
