@@ -1,26 +1,26 @@
 import React, {useContext, useEffect, useState} from 'react';
 import PageTitle from "../../atoms/PageTitle";
 import firebase from "../../firebase/firebase";
-import CodexFilter from "../../atoms/CodexFilter";
+import CodexFilter from "../../molecules/CodexFilter";
 import SubmitButton from "../../atoms/SubmitButton";
 import InputRow from "../../atoms/InputRow";
-import SelectArray from "../../atoms/SelectArray";
-import RoleRow from "../../atoms/RoleRow";
+import SelectArray from "../../molecules/SelectArray";
+import RoleRow from "../../molecules/RoleRow";
 import FirebaseContext from "../../firebase/FirebaseContext";
 
 function NewSquadsPage () {
-    const {codex,role}=useContext(FirebaseContext);
+    const {codex,role,codexUnits}=useContext(FirebaseContext);
     const [newSquad,setNewSquad] = useState({Codex: codex,Name: null,Role: role,MinSize: null,MaxSize: null,Units: []});
 
     function handleNameInput(input) {setNewSquad({...newSquad,Name:input})}
-    function handleMinSizeInput(input) {setNewSquad({...newSquad,MinSize:input})}
-    function handleMaxSizeInput(input) {setNewSquad({...newSquad,MaxSize:input})}
+    function handleMinSizeInput(input) {setNewSquad({...newSquad,MinSize:+input})}
+    function handleMaxSizeInput(input) {setNewSquad({...newSquad,MaxSize:+input})}
     function handleUnitRemove () {var NewUnit = newSquad.Units;NewUnit.pop();setNewSquad({...newSquad,Units:NewUnit})}
     function handleUnitAdd(input) {var NewUnit = newSquad.Units;NewUnit.push(input);setNewSquad({...newSquad,Units:NewUnit})}
 
     function handleNewSquadSubmission () {
         firebase.db.collection("squads").add(newSquad);
-        window.alert("New squad added");
+        window.location.hash = '/squads/view';
     }
 
     // eslint-disable-next-line
@@ -39,7 +39,7 @@ function NewSquadsPage () {
                 <InputRow type="number" left="Min Squad Size:" onInputChange={handleMinSizeInput}/>
                 <InputRow type="number" left="Max Squad Size:" onInputChange={handleMaxSizeInput}/>
                 <SelectArray
-                    collectionName="units"
+                    codexArray={codexUnits}
                     left="Units in Squad:"
                     onItemAdd={handleUnitAdd}
                     onItemRemove={handleUnitRemove}
