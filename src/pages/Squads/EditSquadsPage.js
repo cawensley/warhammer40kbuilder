@@ -4,19 +4,16 @@ import CodexFilter from "../../molecules/CodexFilter";
 import firebase from "../../firebase/firebase";
 import PageLoading from "../../atoms/PageLoading";
 import SubmitButton from "../../atoms/SubmitButton";
-import TextRow from "../../atoms/TextRow";
 import InputRow from "../../atoms/InputRow";
 import SelectArray from "../../molecules/SelectArray";
 import RoleRow from "../../molecules/RoleRow";
 import FirebaseContext from "../../firebase/FirebaseContext";
-import IDtoName from "../../atoms/IDtoName";
 
 function EditSquadsPage ({match}) {
-    const {codex,role,roles,codexUnits}=useContext(FirebaseContext);
+    const {codex,role,codexUnits}=useContext(FirebaseContext);
     const editSquadID = match.params.ID;
     const [isLoading, setisLoading] = useState(false);
-    const [originalSquad,setOriginalSquad]=useState({Name: null,Role: null,MinSize:null,MaxSize:null});
-    const [editSquad,setEditSquad] = useState({Codex: codex,Name: null,Role: role,MinSize: null,MaxSize: null,Units: []});
+    const [editSquad,setEditSquad] = useState({Codex: codex,Name: '',Role: role,MinSize: '',MaxSize: '',Units: []});
 
     function handleNameInput(input) {setEditSquad({...editSquad,Name:input})}
     function handleMinSizeInput(input) {setEditSquad({...editSquad,MinSize:+input})}
@@ -28,12 +25,12 @@ function EditSquadsPage ({match}) {
         setisLoading(true);
         firebase.db.collection("squads").doc(editSquadID).get()
             .then(doc=>{
-                setOriginalSquad({
+                setEditSquad({...editSquad,
                     Name: doc.data().Name,
-                    Role: doc.data().Role,
                     MinSize: doc.data().MinSize,
-                    MaxSize:doc.data().MaxSize});
-                setEditSquad({...editSquad,Units:doc.data().Units})
+                    MaxSize:doc.data().MaxSize,
+                    Units:doc.data().Units
+                })
             });
         setisLoading(false);
     }
@@ -57,14 +54,10 @@ function EditSquadsPage ({match}) {
             <PageTitle Title="Edit Squads Page" />
             <form onSubmit={handleEditSquadSubmission}>
                 <CodexFilter/>
-                <TextRow left="Current Name:" right={originalSquad.Name}/>
-                <InputRow type="text" left="New Squad Name:" onInputChange={handleNameInput}/>
-                <TextRow left="Current Role:" right={<IDtoName searchArray={roles} uniqueID={originalSquad.Role}/>}/>
-                <RoleRow left="New Army Role:"/>
-                <TextRow left="Current Min. Size:" right={originalSquad.MinSize}/>
-                <InputRow type="number" left="New Min Squad Size:" onInputChange={handleMinSizeInput}/>
-                <TextRow left="Current Max. Size:" right={originalSquad.MaxSize}/>
-                <InputRow type="number" left="New Max Squad Size:" onInputChange={handleMaxSizeInput}/>
+                <InputRow type="text" left="Edit Squad Name:" startValue={editSquad.Name} onInputChange={handleNameInput}/>
+                <RoleRow left="Edit Army Role:"/>
+                <InputRow type="number" left="Edit Min Squad Size:" startValue={editSquad.MinSize} onInputChange={handleMinSizeInput}/>
+                <InputRow type="number" left="Edit Max Squad Size:" startValue={editSquad.MaxSize} onInputChange={handleMaxSizeInput}/>
                 <SelectArray
                     codexArray={codexUnits}
                     left="Units in Squad:"

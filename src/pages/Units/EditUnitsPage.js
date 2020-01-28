@@ -4,7 +4,6 @@ import CodexFilter from "../../molecules/CodexFilter";
 import firebase from "../../firebase/firebase";
 import PageLoading from "../../atoms/PageLoading";
 import SubmitButton from "../../atoms/SubmitButton";
-import TextRow from "../../atoms/TextRow";
 import InputRow from "../../atoms/InputRow";
 import SelectArray from "../../molecules/SelectArray";
 import FirebaseContext from "../../firebase/FirebaseContext";
@@ -13,11 +12,11 @@ function EditUnitsPage ({match}) {
     const editUnitID = match.params.ID;
     const {codex,codexEquipment}=useContext(FirebaseContext);
     const [isLoading, setisLoading] = useState(false);
-    const [originalUnit,setOriginalUnit]=useState({Name: null,Cost: null});
-    const [editUnit,setEditUnit] = useState({Codex: codex,Name: null,Cost: null,Gear: []});
+    const [editUnit,setEditUnit] = useState({Codex: codex,Name: '',Cost: '',Abilities:'',Gear: []});
 
     function handleNameInput(input) {setEditUnit({...editUnit,Name:input})}
     function handleCostInput(input) {setEditUnit({...editUnit,Cost:+input})}
+    function handleAbilitiesInput(input) {setEditUnit({...editUnit,Abilities:input})}
     function handleGearRemove () {var NewGear = editUnit.Gear;NewGear.pop();setEditUnit({...editUnit,Gear:NewGear})}
     function handleGearAdd(input) {var NewGear = editUnit.Gear;NewGear.push(input);setEditUnit({...editUnit,Gear:NewGear})}
 
@@ -25,8 +24,11 @@ function EditUnitsPage ({match}) {
         setisLoading(true);
         firebase.db.collection("units").doc(editUnitID).get()
             .then(doc=>{
-                setOriginalUnit({Name: doc.data().Name,Cost: doc.data().Cost});
-                setEditUnit({...editUnit,Gear:doc.data().Gear});
+                setEditUnit({...editUnit,
+                    Name:doc.data().Name,
+                    Cost:doc.data().Cost,
+                    Abilities:doc.data().Abilities,
+                    Gear:doc.data().Gear});
             });
         setisLoading(false);
     }
@@ -48,10 +50,10 @@ function EditUnitsPage ({match}) {
             <PageTitle Title="Edit Units Page" />
             <form onSubmit={handleEditUnitSubmission}>
                 <CodexFilter/>
-                <TextRow left="Current Name:" right={originalUnit.Name}/>
-                <InputRow type="text" left="New Unit Name:" onInputChange={handleNameInput}/>
-                <TextRow left="Current Cost:" right={originalUnit.Cost}/>
-                <InputRow type="number" left="New Unit Cost:" onInputChange={handleCostInput}/>
+                <InputRow type="text" left="Edit Unit Name:" startValue={editUnit.Name} onInputChange={handleNameInput}/>
+                <InputRow type="number" left="Edit Unit Cost:" startValue={editUnit.Cost} onInputChange={handleCostInput}/>
+                <InputRow type="text" left="Edit Unit Abilities:" startValue={editUnit.Abilities} onInputChange={handleAbilitiesInput}/>
+
                 <SelectArray
                     codexArray={codexEquipment}
                     left="Gear:"
