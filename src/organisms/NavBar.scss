@@ -3,3 +3,7 @@
 .navbar-brand a.chosen {color: $warning;}
 
 .navbar-brand a:hover {color: $warning;}
+
+.dropdown-item {color: $primary;
+  &:hover {color: $warning}
+}

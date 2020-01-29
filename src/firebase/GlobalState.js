@@ -35,7 +35,6 @@ const GlobalState = ({children}) => {
             .onSnapshot(function(snapshot) {
             const rawdata = snapshot.docs.map(doc => {return {id: doc.id,...doc.data()}});
             rawdata.sort(compareFunction);
-            console.log(rawdata);
             setCodexEquipment(rawdata);
         });
         firebase.db.collection("units").where('Codex','==',codex)
