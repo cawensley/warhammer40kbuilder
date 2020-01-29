@@ -10,10 +10,10 @@ import RoleRow from "../../molecules/RoleRow";
 import FirebaseContext from "../../firebase/FirebaseContext";
 
 function EditSquadsPage ({match}) {
-    const {codex,role,codexUnits}=useContext(FirebaseContext);
+    const {codex,role,setRole,codexUnits}=useContext(FirebaseContext);
     const editSquadID = match.params.ID;
     const [isLoading, setisLoading] = useState(false);
-    const [editSquad,setEditSquad] = useState({Codex: codex,Name: '',Role: role,MinSize: '',MaxSize: '',Units: []});
+    const [editSquad,setEditSquad] = useState({Codex: codex,Name: '',Role: null,MinSize: '',MaxSize: '',Units: []});
 
     function handleNameInput(input) {setEditSquad({...editSquad,Name:input})}
     function handleMinSizeInput(input) {setEditSquad({...editSquad,MinSize:+input})}
@@ -30,7 +30,8 @@ function EditSquadsPage ({match}) {
                     MinSize: doc.data().MinSize,
                     MaxSize:doc.data().MaxSize,
                     Units:doc.data().Units
-                })
+                });
+                setRole(doc.data().Role)
             });
         setisLoading(false);
     }
