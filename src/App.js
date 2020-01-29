@@ -2,6 +2,7 @@ import React, {useContext} from 'react';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 import FirebaseContext from "./firebase/FirebaseContext";
 import MainNavBar from './organisms/MainNavBar';
+import NotLoggedInNavBar from "./organisms/NotLoggedInNavBar";
 import Footer from './organisms/footer';
 import HomePage from "./pages/HomePage";
 import ViewProfilePage from "./pages/ViewProfilePage";
@@ -44,7 +45,7 @@ function App () {
             </Router>
     ) : (
             <Router>
-                <MainNavBar/>
+                <NotLoggedInNavBar/>
                 <Switch>
                     <Route path="/auth/login" component={LoginPage}/>
                     <Route path="/auth/register" component={RegisterPage}/>
