@@ -1,8 +1,8 @@
-import React, {useContext} from 'react';
-import FirebaseContext from "../firebase/FirebaseContext";
+import React from 'react';
+import store from "../Redux/store";
+import CodexChange from "../Redux/actions/CodexChange";
 
 function CodexFilter () {
-    const {codex,setCodex,codices}=useContext(FirebaseContext);
 
     return (
         <div className="row mt-4">
@@ -11,9 +11,9 @@ function CodexFilter () {
                 <select
                     id="PageSelection"
                     className="bg-white"
-                    value={codex}
-                    onChange={event => setCodex(event.target.value)}>
-                    {codices.map((codex) => (<option key={codex.id} value={codex.id}>{codex.name}</option>))}
+                    value={store.getState().codex}
+                    onChange={event => {store.dispatch(CodexChange(event.target.value));}}>
+                    {store.getState().codices.map((codex) => (<option key={codex.id} value={codex.id}>{codex.Name}</option>))}
                 </select>
             </div>
         </div>

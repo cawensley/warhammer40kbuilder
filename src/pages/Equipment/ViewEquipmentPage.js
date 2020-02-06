@@ -1,13 +1,15 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {Link} from "react-router-dom";
 import PageTitle from "../../atoms/PageTitle";
 import CodexFilter from "../../molecules/CodexFilter";
 import RedirectButton from "../../atoms/RedirectButton";
 import DeleteButton from "../../molecules/DeleteButton";
-import FirebaseContext from "../../firebase/FirebaseContext";
+import store from "../../Redux/store";
+import {connect} from 'react-redux';
+import equipment from "../../Redux/reducers/equipment";
+import codexFilter from "../../utilities/codexFilter";
 
 function ViewEquipmentPage () {
-    const {codexEquipment}=useContext(FirebaseContext);
 
     return (
         <div className="container-fluid p-padding text-center">
@@ -21,7 +23,7 @@ function ViewEquipmentPage () {
                         <div className="col-4">Cost</div>
                         <div className="col-3"></div>
                     </div>
-                    {codexEquipment.map((item)=>(
+                    {codexFilter(store.getState().equipment).map((item)=>(
                         <div key={item.id} className="row text-white border border-secondary">
                             <Link to={`/equipment/edit/${item.id}`}
                                   className="col-5 p-hyperlink-color">{item.Name}</Link>
@@ -35,4 +37,4 @@ function ViewEquipmentPage () {
     )
 }
 
-export default ViewEquipmentPage;
+export default connect(equipment)(ViewEquipmentPage);

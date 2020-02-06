@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import PageTitle from "../../atoms/PageTitle";
 import CodexFilter from "../../molecules/CodexFilter";
 import firebase from "../../firebase/firebase";
@@ -6,13 +6,13 @@ import PageLoading from "../../atoms/PageLoading";
 import SubmitButton from "../../atoms/SubmitButton";
 import InputRow from "../../atoms/InputRow";
 import SelectArray from "../../molecules/SelectArray";
-import FirebaseContext from "../../firebase/FirebaseContext";
+import store from "../../Redux/store";
+import codexFilter from "../../utilities/codexFilter";
 
 function EditUnitsPage ({match}) {
     const editUnitID = match.params.ID;
-    const {codex,codexEquipment}=useContext(FirebaseContext);
     const [isLoading, setisLoading] = useState(false);
-    const [editUnit,setEditUnit] = useState({Codex: codex,Name: '',Cost: '',Abilities:'',Gear: []});
+    const [editUnit,setEditUnit] = useState({Codex: store.getState().codex,Name: '',Cost: '',Abilities:'',Gear: []});
 
     function handleNameInput(input) {setEditUnit({...editUnit,Name:input})}
     function handleCostInput(input) {setEditUnit({...editUnit,Cost:+input})}
@@ -36,7 +36,7 @@ function EditUnitsPage ({match}) {
     // eslint-disable-next-line
     useEffect(()=>{getEditItemInfo()},[]);
     // eslint-disable-next-line
-    useEffect(()=>setEditUnit({...editUnit,Codex:codex}),[codex]);
+    useEffect(()=>setEditUnit({...editUnit,Codex:store.getState().codex}),[store.getState().codex]);
 
     function handleEditUnitSubmission () {
         firebase.db.collection("units").doc(editUnitID).set(editUnit);
@@ -55,7 +55,7 @@ function EditUnitsPage ({match}) {
                 <InputRow type="text" left="Edit Unit Abilities:" startValue={editUnit.Abilities} onInputChange={handleAbilitiesInput}/>
 
                 <SelectArray
-                    codexArray={codexEquipment}
+                    codexArray={codexFilter(store.getState().equipment)}
                     left="Gear:"
                     onItemAdd={handleGearAdd}
                     onItemRemove={handleGearRemove}

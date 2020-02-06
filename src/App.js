@@ -1,6 +1,5 @@
-import React, {useContext} from 'react';
+import React, {useEffect} from 'react';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
-import FirebaseContext from "./firebase/FirebaseContext";
 import MainNavBar from './organisms/MainNavBar';
 import NotLoggedInNavBar from "./organisms/NotLoggedInNavBar";
 import Footer from './organisms/footer';
@@ -19,11 +18,17 @@ import EditUnitsPage from "./pages/Units/EditUnitsPage";
 import EditSquadsPage from "./pages/Squads/EditSquadsPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import store from "./Redux/store";
+import {connect} from 'react-redux';
+import GetInitialData from "./firebase/GetInitialData";
+import isLoggedIn from "./Redux/reducers/isLoggedIn";
 
 function App () {
-    const {isLoggedIn}=useContext(FirebaseContext);
 
-    return (isLoggedIn) ? (
+    // eslint-disable-next-line
+    useEffect(()=>{if(store.getState().isLoggedIn){GetInitialData()}},[store.getState().isLoggedIn]);
+
+    return (store.getState().isLoggedIn) ? (
             <Router>
                 <MainNavBar/>
                 <Switch>
@@ -43,7 +48,7 @@ function App () {
                 </Switch>
                 <Footer/>
             </Router>
-    ) : (
+            ) : (
             <Router>
                 <NotLoggedInNavBar/>
                 <Switch>
@@ -56,4 +61,4 @@ function App () {
     )
 }
 
-export default App;
+export default connect(isLoggedIn)(App);

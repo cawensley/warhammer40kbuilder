@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import PageTitle from "../../atoms/PageTitle";
 import CodexFilter from "../../molecules/CodexFilter";
 import firebase from "../../firebase/firebase";
@@ -7,13 +7,14 @@ import SubmitButton from "../../atoms/SubmitButton";
 import InputRow from "../../atoms/InputRow";
 import SelectArray from "../../molecules/SelectArray";
 import RoleRow from "../../molecules/RoleRow";
-import FirebaseContext from "../../firebase/FirebaseContext";
+import store from "../../Redux/store";
+import codexFilter from "../../utilities/codexFilter";
+import RoleChange from "../../Redux/actions/RoleChange";
 
 function EditSquadsPage ({match}) {
-    const {codex,role,setRole,codexUnits}=useContext(FirebaseContext);
     const editSquadID = match.params.ID;
     const [isLoading, setisLoading] = useState(false);
-    const [editSquad,setEditSquad] = useState({Codex: codex,Name: '',Role: null,MinSize: '',MaxSize: '',Units: []});
+    const [editSquad,setEditSquad] = useState({Codex: store.getState().codex,Name: '',Role: store.getState().role,MinSize: '',MaxSize: '',Units: []});
 
     function handleNameInput(input) {setEditSquad({...editSquad,Name:input})}
     function handleMinSizeInput(input) {setEditSquad({...editSquad,MinSize:+input})}
@@ -31,7 +32,7 @@ function EditSquadsPage ({match}) {
                     MaxSize:doc.data().MaxSize,
                     Units:doc.data().Units
                 });
-                setRole(doc.data().Role)
+                store.dispatch(RoleChange(doc.data().Role))
             });
         setisLoading(false);
     }
@@ -39,9 +40,9 @@ function EditSquadsPage ({match}) {
     // eslint-disable-next-line
     useEffect(()=>{getEditSquadInfo()},[]);
     // eslint-disable-next-line
-    useEffect(()=>setEditSquad({...editSquad,Codex:codex}),[codex]);
+    useEffect(()=>setEditSquad({...editSquad,Codex:store.getState().codex}),[store.getState().codex]);
     // eslint-disable-next-line
-    useEffect(()=>setEditSquad({...editSquad,Role:role}),[role]);
+    useEffect(()=>setEditSquad({...editSquad,Role:store.getState().role}),[store.getState().role]);
 
     function handleEditSquadSubmission () {
         firebase.db.collection("squads").doc(editSquadID).set(editSquad);
@@ -60,7 +61,7 @@ function EditSquadsPage ({match}) {
                 <InputRow type="number" left="Edit Min Squad Size:" startValue={editSquad.MinSize} onInputChange={handleMinSizeInput}/>
                 <InputRow type="number" left="Edit Max Squad Size:" startValue={editSquad.MaxSize} onInputChange={handleMaxSizeInput}/>
                 <SelectArray
-                    codexArray={codexUnits}
+                    codexArray={codexFilter(store.getState().units)}
                     left="Units in Squad:"
                     onItemAdd={handleUnitAdd}
                     onItemRemove={handleUnitRemove}

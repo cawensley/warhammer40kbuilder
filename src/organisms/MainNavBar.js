@@ -1,10 +1,10 @@
-import React,{useContext} from 'react';
+import React from 'react';
 import { NavLink,Link } from 'react-router-dom';
 import './NavBar.scss';
-import FirebaseContext from "../firebase/FirebaseContext";
+import store from "../Redux/store";
+import LoginChange from "../Redux/actions/LoginChange";
 
 function MainNavBar () {
-    const {setisLoggedIn} = useContext(FirebaseContext);
     const userName = "Test User 1";
 
     function toggleNavBar (input) {
@@ -16,7 +16,7 @@ function MainNavBar () {
     }
 
     function handleLogout () {
-        setisLoggedIn(false);
+        store.dispatch(LoginChange(false));
         window.location.hash = '/'
     }
 

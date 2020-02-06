@@ -1,4 +1,4 @@
-function compareFunction(a, b) {
+function nameAscend(a, b) {
     const NameA = a.Name.toUpperCase();
     const NameB = b.Name.toUpperCase();
 
@@ -11,4 +11,4 @@ function compareFunction(a, b) {
     return comparison;
 }
 
-export default compareFunction;
+export default nameAscend;

@@ -1,15 +1,15 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import PageTitle from "../../atoms/PageTitle";
 import firebase from "../../firebase/firebase";
 import CodexFilter from "../../molecules/CodexFilter";
 import SubmitButton from "../../atoms/SubmitButton";
 import InputRow from "../../atoms/InputRow";
 import SelectArray from "../../molecules/SelectArray";
-import FirebaseContext from "../../firebase/FirebaseContext";
+import store from "../../Redux/store";
+import codexFilter from "../../utilities/codexFilter";
 
 function NewUnitsPage () {
-    const {codex,codexEquipment}=useContext(FirebaseContext);
-    const [newUnit,setNewUnit] = useState({Codex: codex,Name: '',Cost: '',Abilities:'None',Gear: []});
+    const [newUnit,setNewUnit] = useState({Codex: store.getState().codex,Name: '',Cost: '',Abilities:'None',Gear: []});
 
     function handleNameInput(input) {setNewUnit({...newUnit,Name:input})}
     function handleCostInput(input) {setNewUnit({...newUnit,Cost:+input})}
@@ -23,7 +23,7 @@ function NewUnitsPage () {
     }
 
     // eslint-disable-next-line
-    useEffect(()=>setNewUnit({...newUnit,Codex:codex}),[codex]);
+    useEffect(()=>setNewUnit({...newUnit,Codex:store.getState().codex}),[store.getState().codex]);
 
     return (
         <div className="container-fluid p-padding text-center">
@@ -34,7 +34,7 @@ function NewUnitsPage () {
                 <InputRow type="number" left="New Unit Cost:" startValue={newUnit.Cost} onInputChange={handleCostInput}/>
                 <InputRow type="text" left="New Unit Abilities:" startValue={newUnit.Abilities} onInputChange={handleAbilitiesInput}/>
                 <SelectArray
-                    codexArray={codexEquipment}
+                    codexArray={codexFilter(store.getState().equipment)}
                     left="Gear:"
                     onItemAdd={handleGearAdd}
                     onItemRemove={handleGearRemove}

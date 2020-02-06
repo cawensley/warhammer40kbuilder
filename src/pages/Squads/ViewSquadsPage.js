@@ -1,14 +1,16 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {Link} from "react-router-dom";
 import PageTitle from "../../atoms/PageTitle";
 import CodexFilter from "../../molecules/CodexFilter";
 import RedirectButton from "../../atoms/RedirectButton";
 import DeleteButton from "../../molecules/DeleteButton";
-import FirebaseContext from "../../firebase/FirebaseContext";
 import IDtoName from "../../atoms/IDtoName";
+import store from "../../Redux/store";
+import {connect} from 'react-redux';
+import squads from "../../Redux/reducers/squads";
+import codexFilter from "../../utilities/codexFilter";
 
 function ViewSquadsPage () {
-    const {codexSquads,codexUnits,roles}=useContext(FirebaseContext);
 
     return (
         <div className="container-fluid p-padding text-center">
@@ -25,15 +27,15 @@ function ViewSquadsPage () {
                         <div className="col-2">Units</div>
                         <div className="col-1"></div>
                     </div>
-                    {codexSquads.map((item)=>(
+                    {codexFilter(store.getState().squads).map((item)=>(
                         <div key={item.id} className="row text-white align-items-center border border-secondary">
                             <Link to={`/squads/edit/${item.id}`}
                                   className="col-3 p-hyperlink-color">{item.Name}</Link>
-                            <div className="col-2"><IDtoName searchArray={roles} uniqueID={item.Role}/></div>
+                            <div className="col-2"><IDtoName searchArray={store.getState().roles} uniqueID={item.Role}/></div>
                             <div className="col-2">{item.MinSize}</div>
                             <div className="col-2">{item.MaxSize}</div>
                             <div className="col-2">
-                                {item.Units.map((item)=><IDtoName key={item} searchArray={codexUnits} uniqueID={item}/>)}
+                                {item.Units.map((item)=><IDtoName key={item} searchArray={codexFilter(store.getState().units)} uniqueID={item}/>)}
                             </div>
                             <div className="col-1"><DeleteButton collectionName={"squads"} uniqueID={item.id}/></div>
                         </div>
@@ -44,4 +46,4 @@ function ViewSquadsPage () {
     )
 }
 
-export default ViewSquadsPage;
+export default connect(squads)(ViewSquadsPage);
