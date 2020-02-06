@@ -1,12 +1,12 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import PageTitle from "../atoms/PageTitle";
-import FirebaseContext from "../firebase/FirebaseContext";
+import store from "../Redux/store";
+import LoginChange from "../Redux/actions/LoginChange";
 
 function LoginPage () {
-    const {setisLoggedIn} = useContext(FirebaseContext);
 
     function handleLogin () {
-        setisLoggedIn(true);
+        store.dispatch(LoginChange(true));
         window.location.hash = '/armies/view';
     }
 

@@ -1,17 +1,16 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import PageTitle from "../../atoms/PageTitle";
 import CodexFilter from "../../molecules/CodexFilter";
 import firebase from "../../firebase/firebase";
 import PageLoading from "../../atoms/PageLoading";
 import SubmitButton from "../../atoms/SubmitButton";
 import InputRow from "../../atoms/InputRow";
-import FirebaseContext from "../../firebase/FirebaseContext";
+import store from "../../Redux/store";
 
 function EditEquipmentPage ({match}) {
-    const {codex}=useContext(FirebaseContext);
     const editEquipmentID = match.params.ID;
     const [isLoading, setisLoading] = useState(false);
-    const [editEquipment,setEditEquipment] = useState({Codex: codex,Name: '',Cost:''});
+    const [editEquipment,setEditEquipment] = useState({Codex: store.getState().codex,Name: '',Cost:''});
 
     function handleNameInput(input) {setEditEquipment({...editEquipment,Name:input})}
     function handleCostInput(input) {setEditEquipment({...editEquipment,Cost:+input})}
@@ -28,7 +27,7 @@ function EditEquipmentPage ({match}) {
     // eslint-disable-next-line
     useEffect(()=>{getEditItemInfo()},[]);
     // eslint-disable-next-line
-    useEffect(()=>setEditEquipment({...editEquipment,Codex:codex}),[codex]);
+    useEffect(()=>{setEditEquipment({...editEquipment,Codex:store.getState().codex});},[store.getState().codex]);
 
     function handleEditItemSubmission () {
         firebase.db.collection("equipment").doc(editEquipmentID).set(editEquipment);

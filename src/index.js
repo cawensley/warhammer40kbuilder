@@ -2,6 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
 import App from './App';
-import GlobalState from "./firebase/GlobalState";
+import {Provider} from 'react-redux';
+import store from "./Redux/store";
 
-ReactDOM.render(<GlobalState><App /></GlobalState>, document.getElementById('root'));
+ReactDOM.render(
+    <Provider store={store}>
+        <App />
+    </Provider>, document.getElementById('root'));

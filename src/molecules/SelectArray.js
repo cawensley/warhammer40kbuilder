@@ -1,8 +1,12 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import IDtoName from "../atoms/IDtoName";
+import store from "../Redux/store";
 
 function SelectArray ({codexArray, left, onItemAdd, onItemRemove,arrayDisplay}) {
-    const [thingSelected,setThingSelected]=useState(codexArray[0].id);
+    const [thingSelected,setThingSelected]=useState();
+
+    // eslint-disable-next-line
+    useEffect(()=>{if(codexArray.length > 0) {setThingSelected(codexArray[0].id)}},[store.getState().codex]);
 
     function onThingAdd () {onItemAdd(thingSelected)}
     function onThingRemove () {onItemRemove()}

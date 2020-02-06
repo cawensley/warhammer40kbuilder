@@ -1,4 +1,3 @@
-export default function CodexChange(codexID) {
-    localStorage.setItem('CodexSelected', codexID);
-    return { type: 'Codex_Change', payload: codexID };
+export default function CodexChange(codex) {
+    return { type: 'Codex_Change', payload: codex };
 }

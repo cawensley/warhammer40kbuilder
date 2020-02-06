@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import PageTitle from "../../atoms/PageTitle";
 import firebase from "../../firebase/firebase";
 import CodexFilter from "../../molecules/CodexFilter";
@@ -6,11 +6,11 @@ import SubmitButton from "../../atoms/SubmitButton";
 import InputRow from "../../atoms/InputRow";
 import SelectArray from "../../molecules/SelectArray";
 import RoleRow from "../../molecules/RoleRow";
-import FirebaseContext from "../../firebase/FirebaseContext";
+import store from "../../Redux/store";
+import codexFilter from "../../utilities/codexFilter";
 
 function NewSquadsPage () {
-    const {codex,role,codexUnits}=useContext(FirebaseContext);
-    const [newSquad,setNewSquad] = useState({Codex: codex,Name: '',Role: role,MinSize: '',MaxSize: '',Units: []});
+    const [newSquad,setNewSquad] = useState({Codex: store.getState().codex,Name: '',Role: store.getState().role,MinSize: '',MaxSize: '',Units: []});
 
     function handleNameInput(input) {setNewSquad({...newSquad,Name:input})}
     function handleMinSizeInput(input) {setNewSquad({...newSquad,MinSize:+input})}
@@ -24,9 +24,9 @@ function NewSquadsPage () {
     }
 
     // eslint-disable-next-line
-    useEffect(()=>setNewSquad({...newSquad,Codex:codex}),[codex]);
+    useEffect(()=>setNewSquad({...newSquad,Codex:store.getState().codex}),[store.getState().codex]);
     // eslint-disable-next-line
-    useEffect(()=>setNewSquad({...newSquad,Role:role}),[role]);
+    useEffect(()=>setNewSquad({...newSquad,Role:store.getState().role}),[store.getState().role]);
 
     return (
 
@@ -39,7 +39,7 @@ function NewSquadsPage () {
                 <InputRow type="number" left="Min Squad Size:" startValue={newSquad.MinSize} onInputChange={handleMinSizeInput}/>
                 <InputRow type="number" left="Max Squad Size:" startValue={newSquad.MaxSize} onInputChange={handleMaxSizeInput}/>
                 <SelectArray
-                    codexArray={codexUnits}
+                    codexArray={codexFilter(store.getState().units)}
                     left="Units in Squad:"
                     onItemAdd={handleUnitAdd}
                     onItemRemove={handleUnitRemove}

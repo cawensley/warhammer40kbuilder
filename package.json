@@ -1,6 +1,22 @@
 {
   "homepage": "https://cawensley.github.io/warhammer40kbuilder/",
   "name": "warhammer40kbuilder",
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!<rootDir>/node_modules/",
+      "!<rootDir>/path/to/dir/"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
+      }
+    },
+    "coverageReporters": ["text"]
+  },
   "version": "0.1.0",
   "private": true,
   "dependencies": {
