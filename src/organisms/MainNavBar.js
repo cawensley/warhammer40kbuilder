@@ -6,13 +6,17 @@ import LoginChange from "../Redux/actions/LoginChange";
 
 function MainNavBar () {
     const userName = "Test User 1";
+    const [navLeftClass,setNavLeftClass]=React.useState("collapse navbar-collapse ");
+    const [navRightClass,setNavRightClass]=React.useState("dropdown-menu dropdown-menu-right bg-secondary ");
 
-    function toggleNavBar (input) {
-        document.getElementById(`${input}`).classList.toggle("show");
+    function handleLeftButtonClick () {
+        if (!navLeftClass.includes("show")) {setNavLeftClass(navLeftClass.concat("show"))}
+        else {setNavLeftClass("collapse navbar-collapse ")}
     }
 
-    function closeMenu (input) {
-        document.getElementById(`${input}`).classList.remove("show");
+    function handleRightButtonClick () {
+        if (!navRightClass.includes("show")) {setNavRightClass(navRightClass.concat("show"))}
+        else {setNavRightClass("dropdown-menu dropdown-menu-right bg-secondary ")}
     }
 
     function handleLogout () {
@@ -22,11 +26,11 @@ function MainNavBar () {
 
     return (
         <nav className="navbar navbar-expand-md bg-secondary fixed-top p-1">
-            <button className="navbar-toggler" type="button" onClick={()=>toggleNavBar("leftMenu")}>
+            <button className="navbar-toggler" type="button" onClick={()=>handleLeftButtonClick()}>
                 <span className="text-primary"><i className="fas fa-bars" /></span>
             </button>
 
-            <div className="collapse navbar-collapse" id="leftMenu" onClick={()=>closeMenu("leftMenu")}>
+            <div className={navLeftClass} onClick={()=>handleLeftButtonClick()}>
                 <ul className="navbar-nav">
                     <li className="navbar-brand">
                         <NavLink to="/" className="nav-link px-3 py-1">Home Page</NavLink>
@@ -44,12 +48,10 @@ function MainNavBar () {
                 </ul>
             </div>
             <div className="btn-group ml-auto">
-                <button type="button" className="btn btn-success dropdown-toggle"
-                        onClick={()=>toggleNavBar("RightMenu")}>
+                <button type="button" className="btn btn-success dropdown-toggle" onClick={()=>handleRightButtonClick()}>
                     {userName}
                 </button>
-                <div className="dropdown-menu dropdown-menu-right bg-secondary collapse" id="RightMenu"
-                     onClick={()=>closeMenu("RightMenu")}>
+                <div className={navRightClass} onClick={()=>handleRightButtonClick()}>
                     <Link to="/userprofile" className="dropdown-item bg-secondary">Your Profile</Link>
                     <button type="button" className="dropdown-item bg-secondary" onClick={handleLogout}>Logout</button>
                 </div>

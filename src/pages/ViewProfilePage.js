@@ -4,7 +4,7 @@ import PageTitle from "../atoms/PageTitle";
 function ViewProfilePage () {
 
     return (
-        <div className="container-fluid p-padding text-center">
+        <div data-test="ViewProfilePage" className="container-fluid p-padding text-center">
             <PageTitle Title="View Profile Page" />
         </div>
     )

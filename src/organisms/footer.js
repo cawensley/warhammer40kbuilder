@@ -1,11 +1,10 @@
 import React from 'react';
 
 function Footer () {
-    const currentDate = new Date();
-    const currentYear = currentDate.getFullYear();
+    const currentYear = new Date().getFullYear();
 
     return (
-        <div className="bg-secondary fixed-bottom text-center text-primary">
+        <div data-test="Footer" className="bg-secondary fixed-bottom text-center text-primary">
             Copyright &copy; WH40k Army Builder&nbsp;{currentYear.toString()}
         </div>
     );

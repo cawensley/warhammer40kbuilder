@@ -11,9 +11,9 @@ function LoginPage () {
     }
 
     return (
-        <div className="container-fluid p-padding text-center">
+        <div data-test="LoginPage" className="container-fluid p-padding text-center">
             <PageTitle Title="Login Page" />
-            <button type="button" className="btn btn-success" onClick={handleLogin}>Login</button>
+            <button data-test="loginButton" type="button" className="btn btn-success" onClick={handleLogin}>Login</button>
         </div>
     )
 }
