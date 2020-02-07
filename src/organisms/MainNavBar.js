@@ -6,18 +6,11 @@ import LoginChange from "../Redux/actions/LoginChange";
 
 function MainNavBar () {
     const userName = "Test User 1";
-    const [navLeftClass,setNavLeftClass]=React.useState("collapse navbar-collapse ");
-    const [navRightClass,setNavRightClass]=React.useState("dropdown-menu dropdown-menu-right bg-secondary ");
+    const [showLeft,setShowLeft]=React.useState("");
+    const [showRight,setShowRight]=React.useState("");
 
-    function handleLeftButtonClick () {
-        if (!navLeftClass.includes("show")) {setNavLeftClass(navLeftClass.concat("show"))}
-        else {setNavLeftClass("collapse navbar-collapse ")}
-    }
-
-    function handleRightButtonClick () {
-        if (!navRightClass.includes("show")) {setNavRightClass(navRightClass.concat("show"))}
-        else {setNavRightClass("dropdown-menu dropdown-menu-right bg-secondary ")}
-    }
+    function handleLeftClick () {(showLeft === "") ? setShowLeft("show") : setShowLeft("")}
+    function handleRightClick () {(showRight === "") ? setShowRight("show") : setShowRight("")}
 
     function handleLogout () {
         store.dispatch(LoginChange(false));
@@ -25,12 +18,12 @@ function MainNavBar () {
     }
 
     return (
-        <nav className="navbar navbar-expand-md bg-secondary fixed-top p-1">
-            <button className="navbar-toggler" type="button" onClick={()=>handleLeftButtonClick()}>
+        <nav data-test="MainNavBar" className="navbar navbar-expand-md bg-secondary fixed-top p-1">
+            <button data-test="leftdropdownButton" className="navbar-toggler" type="button" onClick={()=>handleLeftClick()}>
                 <span className="text-primary"><i className="fas fa-bars" /></span>
             </button>
 
-            <div className={navLeftClass} onClick={()=>handleLeftButtonClick()}>
+            <div data-test="leftdropdownMenu" className={"collapse navbar-collapse "+showLeft} onClick={()=>handleLeftClick()}>
                 <ul className="navbar-nav">
                     <li className="navbar-brand">
                         <NavLink to="/" className="nav-link px-3 py-1">Home Page</NavLink>
@@ -48,12 +41,15 @@ function MainNavBar () {
                 </ul>
             </div>
             <div className="btn-group ml-auto">
-                <button type="button" className="btn btn-success dropdown-toggle" onClick={()=>handleRightButtonClick()}>
+                <button data-test="rightdropdownButton" type="button" className="btn btn-success dropdown-toggle"
+                        onClick={()=>handleRightClick()}>
                     {userName}
                 </button>
-                <div className={navRightClass} onClick={()=>handleRightButtonClick()}>
+                <div data-test="rightdropdownMenu" className={"dropdown-menu dropdown-menu-right bg-secondary "+showRight}
+                     onClick={()=>handleRightClick()}>
                     <Link to="/userprofile" className="dropdown-item bg-secondary">Your Profile</Link>
-                    <button type="button" className="dropdown-item bg-secondary" onClick={handleLogout}>Logout</button>
+                    <button data-test="logoutButton" type="button" className="dropdown-item bg-secondary"
+                            onClick={handleLogout}>Logout</button>
                 </div>
             </div>
         </nav>

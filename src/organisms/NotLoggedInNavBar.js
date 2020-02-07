@@ -3,12 +3,9 @@ import {Link} from 'react-router-dom';
 import './NavBar.scss';
 
 function NotLoggedInNavBar () {
-    const [navClass,setNavClass]=React.useState("dropdown-menu dropdown-menu-right bg-secondary ");
+    const [show,setShow]=React.useState("");
 
-    function handleButtonClick () {
-        if (!navClass.includes("show")) {setNavClass(navClass.concat("show"))}
-        else {setNavClass("dropdown-menu dropdown-menu-right bg-secondary ")}
-    }
+    function handleNavClick () {(show === "") ? setShow("show") : setShow("")}
 
     return (
         <nav data-test="NotLoggedInNavBar" className="navbar navbar-expand-sm bg-secondary fixed-top p-1" >
@@ -17,10 +14,10 @@ function NotLoggedInNavBar () {
             </div>
             <div className="btn-group ml-auto">
                 <button data-test="dropdownButton" type="button" className="btn btn-success dropdown-toggle"
-                        onClick={()=>handleButtonClick()}>
+                        onClick={()=>handleNavClick()}>
                     Login
                 </button>
-                <div data-test="dropdown" className={navClass} onClick={()=>handleButtonClick()}>
+                <div data-test="dropdown" className={"dropdown-menu dropdown-menu-right bg-secondary "+show} onClick={()=>handleNavClick()}>
                     <Link to="/auth/login" className="dropdown-item bg-secondary">Login</Link>
                     <Link to="/auth/register" className="dropdown-item bg-secondary">Register</Link>
                 </div>
