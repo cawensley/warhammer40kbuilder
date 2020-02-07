@@ -17,22 +17,24 @@ test('NotLoggedInNavBar renders without error',()=>{
 });
 
 describe("testing SHOW functionality of dropdown menu",()=>{
-    let mockSetNavClass = jest.fn();
+    let mockSetShow = jest.fn();
     let wrapper;
 
     beforeEach(()=>{
-        mockSetNavClass.mockClear();
-        React.useState=jest.fn(()=>["",mockSetNavClass]);
-        wrapper = setup();
+        mockSetShow.mockClear();
     });
-    test('Dropdown button click changes classname to SHOW',()=>{
+    test('Dropdown button click invokes SetShow function',()=>{
+        React.useState=jest.fn(()=>["",mockSetShow]);
+        wrapper = setup();
         const dropdownButton=findByTestAttr(wrapper,'dropdownButton');
         dropdownButton.simulate('click',{preventDefault () {}});
-        expect(mockSetNavClass).toHaveBeenCalled();
+        expect(mockSetShow).toHaveBeenCalled();
     });
-    test('Dropdown menu click changes classname to SHOW',()=>{
+    test('Dropdown menu click invokes SetShow function to remove "show"',()=>{
+        React.useState=jest.fn(()=>["show",mockSetShow]);
+        wrapper = setup();
         const dropdownMenu=findByTestAttr(wrapper,'dropdown');
         dropdownMenu.simulate('click',{preventDefault () {}});
-        expect(mockSetNavClass).toHaveBeenCalled();
+        expect(dropdownMenu.hasClass("show")).toBe(true);
     });
 });
