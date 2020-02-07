@@ -22,19 +22,16 @@ function GetInitialData () {
     firebase.db.collection("equipment").onSnapshot(function(snapshot) {
             const rawdata = snapshot.docs.map(doc => {return {id: doc.id,...doc.data()}});
             rawdata.sort(nameAscend);
-            console.log("EQUIPMENT DATABASE refreshed");
             store.dispatch(EquipmentChange(rawdata));
         });
     firebase.db.collection("units").onSnapshot(function(snapshot) {
             const rawdata = snapshot.docs.map(doc => {return {id: doc.id,...doc.data()}});
             rawdata.sort(nameAscend);
-            console.log("UNITS DATABASE refreshed");
             store.dispatch(UnitsChange(rawdata))
         });
     firebase.db.collection("squads").onSnapshot(function(snapshot) {
             const rawdata = snapshot.docs.map(doc => {return {id: doc.id,...doc.data()}});
             rawdata.sort(nameAscend);
-            console.log("SQUADS DATABASE refreshed");
             store.dispatch(SquadsChange(rawdata))
         });
 }
