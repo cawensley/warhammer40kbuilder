@@ -1,15 +1,17 @@
 import React from 'react';
-import firebase from "../firebase/firebase";
+import PropTypes from "prop-types";
+import firebase from "firebase/app";
+import "firebase/firestore";
 
 function DeleteButton ({ collectionName,uniqueID}) {
 
     function RemoveItem () {
-        const linkRef = firebase.db.collection(`${collectionName}`).doc(uniqueID);
-        linkRef.delete().catch(error=>{console.log("Error deleting document:",error)});
+        return firebase.firestore().collection(`${collectionName}`).doc(uniqueID).delete()
     }
 
     return (
         <button
+            data-test="deleteButton"
             type="submit"
             value="Submit"
             className="btn btn-danger btn-sm"
@@ -20,4 +22,11 @@ function DeleteButton ({ collectionName,uniqueID}) {
     );
 }
 
+DeleteButton.propTypes = {
+    uniqueID: PropTypes.string
+};
+
+DeleteButton.defaultProps = {
+    uniqueID: null
+};
 export default DeleteButton;

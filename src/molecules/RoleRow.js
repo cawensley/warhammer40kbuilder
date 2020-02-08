@@ -5,10 +5,11 @@ import RoleChange from "../Redux/actions/RoleChange";
 function RoleRow ({left}) {
 
     return (
-        <div className="row mt-4">
+        <div data-test="RoleRow" className="row mt-4">
             <div className="text-warning col-6 text-right">{left}</div>
             <div className="col-6 text-left">
                 <select
+                    data-test="RoleRowSelect"
                     id="Role"
                     className="bg-white"
                     value={store.getState().role}

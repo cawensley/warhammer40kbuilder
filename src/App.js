@@ -29,7 +29,7 @@ function App () {
     useEffect(()=>{if(store.getState().isLoggedIn){GetInitialData()}},[store.getState().isLoggedIn]);
 
     return (store.getState().isLoggedIn) ? (
-            <Router>
+            <Router data-test="APPLoggedIn">
                 <MainNavBar/>
                 <Switch>
                     <Route path="/armies/view" component={ViewArmiesPage}/>
@@ -49,7 +49,7 @@ function App () {
                 <Footer/>
             </Router>
             ) : (
-            <Router>
+            <Router data-test="APPLoggedOut">
                 <NotLoggedInNavBar/>
                 <Switch>
                     <Route path="/auth/login" component={LoginPage}/>
