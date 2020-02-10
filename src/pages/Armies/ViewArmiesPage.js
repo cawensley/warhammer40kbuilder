@@ -6,7 +6,7 @@ import RedirectButton from "../../atoms/RedirectButton";
 function ViewArmiesPage () {
 
     return (
-        <div className="container-fluid p-padding text-center">
+        <div data-test="ViewArmiesPage" className="container-fluid p-padding text-center">
             <PageTitle Title="View Armies Page" />
             <CodexFilter/>
             <RedirectButton redirect={"/armies/new"} buttontext={"Add Armies"}/>
