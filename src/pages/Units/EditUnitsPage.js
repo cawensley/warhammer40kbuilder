@@ -1,7 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import PageTitle from "../../atoms/PageTitle";
 import CodexFilter from "../../molecules/CodexFilter";
-import firebase from "../../firebase/firebase";
+import firebase from "firebase/app";
+import "firebase/firestore";
 import PageLoading from "../../atoms/PageLoading";
 import SubmitButton from "../../atoms/SubmitButton";
 import InputRow from "../../atoms/InputRow";
@@ -11,55 +12,53 @@ import codexFilter from "../../utilities/codexFilter";
 
 function EditUnitsPage ({match}) {
     const editUnitID = match.params.ID;
-    const [isLoading, setisLoading] = useState(false);
-    const [editUnit,setEditUnit] = useState({Codex: store.getState().codex,Name: '',Cost: '',Abilities:'',Gear: []});
+    const [state, setState] = React.useState({isLoading:false,Unit:{Codex: store.getState().codex,Name: '',Cost: '',Abilities:'',Gear: []}});
 
-    function handleNameInput(input) {setEditUnit({...editUnit,Name:input})}
-    function handleCostInput(input) {setEditUnit({...editUnit,Cost:+input})}
-    function handleAbilitiesInput(input) {setEditUnit({...editUnit,Abilities:input})}
-    function handleGearRemove () {var NewGear = editUnit.Gear;NewGear.pop();setEditUnit({...editUnit,Gear:NewGear})}
-    function handleGearAdd(input) {var NewGear = editUnit.Gear;NewGear.push(input);setEditUnit({...editUnit,Gear:NewGear})}
+    function handleNameInput(input) {setState({...state,Unit:{...state.Unit,Name:input}})}
+    function handleCostInput(input) {setState({...state,Unit:{...state.Unit,Cost:+input}})}
+    function handleAbilitiesInput(input) {setState({...state,Unit:{...state.Unit,Abilities:input}})}
+    function handleGearRemove () {var NewGear = state.Unit.Gear;NewGear.pop();setState({...state,Unit:{...state.Unit,Gear:NewGear}})}
+    function handleGearAdd(input) {var NewGear = state.Unit.Gear;NewGear.push(input);setState({...state,Unit:{...state.Unit,Gear:NewGear}})}
 
     function getEditItemInfo () {
-        setisLoading(true);
-        firebase.db.collection("units").doc(editUnitID).get()
+        setState({...state,isLoading:true});
+        firebase.firestore().collection("units").doc(editUnitID).get()
             .then(doc=>{
-                setEditUnit({...editUnit,
+                setState({...state,Unit:{...state.Unit,
                     Name:doc.data().Name,
                     Cost:doc.data().Cost,
                     Abilities:doc.data().Abilities,
-                    Gear:doc.data().Gear});
+                    Gear:doc.data().Gear}});
             });
-        setisLoading(false);
+        setState({...state,isLoading:false});
     }
 
     // eslint-disable-next-line
-    useEffect(()=>{getEditItemInfo()},[]);
+    React.useEffect(()=>{getEditItemInfo()},[]);
     // eslint-disable-next-line
-    useEffect(()=>setEditUnit({...editUnit,Codex:store.getState().codex}),[store.getState().codex]);
+    React.useEffect(()=>setState({...state,Unit:{...state.Unit,Codex:store.getState().codex}}),[store.getState().codex]);
 
     function handleEditUnitSubmission () {
-        firebase.db.collection("units").doc(editUnitID).set(editUnit);
+        firebase.firestore().collection("units").doc(editUnitID).set(state.Unit);
         window.location.hash = '/units/view';
     }
 
-    if (isLoading) { return (<PageLoading />); }
+    if (state.isLoading) { return (<PageLoading />); }
 
     return (
-        <div className="container-fluid p-padding text-center">
+        <div data-test="editUnitsPage" className="container-fluid p-padding text-center">
             <PageTitle Title="Edit Units Page" />
-            <form onSubmit={handleEditUnitSubmission}>
+            <form data-test="submitButton" onSubmit={handleEditUnitSubmission}>
                 <CodexFilter/>
-                <InputRow type="text" left="Edit Unit Name:" startValue={editUnit.Name} onInputChange={handleNameInput}/>
-                <InputRow type="number" left="Edit Unit Cost:" startValue={editUnit.Cost} onInputChange={handleCostInput}/>
-                <InputRow type="text" left="Edit Unit Abilities:" startValue={editUnit.Abilities} onInputChange={handleAbilitiesInput}/>
-
+                <InputRow type="text" left="Edit Unit Name:" startValue={state.Unit.Name} onInputChange={handleNameInput}/>
+                <InputRow type="number" left="Edit Unit Cost:" startValue={state.Unit.Cost} onInputChange={handleCostInput}/>
+                <InputRow type="text" left="Edit Unit Abilities:" startValue={state.Unit.Abilities} onInputChange={handleAbilitiesInput}/>
                 <SelectArray
                     codexArray={codexFilter(store.getState().equipment)}
                     left="Gear:"
                     onItemAdd={handleGearAdd}
                     onItemRemove={handleGearRemove}
-                    arrayDisplay={editUnit.Gear}
+                    arrayDisplay={state.Unit.Gear}
                 />
                 <SubmitButton buttontext={"Save Changes to Unit"}/>
             </form>

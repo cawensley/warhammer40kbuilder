@@ -13,7 +13,7 @@ import codexFilter from "../../utilities/codexFilter";
 function ViewUnitsPage () {
 
     return (
-        <div className="container-fluid p-padding text-center">
+        <div data-test="ViewUnitsPage" className="container-fluid p-padding text-center">
             <PageTitle Title="View Units Page" />
             <CodexFilter/>
             <RedirectButton redirect={"/units/new"} buttontext={"Add Units"}/>
@@ -27,7 +27,7 @@ function ViewUnitsPage () {
                         <div className="col-3"></div>
                     </div>
                     {codexFilter(store.getState().units).map((item)=>(
-                        <div key={item.id} className="row text-white align-items-center border border-secondary">
+                        <div data-test="unitsDisplay" key={item.id} className="row text-white align-items-center border border-secondary">
                             <Link to={`/units/edit/${item.id}`}
                                   className="col-2 p-hyperlink-color">{item.Name}</Link>
                             <div className="col-2">{item.Cost}</div>
