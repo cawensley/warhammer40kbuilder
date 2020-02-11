@@ -12,7 +12,7 @@ import codexFilter from "../../utilities/codexFilter";
 function ViewEquipmentPage () {
 
     return (
-        <div className="container-fluid p-padding text-center">
+        <div data-test="ViewEquipmentPage" className="container-fluid p-padding text-center">
             <PageTitle Title="View Equipment Page" />
             <CodexFilter/>
             <RedirectButton redirect={"/equipment/new"} buttontext={"Add Equipment"}/>
@@ -24,7 +24,7 @@ function ViewEquipmentPage () {
                         <div className="col-3"></div>
                     </div>
                     {codexFilter(store.getState().equipment).map((item)=>(
-                        <div key={item.id} className="row text-white border border-secondary">
+                        <div data-test="equipDisplay" key={item.id} className="row text-white border border-secondary">
                             <Link to={`/equipment/edit/${item.id}`}
                                   className="col-5 p-hyperlink-color">{item.Name}</Link>
                             <div className="col-4">{item.Cost}</div>

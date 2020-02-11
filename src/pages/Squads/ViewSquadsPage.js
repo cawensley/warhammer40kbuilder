@@ -13,7 +13,7 @@ import codexFilter from "../../utilities/codexFilter";
 function ViewSquadsPage () {
 
     return (
-        <div className="container-fluid p-padding text-center">
+        <div data-test="ViewSquadsPage" className="container-fluid p-padding text-center">
             <PageTitle Title="View Squads Page" />
             <CodexFilter/>
             <RedirectButton redirect={"/squads/new"} buttontext={"Add Squads"}/>
@@ -28,7 +28,7 @@ function ViewSquadsPage () {
                         <div className="col-1"></div>
                     </div>
                     {codexFilter(store.getState().squads).map((item)=>(
-                        <div key={item.id} className="row text-white align-items-center border border-secondary">
+                        <div data-test="squadsDisplay" key={item.id} className="row text-white align-items-center border border-secondary">
                             <Link to={`/squads/edit/${item.id}`}
                                   className="col-3 p-hyperlink-color">{item.Name}</Link>
                             <div className="col-2"><IDtoName searchArray={store.getState().roles} uniqueID={item.Role}/></div>

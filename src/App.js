@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
+import firebase from "../src/firebase/firebase"
 import MainNavBar from './organisms/MainNavBar';
 import NotLoggedInNavBar from "./organisms/NotLoggedInNavBar";
 import Footer from './organisms/footer';

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import PageTitle from "../../atoms/PageTitle";
 import CodexFilter from "../../molecules/CodexFilter";
 import SubmitButton from "../../atoms/SubmitButton";
@@ -14,7 +14,7 @@ function NewEquipmentPage () {
     function handleCostInput(input) {setNewEquipment({...newEquipment,Cost:+input})}
 
     // eslint-disable-next-line
-    useEffect(()=>setNewEquipment({...newEquipment,Codex:store.getState().codex}),[store.getState().codex]);
+    React.useEffect(()=>setNewEquipment({...newEquipment,Codex:store.getState().codex}),[store.getState().codex]);
 
     function newEquipmentSubmission () {
         firebase.firestore().collection("equipment").add(newEquipment);
@@ -24,11 +24,11 @@ function NewEquipmentPage () {
     return (
         <div data-test="newEquipmentPage" className="container-fluid p-padding text-center">
             <PageTitle Title="New Equipment Page" />
-            <form onSubmit={newEquipmentSubmission}>
+            <form data-test="submitButton" onSubmit={newEquipmentSubmission}>
                 <CodexFilter/>
                 <InputRow type="text" left="New Equipment Name:" startValue={newEquipment.Name} onInputChange={handleNameInput}/>
                 <InputRow type="number" left="New Equipment Cost:" startValue={newEquipment.Cost} onInputChange={handleCostInput}/>
-                <SubmitButton data-test="submitButton" buttontext="Add Equipment to Database"/>
+                <SubmitButton buttontext="Add Equipment to Database"/>
             </form>
         </div>
     )

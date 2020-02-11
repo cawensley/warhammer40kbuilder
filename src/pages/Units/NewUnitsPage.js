@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import PageTitle from "../../atoms/PageTitle";
-import firebase from "../../firebase/firebase";
+import firebase from "firebase/app";
+import "firebase/firestore";
 import CodexFilter from "../../molecules/CodexFilter";
 import SubmitButton from "../../atoms/SubmitButton";
 import InputRow from "../../atoms/InputRow";
@@ -9,7 +10,7 @@ import store from "../../Redux/store";
 import codexFilter from "../../utilities/codexFilter";
 
 function NewUnitsPage () {
-    const [newUnit,setNewUnit] = useState({Codex: store.getState().codex,Name: '',Cost: '',Abilities:'None',Gear: []});
+    const [newUnit,setNewUnit] = React.useState({Codex: store.getState().codex,Name: '',Cost: '',Abilities:'None',Gear: []});
 
     function handleNameInput(input) {setNewUnit({...newUnit,Name:input})}
     function handleCostInput(input) {setNewUnit({...newUnit,Cost:+input})}
@@ -18,17 +19,17 @@ function NewUnitsPage () {
     function handleGearAdd(input) {var NewGear = newUnit.Gear;NewGear.push(input);setNewUnit({...newUnit,Gear:NewGear})}
 
     function handleNewUnitSubmission () {
-        firebase.db.collection("units").add(newUnit);
+        firebase.firestore().collection("units").add(newUnit);
         window.location.hash = '/units/view';
     }
 
     // eslint-disable-next-line
-    useEffect(()=>setNewUnit({...newUnit,Codex:store.getState().codex}),[store.getState().codex]);
+    React.useEffect(()=>setNewUnit({...newUnit,Codex:store.getState().codex}),[store.getState().codex]);
 
     return (
-        <div className="container-fluid p-padding text-center">
+        <div data-test="newUnitsPage" className="container-fluid p-padding text-center">
             <PageTitle Title="New Units Page" />
-            <form onSubmit={handleNewUnitSubmission}>
+            <form data-test="submitButton" onSubmit={handleNewUnitSubmission}>
                 <CodexFilter/>
                 <InputRow type="text" left="New Unit Name:" startValue={newUnit.Name} onInputChange={handleNameInput}/>
                 <InputRow type="number" left="New Unit Cost:" startValue={newUnit.Cost} onInputChange={handleCostInput}/>
