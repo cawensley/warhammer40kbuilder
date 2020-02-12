@@ -6,12 +6,8 @@ import Footer from "./footer";
 
 Enzyme.configure({adapter:new EnzymeAdapter()});
 
-const setup = (props={}) => {
-    return shallow(<Footer {...props}/>)
-};
-
 test('Footer renders without error',()=>{
-    const wrapper = setup();
+    const wrapper = shallow(<Footer/>);
     const component = findByTestAttr(wrapper,'Footer');
     expect(component.length).toBe(1);
 });

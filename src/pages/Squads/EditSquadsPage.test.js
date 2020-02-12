@@ -10,9 +10,9 @@ firebase.firestore = firestore;
 Enzyme.configure({adapter:new EnzymeAdapter()});
 
 let mockSetState = jest.fn();
+const mockSquad = {Codex: "Autobots",Name: '',Role: "GoodGuys",MinSize: '',MaxSize: '',Units: ["Barricade"]};
 
 const setup = (isLoading) => {
-    const mockSquad = {Codex: "Autobots",Name: '',Role: "GoodGuys",MinSize: '',MaxSize: '',Units: ["Barricade"]};
     jest.clearAllMocks();
     React.useState=jest.fn(()=>[{isLoading:isLoading,Squad:mockSquad},mockSetState]);
     return mount(<EditSquadsPage match={{params:{ID:"5555"}}}/>)

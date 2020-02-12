@@ -21,6 +21,8 @@ const setup = () => {
     )
 };
 
+const mockUnitsArray = [{id:"11",Codex:"Ninjas",Name:"UnitSneaky",Gear:["sword"]},{id:"22",Codex:"Pirates",Name:"UnitBlack",Gear:["pistol"]}];
+
 test('View Units Page renders without error',()=>{
     const wrapper = setup();
     const component = findByTestAttr(wrapper,'ViewUnitsPage');
@@ -28,7 +30,6 @@ test('View Units Page renders without error',()=>{
 });
 test('View Units Page renders data when Codex and UnitsArray are in redux',()=>{
     store.dispatch(CodexChange("Pirates"));
-    const mockUnitsArray = [{id:"11",Codex:"Ninjas",Name:"UnitSneaky",Gear:["sword"]},{id:"22",Codex:"Pirates",Name:"UnitBlack",Gear:["pistol"]}];
     store.dispatch(UnitsChange(mockUnitsArray));
     const wrapper = setup();
     const component = findByTestAttr(wrapper,'unitsDisplay');

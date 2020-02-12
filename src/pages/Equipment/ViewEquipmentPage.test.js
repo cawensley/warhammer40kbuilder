@@ -21,6 +21,8 @@ const setup = () => {
     )
 };
 
+const mockEquipmentArray = [{id:"11",Codex:"Ninjas",Name:"Dagger"},{id:"22",Codex:"Pirates",Name:"musket"}];
+
 test('View Equipment Page renders without error',()=>{
     const wrapper = setup();
     const component = findByTestAttr(wrapper,'ViewEquipmentPage');
@@ -28,7 +30,6 @@ test('View Equipment Page renders without error',()=>{
 });
 test('View Equipment Page renders data when Codex and EquipmentArrays are in redux',()=>{
     store.dispatch(CodexChange("Ninjas"));
-    const mockEquipmentArray = [{id:"11",Codex:"Ninjas",Name:"Dagger"},{id:"22",Codex:"Pirates",Name:"musket"}];
     store.dispatch(EquipmentChange(mockEquipmentArray));
     const wrapper = setup();
     const component = findByTestAttr(wrapper,'equipDisplay');

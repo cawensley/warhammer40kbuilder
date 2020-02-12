@@ -7,8 +7,8 @@ import store from "../Redux/store";
 
 Enzyme.configure({adapter:new EnzymeAdapter()});
 
-const setup = (props={}) => {
-    return shallow(<LoginPage {...props}/>)
+const setup = () => {
+    return shallow(<LoginPage/>)
 };
 
 test('Login Page renders without error',()=>{
@@ -16,7 +16,6 @@ test('Login Page renders without error',()=>{
     const component = findByTestAttr(wrapper,'LoginPage');
     expect(component.length).toBe(1);
 });
-
 test('Login button click changes Login Status to true',()=>{
     const wrapper = setup();
     const loginButton=findByTestAttr(wrapper,'loginButton');

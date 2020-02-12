@@ -6,12 +6,8 @@ import PageLoading from "./PageLoading";
 
 Enzyme.configure({adapter:new EnzymeAdapter()});
 
-const setup = (props={}) => {
-    return shallow(<PageLoading {...props}/>)
-};
-
 test('renders without error',()=>{
-    const wrapper = setup();
+    const wrapper = shallow(<PageLoading/>);
     const component = findByTestAttr(wrapper,'loadingSpinCog');
     expect(component.length).toBe(1);
 });

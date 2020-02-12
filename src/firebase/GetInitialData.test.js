@@ -4,7 +4,7 @@ import GetInitialData from "./GetInitialData";
 
 firebase.firestore = firestore;
 
-test('GetInitialData grabs Codices and Roles and stores to Redux',()=>{
+test('GetInitialData grabs five collections ',()=>{
     GetInitialData();
     expect(firestore().collection).toHaveBeenCalledWith("codices");
     expect(firestore().collection).toHaveBeenCalledWith("Roles");

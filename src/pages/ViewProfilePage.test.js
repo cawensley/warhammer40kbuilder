@@ -6,8 +6,8 @@ import ViewProfilePage from "./ViewProfilePage";
 
 Enzyme.configure({adapter:new EnzymeAdapter()});
 
-const setup = (props={}) => {
-    return shallow(<ViewProfilePage {...props}/>)
+const setup = () => {
+    return shallow(<ViewProfilePage/>)
 };
 
 test('View Profile Page renders without error',()=>{
