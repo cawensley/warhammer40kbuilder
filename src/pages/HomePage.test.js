@@ -6,8 +6,8 @@ import HomePage from "./HomePage";
 
 Enzyme.configure({adapter:new EnzymeAdapter()});
 
-const setup = (props={}) => {
-    return shallow(<HomePage {...props}/>)
+const setup = () => {
+    return shallow(<HomePage/>)
 };
 
 test('Home Page renders without error',()=>{

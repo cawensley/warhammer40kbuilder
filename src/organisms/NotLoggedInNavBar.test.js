@@ -6,35 +6,28 @@ import NotLoggedInNavBar from "./NotLoggedInNavBar";
 
 Enzyme.configure({adapter:new EnzymeAdapter()});
 
-const setup = (props={}) => {
-    return shallow(<NotLoggedInNavBar {...props}/>)
+let mockSetShow = jest.fn();
+
+const setup = (mockShow) => {
+    mockSetShow.mockClear();
+    React.useState=jest.fn(()=>[mockShow,mockSetShow]);
+    return shallow(<NotLoggedInNavBar/>)
 };
 
 test('NotLoggedInNavBar renders without error',()=>{
-    const wrapper = setup();
+    const wrapper = setup("");
     const component = findByTestAttr(wrapper,'NotLoggedInNavBar');
     expect(component.length).toBe(1);
 });
-
-describe("testing SHOW functionality of dropdown menu",()=>{
-    let mockSetShow = jest.fn();
-    let wrapper;
-
-    beforeEach(()=>{
-        mockSetShow.mockClear();
-    });
-    test('Dropdown button click invokes SetShow function',()=>{
-        React.useState=jest.fn(()=>["",mockSetShow]);
-        wrapper = setup();
-        const dropdownButton=findByTestAttr(wrapper,'dropdownButton');
-        dropdownButton.simulate('click',{preventDefault () {}});
-        expect(mockSetShow).toHaveBeenCalled();
-    });
-    test('Dropdown menu click invokes SetShow function to remove "show"',()=>{
-        React.useState=jest.fn(()=>["show",mockSetShow]);
-        wrapper = setup();
-        const dropdownMenu=findByTestAttr(wrapper,'dropdown');
-        dropdownMenu.simulate('click',{preventDefault () {}});
-        expect(dropdownMenu.hasClass("show")).toBe(true);
-    });
+test('Dropdown button click invokes SetShow function to add SHOW',()=>{
+    const wrapper = setup("");
+    const dropdownButton=findByTestAttr(wrapper,'dropdownButton');
+    dropdownButton.simulate('click',{preventDefault () {}});
+    expect(mockSetShow).toHaveBeenCalledWith("show");
+});
+test('Dropdown menu click invokes SetShow function to remove SHOW',()=>{
+    const wrapper = setup("show");
+    const dropdownMenu=findByTestAttr(wrapper,'dropdown');
+    dropdownMenu.simulate('click',{preventDefault () {}});
+    expect(mockSetShow).toHaveBeenCalledWith("");
 });

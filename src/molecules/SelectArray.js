@@ -6,7 +6,7 @@ function SelectArray ({codexArray, left, onItemAdd, onItemRemove,arrayDisplay}) 
     const [thingSelected,setThingSelected]=React.useState();
 
     // eslint-disable-next-line
-    React.useEffect(()=>{Array.isArray(codexArray) ? ((codexArray.length > 0) ? setThingSelected(codexArray[0].id) : {}) : {}},[store.getState().codex]);
+    React.useEffect(()=>{if (codexArray.length > 0) {setThingSelected(codexArray[0].id)}},[store.getState().codex]);
 
     function onThingAdd () {onItemAdd(thingSelected)}
     function onThingRemove () {onItemRemove()}
@@ -21,7 +21,7 @@ function SelectArray ({codexArray, left, onItemAdd, onItemRemove,arrayDisplay}) 
                         className="bg-white"
                         value={thingSelected}
                         onChange={event => setThingSelected(event.target.value)}>
-                        {Array.isArray(codexArray)
+                        {(codexArray.length > 0)
                             ? codexArray.map((item) => (<option key={item.id} value={item.id}>{item.Name}</option>))
                             : <option key="0" value="0">{"No Array Provided"}</option>}
                     </select>
@@ -32,12 +32,9 @@ function SelectArray ({codexArray, left, onItemAdd, onItemRemove,arrayDisplay}) 
             <div className="row mt-4">
                 <div className="text-warning col-6 text-right">Selected&nbsp;{left}</div>
                 <div className="text-white col-6 text-left">
-                    {Array.isArray(arrayDisplay) ? (
-                        (arrayDisplay.length === 0)
-                        ? "Nothing Selected"
-                        : arrayDisplay.map((item) => <IDtoName key={item} searchArray={codexArray} uniqueID={item}/>)
-                        ) : "Loading..."
-                    }
+                    {(arrayDisplay.length > 0)
+                    ? arrayDisplay.map((item) => <IDtoName key={item} searchArray={codexArray} uniqueID={item}/>)
+                    : "Nothing Selected"}
                 </div>
             </div>
         </div>

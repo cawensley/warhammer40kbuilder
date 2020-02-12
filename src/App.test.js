@@ -9,8 +9,11 @@ import {Provider} from "react-redux";
 
 Enzyme.configure({adapter:new EnzymeAdapter()});
 
-const setup = (props={}) => {
-    return mount(<Provider store={store}><App {...props}/></Provider>)
+const setup = () => {
+    return mount(
+        <Provider store={store}>
+            <App />
+        </Provider>)
 };
 
 test('App renders when user is LoggedIN',()=>{
@@ -19,7 +22,6 @@ test('App renders when user is LoggedIN',()=>{
     const component = findByTestAttr(wrapper,'APPLoggedIn');
     expect(component.length).toBe(1);
 });
-
 test('App renders when user is APPLoggedOut',()=>{
     store.dispatch(LoginChange(false));
     const wrapper = setup();

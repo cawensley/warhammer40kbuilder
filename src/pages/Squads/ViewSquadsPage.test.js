@@ -21,6 +21,11 @@ const setup = () => {
     )
 };
 
+const mockSquadsArray = [
+    {id:"11",Codex:"Ninjas",Role:"troops",Name:"SquadSneaky",Units:["sneakyGuys"]},
+    {id:"22",Codex:"Pirates",Role:"elites",Name:"SquadSwash",Units:["burglers"]}
+];
+
 test('View Squads Page renders without error',()=>{
     const wrapper = setup();
     const component = findByTestAttr(wrapper,'ViewSquadsPage');
@@ -28,10 +33,6 @@ test('View Squads Page renders without error',()=>{
 });
 test('View Squads Page renders data when Codex and SquadsArray are in redux',()=>{
     store.dispatch(CodexChange("Ninjas"));
-    const mockSquadsArray = [
-        {id:"11",Codex:"Ninjas",Role:"troops",Name:"SquadSneaky",Units:["sneakyGuys"]},
-        {id:"22",Codex:"Pirates",Role:"elites",Name:"SquadSwash",Units:["burglers"]}
-    ];
     store.dispatch(SquadsChange(mockSquadsArray));
     const wrapper = setup();
     const component = findByTestAttr(wrapper,'squadsDisplay');

@@ -6,8 +6,8 @@ import RegisterPage from "./RegisterPage";
 
 Enzyme.configure({adapter:new EnzymeAdapter()});
 
-const setup = (props={}) => {
-    return shallow(<RegisterPage {...props}/>)
+const setup = () => {
+    return shallow(<RegisterPage/>)
 };
 
 test('Register Page renders without error',()=>{
