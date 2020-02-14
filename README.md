@@ -9,7 +9,7 @@
 https://cawensley.github.io/warhammer40kbuilder/
 
 ## Thought process when creating the website
-
+Not to make a recipe website
 
 ## Any trade offs you made?
 
