@@ -10,7 +10,7 @@ firebase.firestore = firestore;
 Enzyme.configure({ adapter: new EnzymeAdapter() });
 
 const mocksetNewEquipment = jest.fn();
-const mocknewEquipment = { Codex: 'Golems', Name: '', Cost: '' };
+const mocknewEquipment = { Codex: 'Golems', Name: '', Cost: 0 };
 
 const setup = () => {
   mocksetNewEquipment.mockClear();

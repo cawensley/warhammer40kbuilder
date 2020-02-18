@@ -11,7 +11,7 @@ Enzyme.configure({ adapter: new EnzymeAdapter() });
 
 const mocksetNewUnit = jest.fn();
 const mocknewUnit = {
-  Codex: 'Ninjas', Name: '', Cost: '', Abilities: 'None', Gear: ['ID10'],
+  Codex: 'Ninjas', Name: '', Cost: 0, Abilities: 'None', Gear: ['ID10'],
 };
 
 const setup = () => {

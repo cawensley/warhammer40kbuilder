@@ -31,3 +31,9 @@ test('Dropdown menu click invokes SetShow function to remove SHOW', () => {
   dropdownMenu.simulate('click', { preventDefault() {} });
   expect(mockSetShow).toHaveBeenCalledWith('');
 });
+test('Dropdown menu click invokes SetShow function to remove SHOW', () => {
+  const wrapper = setup('show');
+  const dropdownMenu = findByTestAttr(wrapper, 'dropdown');
+  dropdownMenu.simulate('keydown', { keyCode: 13 });
+  expect(mockSetShow).toHaveBeenCalledWith('');
+});

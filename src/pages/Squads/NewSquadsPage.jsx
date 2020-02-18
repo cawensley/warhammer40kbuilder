@@ -4,15 +4,16 @@ import PageTitle from '../../atoms/PageTitle';
 import 'firebase/firestore';
 import CodexFilter from '../../molecules/CodexFilter';
 import SubmitButton from '../../atoms/SubmitButton';
-import InputRow from '../../atoms/InputRow';
+import TextInputRow from '../../atoms/TextInputRow';
 import SelectArray from '../../molecules/SelectArray';
 import RoleRow from '../../molecules/RoleRow';
 import store from '../../Redux/store';
 import codexFilter from '../../utilities/codexFilter';
+import NumberInputRow from '../../atoms/NumberInputRow';
 
 function NewSquadsPage() {
   const [newSquad, setNewSquad] = React.useState({
-    Codex: store.getState().codex, Name: '', Role: store.getState().role, MinSize: '', MaxSize: '', Units: [],
+    Codex: store.getState().codex, Name: '', Role: store.getState().role, MinSize: 0, MaxSize: 0, Units: [],
   });
 
   function handleNameInput(input) { setNewSquad({ ...newSquad, Name: input }); }
@@ -45,10 +46,10 @@ function NewSquadsPage() {
       <PageTitle Title="New Squads Page" />
       <form data-test="submitButton" onSubmit={handleNewSquadSubmission}>
         <CodexFilter />
-        <InputRow type="text" left="New Squad Name:" startValue={newSquad.Name} onInputChange={handleNameInput} />
+        <TextInputRow type="text" left="New Squad Name:" startValue={newSquad.Name} onInputChange={handleNameInput} />
         <RoleRow left="Army Role:" />
-        <InputRow type="number" left="Min Squad Size:" startValue={newSquad.MinSize} onInputChange={handleMinSizeInput} />
-        <InputRow type="number" left="Max Squad Size:" startValue={newSquad.MaxSize} onInputChange={handleMaxSizeInput} />
+        <NumberInputRow left="Min Squad Size:" startValue={newSquad.MinSize} onInputChange={handleMinSizeInput} />
+        <NumberInputRow left="Max Squad Size:" startValue={newSquad.MaxSize} onInputChange={handleMaxSizeInput} />
         <SelectArray
           codexArray={codexFilter(store.getState().units)}
           left="Units in Squad:"

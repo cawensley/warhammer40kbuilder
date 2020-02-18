@@ -11,7 +11,7 @@ Enzyme.configure({ adapter: new EnzymeAdapter() });
 
 const mocksetNewSquad = jest.fn();
 const mocknewSquad = {
-  Codex: 'Golems', Name: '', Role: '', MinSize: '', MaxSize: '', Units: ['ID20'],
+  Codex: 'Golems', Name: '', Role: '', MinSize: 0, MaxSize: 0, Units: ['ID20'],
 };
 
 const setup = () => {

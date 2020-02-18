@@ -6,19 +6,20 @@ import CodexFilter from '../../molecules/CodexFilter';
 import 'firebase/firestore';
 import PageLoading from '../../atoms/PageLoading';
 import SubmitButton from '../../atoms/SubmitButton';
-import InputRow from '../../atoms/InputRow';
+import TextInputRow from '../../atoms/TextInputRow';
 import SelectArray from '../../molecules/SelectArray';
 import RoleRow from '../../molecules/RoleRow';
 import store from '../../Redux/store';
 import codexFilter from '../../utilities/codexFilter';
 import RoleChange from '../../Redux/actions/RoleChange';
+import NumberInputRow from '../../atoms/NumberInputRow';
 
 function EditSquadsPage({ match }) {
   const editSquadID = match.params.ID;
   const [state, setState] = React.useState({
     isLoading: false,
     Squad: {
-      Codex: store.getState().codex, Name: '', Role: store.getState().role, MinSize: '', MaxSize: '', Units: [],
+      Codex: store.getState().codex, Name: '', Role: store.getState().role, MinSize: 0, MaxSize: 0, Units: [],
     },
   });
 
@@ -79,10 +80,10 @@ function EditSquadsPage({ match }) {
       <PageTitle Title="Edit Squads Page" />
       <form data-test="submitButton" onSubmit={handleEditSquadSubmission}>
         <CodexFilter />
-        <InputRow type="text" left="Edit Squad Name:" startValue={state.Squad.Name} onInputChange={handleNameInput} />
+        <TextInputRow type="text" left="Edit Squad Name:" startValue={state.Squad.Name} onInputChange={handleNameInput} />
         <RoleRow left="Edit Army Role:" />
-        <InputRow type="number" left="Edit Min Squad Size:" startValue={state.Squad.MinSize} onInputChange={handleMinSizeInput} />
-        <InputRow type="number" left="Edit Max Squad Size:" startValue={state.Squad.MaxSize} onInputChange={handleMaxSizeInput} />
+        <NumberInputRow left="Edit Min Squad Size:" startValue={state.Squad.MinSize} onInputChange={handleMinSizeInput} />
+        <NumberInputRow left="Edit Max Squad Size:" startValue={state.Squad.MaxSize} onInputChange={handleMaxSizeInput} />
         <SelectArray
           codexArray={codexFilter(store.getState().units)}
           left="Units in Squad:"
