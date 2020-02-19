@@ -14,7 +14,7 @@ const setup = (mockShow) => {
   return shallow(<NotLoggedInNavBar />);
 };
 
-test('NotLoggedInNavBar renders without error', () => {
+test('it should render', () => {
   const wrapper = setup('');
   const component = findByTestAttr(wrapper, 'NotLoggedInNavBar');
   expect(component.length).toBe(1);

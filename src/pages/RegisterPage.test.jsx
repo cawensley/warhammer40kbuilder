@@ -21,7 +21,7 @@ const setup = (name, password) => {
   return mount(<RegisterPage />);
 };
 
-test('Register Page renders without error', () => {
+test('it should render', () => {
   const wrapper = setup('', '');
   const component = findByTestAttr(wrapper, 'RegisterPage');
   expect(component.length).toBe(1);

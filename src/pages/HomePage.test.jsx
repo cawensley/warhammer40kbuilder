@@ -8,7 +8,7 @@ Enzyme.configure({ adapter: new EnzymeAdapter() });
 
 const setup = () => shallow(<HomePage />);
 
-test('Home Page renders without error', () => {
+test('it should render', () => {
   const wrapper = setup();
   const component = findByTestAttr(wrapper, 'HomePage');
   expect(component.length).toBe(1);

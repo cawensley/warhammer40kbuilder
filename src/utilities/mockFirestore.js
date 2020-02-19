@@ -3,15 +3,18 @@ const docData = {
 };
 const documents = { docs: [{ id: '1111', data: () => docData }] };
 const singleDoc = { data: () => docData };
-const getColl = jest.fn(() => Promise.resolve(documents));
-const getDoc = jest.fn(() => Promise.resolve(singleDoc));
 const set = jest.fn();
-const doc = jest.fn(() => ({ set, get: getDoc, delete: jest.fn() }));
-const onSnapshot = jest.fn((success) => success(documents));
-const add = jest.fn();
-const collection = jest.fn(() => ({
-  doc, get: getColl, add, onSnapshot,
+const doc = jest.fn(() => ({
+  set,
+  get: jest.fn(() => Promise.resolve(singleDoc)),
+  delete: jest.fn(),
 }));
-const firestore = () => ({ collection });
+const collection = jest.fn(() => ({
+  doc,
+  get: jest.fn(() => Promise.resolve(documents)),
+  add: jest.fn(),
+  onSnapshot: jest.fn((success) => success(documents)),
+}));
+function firestore() { return { collection }; }
 
 export default firestore;

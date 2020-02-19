@@ -25,7 +25,7 @@ const mockUnitsArray = [{
   id: '22', Codex: 'Pirates', Name: 'UnitBlack', Gear: ['pistol'],
 }];
 
-test('View Units Page renders without error', () => {
+test('it should render', () => {
   const wrapper = setup();
   const component = findByTestAttr(wrapper, 'ViewUnitsPage');
   expect(component.length).toBe(1);

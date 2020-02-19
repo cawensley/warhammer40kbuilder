@@ -21,7 +21,7 @@ const setup = () => mount(
 
 const mockEquipmentArray = [{ id: '11', Codex: 'Ninjas', Name: 'Dagger' }, { id: '22', Codex: 'Pirates', Name: 'musket' }];
 
-test('View Equipment Page renders without error', () => {
+test('it should render', () => {
   const wrapper = setup();
   const component = findByTestAttr(wrapper, 'ViewEquipmentPage');
   expect(component.length).toBe(1);

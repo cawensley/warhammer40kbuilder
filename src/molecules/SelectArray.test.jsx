@@ -22,7 +22,7 @@ const setup = (codexArray, arrayDisplay, onItemAdd, onItemRem, left) => {
   />);
 };
 
-test('SelectArray component renders without error', () => {
+test('it should render', () => {
   const wrapper = setup(mockCodexArray, []);
   const component = findByTestAttr(wrapper, 'SelectArray');
   expect(component.length).toBe(1);

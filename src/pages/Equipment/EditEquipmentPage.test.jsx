@@ -18,7 +18,7 @@ const setup = (isLoading) => {
   return mount(<EditEquipmentPage match={{ params: { ID: '3333' } }} />);
 };
 
-test('Edit Equipment Page renders without error', () => {
+test('it should render', () => {
   const wrapper = setup(false);
   const component = findByTestAttr(wrapper, 'editEquipmentPage');
   expect(component.length).toBe(1);

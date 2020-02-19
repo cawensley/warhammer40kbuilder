@@ -6,7 +6,7 @@ import PageLoading from './PageLoading';
 
 Enzyme.configure({ adapter: new EnzymeAdapter() });
 
-test('renders without error', () => {
+test('it should render', () => {
   const wrapper = shallow(<PageLoading />);
   const component = findByTestAttr(wrapper, 'loadingSpinCog');
   expect(component.length).toBe(1);

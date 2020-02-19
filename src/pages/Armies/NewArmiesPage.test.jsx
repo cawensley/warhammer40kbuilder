@@ -8,7 +8,7 @@ Enzyme.configure({ adapter: new EnzymeAdapter() });
 
 const setup = () => mount(<NewArmiesPage />);
 
-test('New Armies Page renders without error', () => {
+test('it should render', () => {
   const wrapper = setup();
   const component = findByTestAttr(wrapper, 'NewArmiesPage');
   expect(component.length).toBe(1);

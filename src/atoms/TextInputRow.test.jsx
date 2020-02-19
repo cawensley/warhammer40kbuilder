@@ -10,7 +10,7 @@ const setup = (onInputChange, type, left, startValue) => shallow(
   <TextInputRow type={type} left={left} onInputChange={onInputChange} startValue={startValue} />,
 );
 
-test('renders without error', () => {
+test('it should render', () => {
   const wrapper = setup();
   const component = findByTestAttr(wrapper, 'inputRow');
   expect(component.length).toBe(1);

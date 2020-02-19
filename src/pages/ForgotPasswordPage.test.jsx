@@ -19,7 +19,7 @@ const setup = (email) => {
   return mount(<ForgotPasswordPage />);
 };
 
-test('ForgotPasswordPage renders without error', () => {
+test('it should render', () => {
   const wrapper = setup('');
   const component = findByTestAttr(wrapper, 'ForgotPasswordPage');
   expect(component.length).toBe(1);

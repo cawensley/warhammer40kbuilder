@@ -19,7 +19,7 @@ const setup = (password) => {
   return mount(<LoginPage />);
 };
 
-test('Login Page renders without error', () => {
+test('it should render', () => {
   const wrapper = setup('');
   const component = findByTestAttr(wrapper, 'LoginPage');
   expect(component.length).toBe(1);

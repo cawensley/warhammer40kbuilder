@@ -20,7 +20,7 @@ const setup = (isLoading) => {
   return mount(<EditSquadsPage match={{ params: { ID: '5555' } }} />);
 };
 
-test('Edit Squads Page renders without error', () => {
+test('it should render', () => {
   const wrapper = setup(false);
   const component = findByTestAttr(wrapper, 'editSquadsPage');
   expect(component.length).toBe(1);

@@ -20,7 +20,7 @@ const setup = () => {
   return mount(<NewSquadsPage />);
 };
 
-test('New Squads Page renders without error', () => {
+test('it should render', () => {
   const wrapper = setup();
   const component = findByTestAttr(wrapper, 'newSquadsPage');
   expect(component.length).toBe(1);

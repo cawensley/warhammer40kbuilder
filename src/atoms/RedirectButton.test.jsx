@@ -10,7 +10,7 @@ const setup = (buttontext, redirect) => shallow(
   <RedirectButton redirect={redirect} buttontext={buttontext} />,
 );
 
-test('renders without error', () => {
+test('it should render', () => {
   const wrapper = setup();
   const component = findByTestAttr(wrapper, 'component-button');
   expect(component.length).toBe(1);

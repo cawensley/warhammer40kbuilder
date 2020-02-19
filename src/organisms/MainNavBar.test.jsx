@@ -29,7 +29,7 @@ const setup = (leftMenu, rightMenu) => {
   );
 };
 
-test('MainNavBar renders without error', () => {
+test('it should render', () => {
   const wrapper = setup();
   const component = findByTestAttr(wrapper, 'MainNavBar');
   expect(component.length).toBe(1);

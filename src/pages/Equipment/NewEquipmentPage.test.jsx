@@ -18,7 +18,7 @@ const setup = () => {
   return mount(<NewEquipmentPage />);
 };
 
-test('New Equipment Page renders without error', () => {
+test('it should render', () => {
   const wrapper = setup();
   const component = findByTestAttr(wrapper, 'newEquipmentPage');
   expect(component.length).toBe(1);
