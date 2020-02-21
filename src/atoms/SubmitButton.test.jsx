@@ -8,7 +8,7 @@ Enzyme.configure({ adapter: new EnzymeAdapter() });
 
 const setup = (buttontext) => shallow(<SubmitButton buttontext={buttontext} />);
 
-test('renders without error', () => {
+test('it should render', () => {
   const wrapper = setup();
   const component = findByTestAttr(wrapper, 'component-button');
   expect(component.length).toBe(1);

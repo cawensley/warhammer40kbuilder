@@ -9,7 +9,7 @@ Enzyme.configure({ adapter: new EnzymeAdapter() });
 
 const setup = () => shallow(<CodexFilter />);
 
-test('CodexFilter component renders without error', () => {
+test('it should render', () => {
   const wrapper = setup();
   const component = findByTestAttr(wrapper, 'codexFilter');
   expect(component.length).toBe(1);

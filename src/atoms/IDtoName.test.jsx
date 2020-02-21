@@ -12,7 +12,7 @@ const setup = (uniqueID, searchArray) => shallow(
 
 const defaultArray = [{ id: '12', Name: 'John' }, { id: '1234', Name: 'Bob' }, { id: '123456', Name: 'Janice' }];
 
-test('renders without error', () => {
+test('it should render', () => {
   const wrapper = setup();
   const component = findByTestAttr(wrapper, 'name-absent');
   expect(component.length).toBe(1);

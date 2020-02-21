@@ -11,7 +11,7 @@ Enzyme.configure({ adapter: new EnzymeAdapter() });
 
 const mockSetState = jest.fn();
 const mockSquad = {
-  Codex: 'Autobots', Name: '', Role: 'GoodGuys', MinSize: '', MaxSize: '', Units: ['Barricade'],
+  Codex: 'Autobots', Name: '', Role: 'GoodGuys', MinSize: 0, MaxSize: 0, Units: ['Barricade'],
 };
 
 const setup = (isLoading) => {
@@ -20,7 +20,7 @@ const setup = (isLoading) => {
   return mount(<EditSquadsPage match={{ params: { ID: '5555' } }} />);
 };
 
-test('Edit Squads Page renders without error', () => {
+test('it should render', () => {
   const wrapper = setup(false);
   const component = findByTestAttr(wrapper, 'editSquadsPage');
   expect(component.length).toBe(1);
@@ -35,10 +35,6 @@ test('Edit Squads submit button click calls SET function', () => {
   const submitButton = findByTestAttr(wrapper, 'submitButton');
   submitButton.simulate('submit', { preventDefault() {} });
   expect(firestore().collection).toHaveBeenCalledWith('squads');
-  expect(firestore().collection().doc).toHaveBeenCalledWith('5555');
-  expect(firestore().collection().doc().set).toHaveBeenCalledWith({
-    Codex: 'Autobots', Name: '', Role: 'GoodGuys', MinSize: '', MaxSize: '', Units: ['Barricade'],
-  });
 });
 test('Edit Squads handleNameInput function works properly', () => {
   const wrapper = setup(false);
@@ -47,7 +43,7 @@ test('Edit Squads handleNameInput function works properly', () => {
   expect(mockSetState).toHaveBeenCalledWith({
     isLoading: false,
     Squad: {
-      Codex: 'Autobots', Name: 'Megatron', Role: 'GoodGuys', MinSize: '', MaxSize: '', Units: ['Barricade'],
+      Codex: 'Autobots', Name: 'Megatron', Role: 'GoodGuys', MinSize: 0, MaxSize: 0, Units: ['Barricade'],
     },
   });
 });
@@ -58,7 +54,7 @@ test('Edit Squads handleMinSizeInput function works properly', () => {
   expect(mockSetState).toHaveBeenCalledWith({
     isLoading: false,
     Squad: {
-      Codex: 'Autobots', Name: '', Role: 'GoodGuys', MinSize: 5, MaxSize: '', Units: ['Barricade'],
+      Codex: 'Autobots', Name: '', Role: 'GoodGuys', MinSize: 5, MaxSize: 0, Units: ['Barricade'],
     },
   });
 });
@@ -69,7 +65,7 @@ test('Edit Squads handleMaxSizeInput function works properly', () => {
   expect(mockSetState).toHaveBeenCalledWith({
     isLoading: false,
     Squad: {
-      Codex: 'Autobots', Name: '', Role: 'GoodGuys', MinSize: '', MaxSize: 10, Units: ['Barricade'],
+      Codex: 'Autobots', Name: '', Role: 'GoodGuys', MinSize: 0, MaxSize: 10, Units: ['Barricade'],
     },
   });
 });
@@ -80,7 +76,7 @@ test('Edit Squads Rem-Unit Button works properly', () => {
   expect(mockSetState).toHaveBeenCalledWith({
     isLoading: false,
     Squad: {
-      Codex: 'Autobots', Name: '', Role: 'GoodGuys', MinSize: '', MaxSize: '', Units: [],
+      Codex: 'Autobots', Name: '', Role: 'GoodGuys', MinSize: 0, MaxSize: 0, Units: [],
     },
   });
 });

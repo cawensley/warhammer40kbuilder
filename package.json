@@ -6,7 +6,7 @@
       "src/**/*.{js,jsx,ts,tsx}",
       "!<rootDir>/node_modules/",
       "!<rootDir>/path/to/dir/",
-      "!src/index.js"
+      "!src/index.jsx"
     ],
     "coverageThreshold": {
       "global": {
@@ -50,6 +50,11 @@
     "lint": "eslint --ext .jsx,.js src/ --max-warnings 0",
     "style": "npx stylelint '**/*.scss'"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && npm run style && npm test -- --coverage --watchAll=false"
+    }
+  },
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -75,6 +80,7 @@
     "eslint-plugin-react": "^7.18.3",
     "eslint-plugin-react-hooks": "^1.7.0",
     "gh-pages": "^2.2.0",
+    "husky": "^4.2.3",
     "jest-enzyme": "^7.1.2",
     "stylelint": "^13.1.0",
     "stylelint-config-standard": "^20.0.0",

@@ -31,6 +31,7 @@ function NotLoggedInNavBar() {
         >
           <Link to="/auth/login" className="dropdown-item bg-secondary">Login</Link>
           <Link to="/auth/register" className="dropdown-item bg-secondary">Register</Link>
+          <Link to="/auth/passwordreset" className="dropdown-item bg-secondary">Forgot Password?</Link>
         </div>
       </div>
     </nav>

@@ -28,7 +28,7 @@ const mockSquadsArray = [
   },
 ];
 
-test('View Squads Page renders without error', () => {
+test('it should render', () => {
   const wrapper = setup();
   const component = findByTestAttr(wrapper, 'ViewSquadsPage');
   expect(component.length).toBe(1);

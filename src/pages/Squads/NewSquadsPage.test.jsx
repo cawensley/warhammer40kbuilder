@@ -11,7 +11,7 @@ Enzyme.configure({ adapter: new EnzymeAdapter() });
 
 const mocksetNewSquad = jest.fn();
 const mocknewSquad = {
-  Codex: 'Golems', Name: '', Role: '', MinSize: '', MaxSize: '', Units: ['ID20'],
+  Codex: 'Golems', Name: '', Role: '', MinSize: 0, MaxSize: 0, Units: ['ID20'],
 };
 
 const setup = () => {
@@ -20,7 +20,7 @@ const setup = () => {
   return mount(<NewSquadsPage />);
 };
 
-test('New Squads Page renders without error', () => {
+test('it should render', () => {
   const wrapper = setup();
   const component = findByTestAttr(wrapper, 'newSquadsPage');
   expect(component.length).toBe(1);

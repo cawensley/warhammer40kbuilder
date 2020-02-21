@@ -6,12 +6,13 @@ import CodexFilter from '../../molecules/CodexFilter';
 import 'firebase/firestore';
 import PageLoading from '../../atoms/PageLoading';
 import SubmitButton from '../../atoms/SubmitButton';
-import InputRow from '../../atoms/InputRow';
+import TextInputRow from '../../atoms/TextInputRow';
 import store from '../../Redux/store';
+import NumberInputRow from '../../atoms/NumberInputRow';
 
 function EditEquipmentPage({ match }) {
   const editEquipmentID = match.params.ID;
-  const [state, setState] = React.useState({ isLoading: false, Equipment: { Codex: store.getState().codex, Name: '', Cost: '' } });
+  const [state, setState] = React.useState({ isLoading: false, Equipment: { Codex: store.getState().codex, Name: '', Cost: 0 } });
 
   function handleNameInput(input) {
     setState({ ...state, Equipment: { ...state.Equipment, Name: input } });
@@ -53,8 +54,8 @@ function EditEquipmentPage({ match }) {
       <PageTitle Title="Edit Equipment Page" />
       <form data-test="submitButton" onSubmit={handleEditItemSubmission}>
         <CodexFilter />
-        <InputRow type="text" left="Edit Equipment Name:" startValue={state.Equipment.Name} onInputChange={handleNameInput} />
-        <InputRow type="number" left="Edit Equipment Cost:" startValue={state.Equipment.Cost} onInputChange={handleCostInput} />
+        <TextInputRow type="text" left="Edit Equipment Name:" startValue={state.Equipment.Name} onInputChange={handleNameInput} />
+        <NumberInputRow left="Edit Equipment Cost:" startValue={state.Equipment.Cost} onInputChange={handleCostInput} />
         <SubmitButton buttontext="Save Changes to Equipment" />
       </form>
     </div>

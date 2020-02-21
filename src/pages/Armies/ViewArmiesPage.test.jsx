@@ -8,7 +8,7 @@ Enzyme.configure({ adapter: new EnzymeAdapter() });
 
 const setup = () => shallow(<ViewArmiesPage />);
 
-test('View Armies Page renders without error', () => {
+test('it should render', () => {
   const wrapper = setup();
   const component = findByTestAttr(wrapper, 'ViewArmiesPage');
   expect(component.length).toBe(1);
