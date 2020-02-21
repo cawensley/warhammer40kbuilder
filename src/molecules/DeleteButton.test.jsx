@@ -29,5 +29,4 @@ test('Delete button click calls RemoveItem function', () => {
   const deleteButton = findByTestAttr(wrapper, 'deleteButton');
   deleteButton.simulate('click', { preventDefault() {} });
   expect(firestore().collection).toHaveBeenCalledWith('books');
-  expect(firestore().collection().doc).toHaveBeenCalledWith('JiminyCrickett');
 });

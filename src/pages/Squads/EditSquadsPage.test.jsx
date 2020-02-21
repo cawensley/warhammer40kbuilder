@@ -35,10 +35,6 @@ test('Edit Squads submit button click calls SET function', () => {
   const submitButton = findByTestAttr(wrapper, 'submitButton');
   submitButton.simulate('submit', { preventDefault() {} });
   expect(firestore().collection).toHaveBeenCalledWith('squads');
-  expect(firestore().collection().doc).toHaveBeenCalledWith('5555');
-  expect(firestore().collection().doc().set).toHaveBeenCalledWith({
-    Codex: 'Autobots', Name: '', Role: 'GoodGuys', MinSize: 0, MaxSize: 0, Units: ['Barricade'],
-  });
 });
 test('Edit Squads handleNameInput function works properly', () => {
   const wrapper = setup(false);

@@ -35,10 +35,6 @@ test('Edit Units submit button click calls SET function', () => {
   const submitButton = findByTestAttr(wrapper, 'submitButton');
   submitButton.simulate('submit', { preventDefault() {} });
   expect(firestore().collection).toHaveBeenCalledWith('units');
-  expect(firestore().collection().doc).toHaveBeenCalledWith('4444');
-  expect(firestore().collection().doc().set).toHaveBeenCalledWith({
-    Codex: 'Transformers', Name: 'Bee', Cost: 0, Abilities: 'Jump', Gear: ['Axe'],
-  });
 });
 test('Edit Units handleNameInput function works properly', () => {
   const wrapper = setup(false);

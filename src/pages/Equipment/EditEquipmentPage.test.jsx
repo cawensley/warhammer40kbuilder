@@ -33,8 +33,6 @@ test('Edit Equipment submit button click calls SET function', () => {
   const submitButton = findByTestAttr(wrapper, 'submitButton');
   submitButton.simulate('submit', { preventDefault() {} });
   expect(firestore().collection).toHaveBeenCalledWith('equipment');
-  expect(firestore().collection().doc).toHaveBeenCalledWith('3333');
-  expect(firestore().collection().doc().set).toHaveBeenCalledWith({ Codex: 'Pirates', Name: 'PirateSword', Cost: 0 });
 });
 test('Edit Equipment handleNameInput function works properly', () => {
   const wrapper = setup(false);
