@@ -11,7 +11,7 @@ Enzyme.configure({ adapter: new EnzymeAdapter() });
 
 const mocksetNewUnit = jest.fn();
 const mocknewUnit = {
-  Codex: 'Ninjas', Name: '', Cost: '', Abilities: 'None', Gear: ['ID10'],
+  Codex: 'Ninjas', Name: '', Cost: 0, Abilities: 'None', Gear: ['ID10'],
 };
 
 const setup = () => {
@@ -20,7 +20,7 @@ const setup = () => {
   return mount(<NewUnitsPage />);
 };
 
-test('New Units Page renders without error', () => {
+test('it should render', () => {
   const wrapper = setup();
   const component = findByTestAttr(wrapper, 'newUnitsPage');
   expect(component.length).toBe(1);

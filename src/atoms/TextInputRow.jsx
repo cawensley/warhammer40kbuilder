@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function InputRow({
+function TextInputRow({
   type, left, onInputChange, startValue,
 }) {
   function handleInputChange(event) { onInputChange(event.target.value); }
@@ -12,8 +12,8 @@ function InputRow({
       <div className="text-white col-6 text-left">
         <input
           data-test="input-box"
-          min="0"
           size="20"
+          autoComplete="off"
           value={startValue}
           required
           onChange={(event) => handleInputChange(event)}
@@ -25,14 +25,14 @@ function InputRow({
   );
 }
 
-InputRow.propTypes = {
+TextInputRow.propTypes = {
   left: PropTypes.string,
   onInputChange: PropTypes.func,
   startValue: PropTypes.string,
   type: PropTypes.string,
 };
 
-InputRow.defaultProps = {
+TextInputRow.defaultProps = {
   left: null,
   onInputChange: null,
   startValue: null,
@@ -40,4 +40,4 @@ InputRow.defaultProps = {
 };
 
 
-export default InputRow;
+export default TextInputRow;

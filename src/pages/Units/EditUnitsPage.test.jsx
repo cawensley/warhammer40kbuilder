@@ -11,7 +11,7 @@ Enzyme.configure({ adapter: new EnzymeAdapter() });
 
 const mockSetState = jest.fn();
 const mockUnit = {
-  Codex: 'Transformers', Name: 'Bee', Cost: '', Abilities: 'Jump', Gear: ['Axe'],
+  Codex: 'Transformers', Name: 'Bee', Cost: 0, Abilities: 'Jump', Gear: ['Axe'],
 };
 
 const setup = (isLoading) => {
@@ -20,7 +20,7 @@ const setup = (isLoading) => {
   return mount(<EditUnitsPage match={{ params: { ID: '4444' } }} />);
 };
 
-test('Edit Units Page renders without error', () => {
+test('it should render', () => {
   const wrapper = setup(false);
   const component = findByTestAttr(wrapper, 'editUnitsPage');
   expect(component.length).toBe(1);
@@ -35,10 +35,6 @@ test('Edit Units submit button click calls SET function', () => {
   const submitButton = findByTestAttr(wrapper, 'submitButton');
   submitButton.simulate('submit', { preventDefault() {} });
   expect(firestore().collection).toHaveBeenCalledWith('units');
-  expect(firestore().collection().doc).toHaveBeenCalledWith('4444');
-  expect(firestore().collection().doc().set).toHaveBeenCalledWith({
-    Codex: 'Transformers', Name: 'Bee', Cost: '', Abilities: 'Jump', Gear: ['Axe'],
-  });
 });
 test('Edit Units handleNameInput function works properly', () => {
   const wrapper = setup(false);
@@ -47,7 +43,7 @@ test('Edit Units handleNameInput function works properly', () => {
   expect(mockSetState).toHaveBeenCalledWith({
     isLoading: false,
     Unit: {
-      Codex: 'Transformers', Name: 'Megatron', Cost: '', Abilities: 'Jump', Gear: ['Axe'],
+      Codex: 'Transformers', Name: 'Megatron', Cost: 0, Abilities: 'Jump', Gear: ['Axe'],
     },
   });
 });
@@ -69,7 +65,7 @@ test('Edit Units handleAbilitiesInput function works properly', () => {
   expect(mockSetState).toHaveBeenCalledWith({
     isLoading: false,
     Unit: {
-      Codex: 'Transformers', Name: 'Bee', Cost: '', Abilities: 'Dive', Gear: ['Axe'],
+      Codex: 'Transformers', Name: 'Bee', Cost: 0, Abilities: 'Dive', Gear: ['Axe'],
     },
   });
 });
@@ -80,7 +76,7 @@ test('Edit Units Rem-Equipment Button works properly', () => {
   expect(mockSetState).toHaveBeenCalledWith({
     isLoading: false,
     Unit: {
-      Codex: 'Transformers', Name: 'Bee', Cost: '', Abilities: 'Jump', Gear: [],
+      Codex: 'Transformers', Name: 'Bee', Cost: 0, Abilities: 'Jump', Gear: [],
     },
   });
 });

@@ -4,14 +4,15 @@ import PageTitle from '../../atoms/PageTitle';
 import 'firebase/firestore';
 import CodexFilter from '../../molecules/CodexFilter';
 import SubmitButton from '../../atoms/SubmitButton';
-import InputRow from '../../atoms/InputRow';
+import TextInputRow from '../../atoms/TextInputRow';
 import SelectArray from '../../molecules/SelectArray';
 import store from '../../Redux/store';
 import codexFilter from '../../utilities/codexFilter';
+import NumberInputRow from '../../atoms/NumberInputRow';
 
 function NewUnitsPage() {
   const [newUnit, setNewUnit] = React.useState({
-    Codex: store.getState().codex, Name: '', Cost: '', Abilities: 'None', Gear: [],
+    Codex: store.getState().codex, Name: '', Cost: 0, Abilities: 'None', Gear: [],
   });
 
   function handleNameInput(input) { setNewUnit({ ...newUnit, Name: input }); }
@@ -40,9 +41,9 @@ function NewUnitsPage() {
       <PageTitle Title="New Units Page" />
       <form data-test="submitButton" onSubmit={handleNewUnitSubmission}>
         <CodexFilter />
-        <InputRow type="text" left="New Unit Name:" startValue={newUnit.Name} onInputChange={handleNameInput} />
-        <InputRow type="number" left="New Unit Cost:" startValue={newUnit.Cost} onInputChange={handleCostInput} />
-        <InputRow type="text" left="New Unit Abilities:" startValue={newUnit.Abilities} onInputChange={handleAbilitiesInput} />
+        <TextInputRow type="text" left="New Unit Name:" startValue={newUnit.Name} onInputChange={handleNameInput} />
+        <NumberInputRow left="New Unit Cost:" startValue={newUnit.Cost} onInputChange={handleCostInput} />
+        <TextInputRow type="text" left="New Unit Abilities:" startValue={newUnit.Abilities} onInputChange={handleAbilitiesInput} />
         <SelectArray
           codexArray={codexFilter(store.getState().equipment)}
           left="Gear:"

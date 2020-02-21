@@ -9,7 +9,7 @@ Enzyme.configure({ adapter: new EnzymeAdapter() });
 
 const setup = () => shallow(<RoleRow />);
 
-test('RoleRow component renders without error', () => {
+test('it should render', () => {
   const wrapper = setup();
   const component = findByTestAttr(wrapper, 'RoleRow');
   expect(component.length).toBe(1);

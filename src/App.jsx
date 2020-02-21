@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-import firebase from './firebase/firebase';
 import MainNavBar from './organisms/MainNavBar';
 import NotLoggedInNavBar from './organisms/NotLoggedInNavBar';
 import Footer from './organisms/footer';
@@ -21,14 +20,14 @@ import EditSquadsPage from './pages/Squads/EditSquadsPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import store from './Redux/store';
-import GetInitialData from './firebase/GetInitialData';
-import isLoggedIn from './Redux/reducers/isLoggedIn';
+import user from './Redux/reducers/user';
+import UserAuthorization from './firebase/UserAuthorization';
+import ForgotPasswordPage from './pages/ForgotPasswordPage';
 
 function App() {
-  // eslint-disable-next-line
-    useEffect(()=>{if(store.getState().isLoggedIn){GetInitialData()}},[store.getState().isLoggedIn]);
+  React.useEffect(() => UserAuthorization(), []);
 
-  return (store.getState().isLoggedIn) ? (
+  return (store.getState().user) ? (
     <Router data-test="APPLoggedIn">
       <MainNavBar />
       <Switch>
@@ -54,6 +53,7 @@ function App() {
       <Switch>
         <Route path="/auth/login" component={LoginPage} />
         <Route path="/auth/register" component={RegisterPage} />
+        <Route path="/auth/passwordreset" component={ForgotPasswordPage} />
         <Route path="/" component={HomePage} />
       </Switch>
       <Footer />
@@ -61,4 +61,4 @@ function App() {
   );
 }
 
-export default connect(isLoggedIn)(App);
+export default connect(user)(App);

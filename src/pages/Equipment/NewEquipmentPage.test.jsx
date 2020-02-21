@@ -10,7 +10,7 @@ firebase.firestore = firestore;
 Enzyme.configure({ adapter: new EnzymeAdapter() });
 
 const mocksetNewEquipment = jest.fn();
-const mocknewEquipment = { Codex: 'Golems', Name: '', Cost: '' };
+const mocknewEquipment = { Codex: 'Golems', Name: '', Cost: 0 };
 
 const setup = () => {
   mocksetNewEquipment.mockClear();
@@ -18,7 +18,7 @@ const setup = () => {
   return mount(<NewEquipmentPage />);
 };
 
-test('New Equipment Page renders without error', () => {
+test('it should render', () => {
   const wrapper = setup();
   const component = findByTestAttr(wrapper, 'newEquipmentPage');
   expect(component.length).toBe(1);

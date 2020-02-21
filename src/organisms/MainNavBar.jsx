@@ -1,11 +1,13 @@
 import React from 'react';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 import { NavLink, Link } from 'react-router-dom';
 import './NavBar.scss';
+import { connect } from 'react-redux';
 import store from '../Redux/store';
-import LoginChange from '../Redux/actions/LoginChange';
+import user from '../Redux/reducers/user';
 
 function MainNavBar() {
-  const userName = 'Test User 1';
   const [state, setState] = React.useState({ leftMenu: '', rightMenu: '' });
 
   function handleLeftClick() {
@@ -15,8 +17,8 @@ function MainNavBar() {
     if (state.rightMenu === '') { setState({ ...state, rightMenu: ('show') }); } else setState({ ...state, rightMenu: ('') });
   }
 
-  function handleLogout() {
-    store.dispatch(LoginChange(false));
+  async function handleLogout() {
+    await firebase.auth().signOut();
     window.location.hash = '/';
   }
 
@@ -59,7 +61,7 @@ function MainNavBar() {
           className="btn btn-success dropdown-toggle"
           onClick={() => handleRightClick()}
         >
-          {userName}
+          {store.getState().user.Name}
         </button>
         <div
           data-test="rightdropdownMenu"
@@ -69,7 +71,7 @@ function MainNavBar() {
           onKeyDown={() => handleRightClick()}
           tabIndex={0}
         >
-          <Link to="/userprofile" className="dropdown-item bg-secondary">Your Profile</Link>
+          <Link to="/userprofile" className="dropdown-item bg-secondary">View Profile</Link>
           <button
             data-test="logoutButton"
             type="button"
@@ -84,4 +86,4 @@ function MainNavBar() {
   );
 }
 
-export default MainNavBar;
+export default connect(user)(MainNavBar);

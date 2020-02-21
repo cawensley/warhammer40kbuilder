@@ -3,12 +3,13 @@ import firebase from 'firebase/app';
 import PageTitle from '../../atoms/PageTitle';
 import CodexFilter from '../../molecules/CodexFilter';
 import SubmitButton from '../../atoms/SubmitButton';
-import InputRow from '../../atoms/InputRow';
+import TextInputRow from '../../atoms/TextInputRow';
 import store from '../../Redux/store';
 import 'firebase/firestore';
+import NumberInputRow from '../../atoms/NumberInputRow';
 
 function NewEquipmentPage() {
-  const [newEquipment, setNewEquipment] = React.useState({ Codex: store.getState().codex, Name: '', Cost: '' });
+  const [newEquipment, setNewEquipment] = React.useState({ Codex: store.getState().codex, Name: '', Cost: 0 });
 
   function handleNameInput(input) { setNewEquipment({ ...newEquipment, Name: input }); }
   function handleCostInput(input) { setNewEquipment({ ...newEquipment, Cost: +input }); }
@@ -26,8 +27,8 @@ function NewEquipmentPage() {
       <PageTitle Title="New Equipment Page" />
       <form data-test="submitButton" onSubmit={newEquipmentSubmission}>
         <CodexFilter />
-        <InputRow type="text" left="New Equipment Name:" startValue={newEquipment.Name} onInputChange={handleNameInput} />
-        <InputRow type="number" left="New Equipment Cost:" startValue={newEquipment.Cost} onInputChange={handleCostInput} />
+        <TextInputRow type="text" left="New Equipment Name:" startValue={newEquipment.Name} onInputChange={handleNameInput} />
+        <NumberInputRow left="New Equipment Cost:" startValue={newEquipment.Cost} onInputChange={handleCostInput} />
         <SubmitButton buttontext="Add Equipment to Database" />
       </form>
     </div>

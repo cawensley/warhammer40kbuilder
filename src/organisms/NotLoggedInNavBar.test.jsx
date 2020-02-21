@@ -14,7 +14,7 @@ const setup = (mockShow) => {
   return shallow(<NotLoggedInNavBar />);
 };
 
-test('NotLoggedInNavBar renders without error', () => {
+test('it should render', () => {
   const wrapper = setup('');
   const component = findByTestAttr(wrapper, 'NotLoggedInNavBar');
   expect(component.length).toBe(1);
@@ -29,5 +29,11 @@ test('Dropdown menu click invokes SetShow function to remove SHOW', () => {
   const wrapper = setup('show');
   const dropdownMenu = findByTestAttr(wrapper, 'dropdown');
   dropdownMenu.simulate('click', { preventDefault() {} });
+  expect(mockSetShow).toHaveBeenCalledWith('');
+});
+test('Dropdown menu click invokes SetShow function to remove SHOW', () => {
+  const wrapper = setup('show');
+  const dropdownMenu = findByTestAttr(wrapper, 'dropdown');
+  dropdownMenu.simulate('keydown', { keyCode: 13 });
   expect(mockSetShow).toHaveBeenCalledWith('');
 });

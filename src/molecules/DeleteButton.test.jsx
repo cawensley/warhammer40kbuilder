@@ -13,7 +13,7 @@ const setup = (uniqueID, collectionName) => shallow(
   <DeleteButton uniqueID={uniqueID} collectionName={collectionName} />,
 );
 
-test('Delete Button renders without error', () => {
+test('it should render', () => {
   const wrapper = setup();
   const component = findByTestAttr(wrapper, 'deleteButton');
   expect(component.length).toBe(1);
@@ -29,5 +29,4 @@ test('Delete button click calls RemoveItem function', () => {
   const deleteButton = findByTestAttr(wrapper, 'deleteButton');
   deleteButton.simulate('click', { preventDefault() {} });
   expect(firestore().collection).toHaveBeenCalledWith('books');
-  expect(firestore().collection().doc).toHaveBeenCalledWith('JiminyCrickett');
 });
