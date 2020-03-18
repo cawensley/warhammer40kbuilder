@@ -9,6 +9,7 @@ import IDtoName from '../../atoms/IDtoName';
 import store from '../../Redux/store';
 import squads from '../../Redux/reducers/squads';
 import codexFilter from '../../utilities/codexFilter';
+import findRealUnitName from '../../utilities/findRealUnitName';
 
 function ViewSquadsPage() {
   return (
@@ -38,13 +39,7 @@ function ViewSquadsPage() {
               <div className="col-2">{squad.MinSize}</div>
               <div className="col-2">{squad.MaxSize}</div>
               <div className="col-2">
-                {squad.Units.map((item) => (
-                  <IDtoName
-                    key={item}
-                    searchArray={codexFilter(store.getState().units)}
-                    uniqueID={item}
-                  />
-                ))}
+                {squad.Units.map((item, index) => <div key={index}>{findRealUnitName(item)}</div>)}
               </div>
               <div className="col-1"><DeleteButton collectionName="squads" uniqueID={squad.id} /></div>
             </div>

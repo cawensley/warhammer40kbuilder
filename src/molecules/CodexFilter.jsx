@@ -1,6 +1,7 @@
 import React from 'react';
 import store from '../Redux/store';
 import CodexChange from '../Redux/actions/CodexChange';
+import handleInitialArmy from '../utilities/handleInitialArmy';
 
 function CodexFilter() {
   return (
@@ -12,7 +13,10 @@ function CodexFilter() {
           id="PageSelection"
           className="bg-white"
           value={store.getState().codex}
-          onChange={(event) => { store.dispatch(CodexChange(event.target.value)); }}
+          onChange={(event) => {
+            store.dispatch(CodexChange(event.target.value));
+            handleInitialArmy();
+          }}
         >
           {store.getState().codices.map((codex) => (<option data-test="options" key={codex.id} value={codex.id}>{codex.Name}</option>))}
         </select>

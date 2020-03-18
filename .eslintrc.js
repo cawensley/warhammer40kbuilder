@@ -23,5 +23,6 @@ module.exports = {
     'react',
   ],
   rules: {
+    "react/no-array-index-key": 0
   },
 };

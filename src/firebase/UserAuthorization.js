@@ -7,8 +7,8 @@ import GetInitialData from './GetInitialData';
 function UserAuthorization() {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-      GetInitialData();
       store.dispatch(UserChange({ uid: user.uid, Name: user.displayName, Email: user.email }));
+      GetInitialData();
     } else {
       store.dispatch(UserChange(null));
     }

@@ -5,10 +5,10 @@ import PageTitle from '../../atoms/PageTitle';
 import CodexFilter from '../../molecules/CodexFilter';
 import RedirectButton from '../../atoms/RedirectButton';
 import DeleteButton from '../../molecules/DeleteButton';
-import IDtoName from '../../atoms/IDtoName';
 import store from '../../Redux/store';
 import units from '../../Redux/reducers/units';
 import codexFilter from '../../utilities/codexFilter';
+import findRealEquipmentName from '../../utilities/findRealEquipmentName';
 
 function ViewUnitsPage() {
   return (
@@ -36,13 +36,9 @@ function ViewUnitsPage() {
               <div className="col-2">{unit.Cost}</div>
               <div className="col-2">{unit.Abilities}</div>
               <div className="col-3">
-                {unit.Gear.map((item) => (
-                  <IDtoName
-                    key={item}
-                    searchArray={codexFilter(store.getState().equipment)}
-                    uniqueID={item}
-                  />
-                ))}
+                {unit.Gear.map(
+                  (item, index) => <div key={index}>{findRealEquipmentName(item)}</div>,
+                )}
               </div>
               <div className="col-3"><DeleteButton collectionName="units" uniqueID={unit.id} /></div>
             </div>
