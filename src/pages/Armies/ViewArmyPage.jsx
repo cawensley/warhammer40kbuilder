@@ -13,12 +13,15 @@ import RedirectButton from '../../atoms/RedirectButton';
 
 function ViewArmyPage({ match }) {
   const viewArmyID = match.params.ID;
-  const displayArmy = store.getState().userArmies.filter((army) => army.id === viewArmyID)[0];
+  const displayArmy = store.getState().userArmies.filter((army) => army.id === viewArmyID)[0]
+  || store.getState().homeArmies.filter((army) => army.id === viewArmyID)[0];
 
   return (!displayArmy) ? (<PageLoading />) : (
     <div data-test="ViewArmyPage" className="container-fluid p-padding text-center">
       <PageTitle Title="View Army Page" />
-      <RedirectButton redirect={`/armies/edit/${displayArmy.id}`} buttontext="Edit Army" />
+      {(displayArmy.userID === store.getState().user.uid)
+        ? (<RedirectButton redirect={`/armies/edit/${displayArmy.id}`} buttontext="Edit Army" />)
+        : <div />}
       <TextRow left="Army Name:" right={displayArmy.Name} />
       <TextRow left="Points:" right={`${displayArmy.Points}`} />
       <div className="row justify-content-center mt-5">

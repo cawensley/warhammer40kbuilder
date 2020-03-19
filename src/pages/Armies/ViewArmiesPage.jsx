@@ -9,7 +9,7 @@ function ViewArmiesPage() {
   return (
     <div data-test="ViewArmiesPage" className="container-fluid p-padding text-center">
       <PageTitle Title="View Armies Page" />
-      <RedirectButton redirect="/armies/new" buttontext="Add Army" />
+      <RedirectButton redirect="/userArmies/new" buttontext="Add Army" />
       <div className="row justify-content-center mt-4">
         <div className="col-xl-8">
           <div className="row h3 text-warning">
@@ -34,7 +34,7 @@ function ViewArmiesPage() {
                 /
                 {army.Date.Year}
               </div>
-              <div className="col-3"><DeleteButton collectionName="armies" uniqueID={army.id} /></div>
+              <div className="col-3"><DeleteButton collectionName="userArmies" uniqueID={army.id} /></div>
             </div>
           ))}
         </div>

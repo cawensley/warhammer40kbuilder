@@ -13,9 +13,10 @@ export default function handleArmySubmission(input) {
         Month: new Date().getMonth(),
         Year: new Date().getFullYear(),
       },
+      exactDate: new Date(),
       SquadArray: store.getState().army.SquadArray,
     });
-    window.location.hash = '/armies/view';
+    window.location.hash = '/userArmies/view';
   } else {
     firebase.firestore().collection('armies').doc(input).set({
       userID: store.getState().user.uid,
@@ -26,8 +27,9 @@ export default function handleArmySubmission(input) {
         Month: new Date().getMonth(),
         Year: new Date().getFullYear(),
       },
+      exactDate: new Date(),
       SquadArray: store.getState().army.SquadArray,
     });
-    window.location.hash = '/armies/view';
+    window.location.hash = '/userArmies/view';
   }
 }

@@ -8,7 +8,7 @@ firebase.firestore = firestore;
 
 const mockUser = { uid: '999999', displayName: 'BobbyJoe', Email: 'bobbyJoe@gmail.com' };
 
-test('GetInitialData grabs five collections ', () => {
+test('GetInitialData grabs six collections ', () => {
   store.dispatch(UserChange(
     { uid: mockUser.uid, Name: mockUser.displayName, Email: mockUser.email },
   ));
@@ -18,4 +18,5 @@ test('GetInitialData grabs five collections ', () => {
   expect(firestore().collection).toHaveBeenCalledWith('equipment');
   expect(firestore().collection).toHaveBeenCalledWith('units');
   expect(firestore().collection).toHaveBeenCalledWith('squads');
+  expect(firestore().collection).toHaveBeenCalledWith('armies');
 });

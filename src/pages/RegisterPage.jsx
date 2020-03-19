@@ -22,7 +22,7 @@ function RegisterPage() {
         await firebase.auth().currentUser.updateProfile({ displayName: userInfo.Name });
         store.dispatch(UserChange({ ...store.getState().user, Name: userInfo.Name }));
       })
-      .then(() => { window.location.hash = '/armies/view'; })
+      .then(() => { window.location.hash = '/'; })
       .catch((error) => {
         setUserInfo({ ...userInfo, Error: error.message });
       });

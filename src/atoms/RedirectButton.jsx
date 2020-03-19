@@ -16,7 +16,7 @@ RedirectButton.propTypes = {
 };
 
 RedirectButton.defaultProps = {
-  redirect: '/armies',
+  redirect: '/userArmies',
   buttontext: null,
 };
 
