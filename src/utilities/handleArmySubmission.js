@@ -16,7 +16,7 @@ export default function handleArmySubmission(input) {
       exactDate: new Date(),
       SquadArray: store.getState().army.SquadArray,
     });
-    window.location.hash = '/userArmies/view';
+    window.location.hash = '/armies/view';
   } else {
     firebase.firestore().collection('armies').doc(input).set({
       userID: store.getState().user.uid,
@@ -30,6 +30,6 @@ export default function handleArmySubmission(input) {
       exactDate: new Date(),
       SquadArray: store.getState().army.SquadArray,
     });
-    window.location.hash = '/userArmies/view';
+    window.location.hash = '/armies/view';
   }
 }

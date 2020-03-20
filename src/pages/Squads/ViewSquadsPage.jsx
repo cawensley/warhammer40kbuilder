@@ -19,14 +19,14 @@ function ViewSquadsPage() {
       <RedirectButton redirect="/squads/new" buttontext="Add Squads" />
       <div className="row justify-content-center mt-4">
         <div className="col-xl-8">
-          <div className="row h3 text-warning">
+          <h3 className="row text-warning">
             <div className="col-3">Name</div>
             <div className="col-2">Role</div>
-            <div className="col-2">Min. Size</div>
-            <div className="col-2">Max. Size</div>
-            <div className="col-2">Units</div>
-            <div className="col-1" />
-          </div>
+            <div className="col-1">Min. Size</div>
+            <div className="col-1">Max. Size</div>
+            <div className="col-3">Units</div>
+            <div className="col-2" />
+          </h3>
           {codexFilter(store.getState().squads).map((squad) => (
             <div data-test="squadsDisplay" key={squad.id} className="row text-white align-items-center border border-secondary">
               <Link
@@ -36,12 +36,12 @@ function ViewSquadsPage() {
                 {squad.Name}
               </Link>
               <div className="col-2"><IDtoName searchArray={store.getState().roles} uniqueID={squad.Role} /></div>
-              <div className="col-2">{squad.MinSize}</div>
-              <div className="col-2">{squad.MaxSize}</div>
-              <div className="col-2">
+              <div className="col-1">{squad.MinSize}</div>
+              <div className="col-1">{squad.MaxSize}</div>
+              <div className="col-3">
                 {squad.Units.map((item, index) => <div key={index}>{findRealUnitName(item)}</div>)}
               </div>
-              <div className="col-1"><DeleteButton collectionName="squads" uniqueID={squad.id} /></div>
+              <div className="col-2"><DeleteButton collectionName="squads" uniqueID={squad.id} /></div>
             </div>
           ))}
         </div>

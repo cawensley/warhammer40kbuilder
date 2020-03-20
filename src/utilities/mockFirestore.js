@@ -16,6 +16,7 @@ const docData = {
   Abilities: 'None',
   Gear: [],
   Units: [],
+  userID: '2222',
 };
 const documents = { docs: [{ id: '1111', data: () => docData }] };
 const onSnapshot = jest.fn((success) => success(documents));

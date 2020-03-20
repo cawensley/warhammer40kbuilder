@@ -10,6 +10,38 @@ body {
   background-color: $primary;
 }
 
+@media (max-width: 767px) {
+  body { font-size: 8px; }
+  h1 { font-size: 25px; }
+  h3 { font-size: 12px; }
+  .nav-link { font-size: 15px; }
+
+  .btn {
+    font-size: 8px;
+    padding: 4px 6px;
+  }
+
+  .col-1 {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .col-2 {
+    padding-right: 2px;
+    padding-left: 2px;
+  }
+
+  .col-3 {
+    padding-right: 3px;
+    padding-left: 3px;
+  }
+
+  .col-4 {
+    padding-right: 4px;
+    padding-left: 4px;
+  }
+}
+
 .p-padding {
   padding-top: 5rem;
   padding-bottom: 3rem;

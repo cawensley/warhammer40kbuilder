@@ -26,6 +26,7 @@ const setup = (isLoading) => {
 
 const mockRoles = [{ id: '1111', Name: 'HQ', SortOrder: 0 }];
 const mockUser = { uid: '2222' };
+const mockUser2 = { uid: '4444' };
 const mockCodex = 'zzzzzzz';
 const mockSquad = [{
   id: 'TigerSquad', Codex: 'zzzzzzz', Name: 'PirateSquad11', Role: '1111', MinSize: 1, MaxSize: 5, Units: ['TigerLeader'],
@@ -62,4 +63,12 @@ test('it shouldnt render with isLoading set to true', () => {
   const wrapper = setup(true);
   const component = findByTestAttr(wrapper, 'EditArmyPage');
   expect(component.length).toBe(0);
+});
+test('Doest allow edit if the User.uid doesnt match army UserID', () => {
+  global.window = Object.create(window);
+  const url = '/';
+  Object.defineProperty(window, 'location', { value: { hash: url } });
+  store.dispatch(UserChange(mockUser2));
+  setup(false);
+  expect(window.location.hash).toEqual(url);
 });

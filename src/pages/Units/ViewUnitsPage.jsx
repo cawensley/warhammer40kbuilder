@@ -18,13 +18,13 @@ function ViewUnitsPage() {
       <RedirectButton redirect="/units/new" buttontext="Add Units" />
       <div className="row justify-content-center mt-4">
         <div className="col-xl-8">
-          <div className="row h3 text-warning">
+          <h3 className="row text-warning">
             <div className="col-2">Name</div>
-            <div className="col-2">Cost</div>
-            <div className="col-2">Abilities</div>
+            <div className="col-1">Cost</div>
+            <div className="col-4">Abilities</div>
             <div className="col-3">Gear</div>
-            <div className="col-3" />
-          </div>
+            <div className="col-2" />
+          </h3>
           {codexFilter(store.getState().units).map((unit) => (
             <div data-test="unitsDisplay" key={unit.id} className="row text-white align-items-center border border-secondary">
               <Link
@@ -33,14 +33,14 @@ function ViewUnitsPage() {
               >
                 {unit.Name}
               </Link>
-              <div className="col-2">{unit.Cost}</div>
-              <div className="col-2">{unit.Abilities}</div>
+              <div className="col-1">{unit.Cost}</div>
+              <div className="col-4">{unit.Abilities}</div>
               <div className="col-3">
                 {unit.Gear.map(
                   (item, index) => <div key={index}>{findRealEquipmentName(item)}</div>,
                 )}
               </div>
-              <div className="col-3"><DeleteButton collectionName="units" uniqueID={unit.id} /></div>
+              <div className="col-2"><DeleteButton collectionName="units" uniqueID={unit.id} /></div>
             </div>
           ))}
         </div>

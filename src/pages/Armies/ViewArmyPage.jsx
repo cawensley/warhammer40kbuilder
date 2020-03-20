@@ -26,13 +26,13 @@ function ViewArmyPage({ match }) {
       <TextRow left="Points:" right={`${displayArmy.Points}`} />
       <div className="row justify-content-center mt-5">
         <div className="col-xl-8">
-          <div className="row h4 text-warning">
+          <h3 className="row text-warning">
             <div className="col-2">Squad</div>
-            <div className="col-2">Unit Qty</div>
-            <div className="col-2">Unit</div>
+            <div className="col-1">Qty</div>
+            <div className="col-3">Unit</div>
             <div className="col-3">Unit Abilities</div>
             <div className="col-3">Gear</div>
-          </div>
+          </h3>
           {displayArmy.SquadArray.map((roleArray) => (
             <div key={roleArray.Role.id}>
               {(roleArray.Squads.length > 0) ? (
@@ -45,10 +45,10 @@ function ViewArmyPage({ match }) {
                 </div>
               ) : <div />}
               {roleArray.Squads.map((squad, index) => (
-                <div key={index} className="row text-white">
+                <div key={index} className="row text-white align-items-center">
                   <div className="col-2">{(squad.Squad !== null) ? (findRealSquadName(squad.Squad)) : '' }</div>
-                  <div className="col-2">{(squad.UnitQTY !== null) ? (squad.UnitQTY) : ''}</div>
-                  <div className="col-2">{(squad.Unit !== null) ? (findRealUnitName(squad.Unit)) : ''}</div>
+                  <div className="col-1">{(squad.UnitQTY !== null) ? (squad.UnitQTY) : ''}</div>
+                  <div className="col-3">{(squad.Unit !== null) ? (findRealUnitName(squad.Unit)) : ''}</div>
                   <div className="col-3">{(squad.Unit !== null) ? (findUnitAbilities(squad.Unit)) : ''}</div>
                   <div className="col-3">{findRealEquipmentName(squad.Equipment)}</div>
                 </div>
