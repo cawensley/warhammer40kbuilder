@@ -1,14 +1,10 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import store from '../Redux/store';
-import nameAscend from '../utilities/nameAscend';
-import numberAscend from '../utilities/numberAscend';
-import CodicesChange from '../Redux/actions/CodicesChange';
-import RolesChange from '../Redux/actions/RolesChange';
-import EquipmentChange from '../Redux/actions/EquipmentChange';
-import UnitsChange from '../Redux/actions/UnitsChange';
-import SquadsChange from '../Redux/actions/SquadsChange';
-import UserArmiesChange from '../Redux/actions/UserArmiesChange';
+import { nameAscend, numberAscend } from '../utilities/sortAscending';
+import {
+  RolesChange, CodicesChange, EquipmentChange, UnitsChange, SquadsChange, UserArmiesChange,
+} from '../Redux/actions/index';
 
 function GetInitialData() {
   firebase.firestore().collection('codices').get().then((snapshot) => {

@@ -8,7 +8,7 @@ import store from '../../Redux/store';
 import 'firebase/firestore';
 import NumberInputRow from '../../atoms/NumberInputRow';
 
-function NewEquipmentPage() {
+const NewEquipmentPage = () => {
   const [newEquipment, setNewEquipment] = React.useState({ Codex: store.getState().codex, Name: '', Cost: 0 });
 
   function handleNameInput(input) { setNewEquipment({ ...newEquipment, Name: input }); }
@@ -33,6 +33,6 @@ function NewEquipmentPage() {
       </form>
     </div>
   );
-}
+};
 
 export default NewEquipmentPage;

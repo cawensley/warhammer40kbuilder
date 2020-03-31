@@ -26,7 +26,7 @@ import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import ViewArmyPage from './pages/Armies/ViewArmyPage';
 import EditArmyPage from './pages/Armies/EditArmyPage';
 
-function App() {
+const App = () => {
   React.useEffect(() => UserAuthorization(), []);
 
   return (store.getState().user) ? (
@@ -63,6 +63,6 @@ function App() {
       <Footer />
     </Router>
   );
-}
+};
 
 export default connect(user)(App);

@@ -1,23 +1,35 @@
 import React from 'react';
 import store from '../Redux/store';
-import ArmyPointsChange from '../Redux/actions/ArmyPointsChange';
+import ArmyPointsChange from '../Redux/actions/ArmyPointsChange/ArmyPointsChange';
 
-function PointsRow() {
+const PointsRow = () => {
+  function GetUnitCost(unitID) {
+    if (store.getState().units
+      .filter((data) => data.id.includes(unitID)).length > 0) {
+      return store.getState().units
+        .filter((data) => data.id.includes(unitID))[0].Cost;
+    } return 0;
+  }
+
+  function GetGearCost(equipmentID) {
+    if (store.getState().equipment
+      .filter((data) => data.id.includes(equipmentID)).length > 0) {
+      return store.getState().equipment
+        .filter((data) => data.id.includes(equipmentID))[0].Cost;
+    } return 0;
+  }
+
   function calculateArmyPoints() {
     let totalPoints = 0;
     let unitQTY = 1;
     store.getState().army.SquadArray.forEach((squadRow) => {
       squadRow.Squads.forEach((squad) => {
+        const gearCost = GetGearCost(squad.Equipment);
         if (squad.Unit) {
           unitQTY = squad.UnitQTY;
-          const unitCost = store.getState().units
-            .filter((data) => data.id.includes(squad.Unit))[0].Cost;
-          const gearCost = store.getState().equipment
-            .filter((data) => data.id.includes(squad.Equipment))[0].Cost;
+          const unitCost = GetUnitCost(squad.Unit);
           totalPoints += unitQTY * (unitCost + gearCost);
         } else {
-          const gearCost = store.getState().equipment
-            .filter((data) => data.id.includes(squad.Equipment))[0].Cost;
           totalPoints += unitQTY * gearCost;
         }
       });
@@ -37,6 +49,6 @@ function PointsRow() {
       </div>
     </div>
   );
-}
+};
 
 export default PointsRow;

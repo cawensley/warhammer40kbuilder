@@ -5,7 +5,7 @@ import PageTitle from '../atoms/PageTitle';
 import TextInputRow from '../atoms/TextInputRow';
 import SubmitButton from '../atoms/SubmitButton';
 
-function ForgotPasswordPage() {
+const ForgotPasswordPage = () => {
   const [userInfo, setUserInfo] = React.useState({ Email: '', Message: '' });
 
   function handleEmailInput(input) { setUserInfo({ ...userInfo, Email: input }); }
@@ -28,6 +28,6 @@ function ForgotPasswordPage() {
       <div className="text-info mt-4">{userInfo.Message}</div>
     </div>
   );
-}
+};
 
 export default ForgotPasswordPage;

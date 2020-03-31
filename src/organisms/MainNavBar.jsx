@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import store from '../Redux/store';
 import user from '../Redux/reducers/user';
 
-function MainNavBar() {
+const MainNavBar = () => {
   const [state, setState] = React.useState({ leftMenu: '', rightMenu: '' });
 
   function handleLeftClick() {
@@ -84,6 +84,6 @@ function MainNavBar() {
       </div>
     </nav>
   );
-}
+};
 
 export default connect(user)(MainNavBar);

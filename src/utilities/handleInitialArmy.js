@@ -1,6 +1,6 @@
 import store from '../Redux/store';
-import ArmySquadChange from '../Redux/actions/ArmySquadChange';
-import ArmyNameChange from '../Redux/actions/ArmyNameChange';
+import ArmySquadChange from '../Redux/actions/ArmySquadChange/ArmySquadChange';
+import ArmyNameChange from '../Redux/actions/ArmyNameChange/ArmyNameChange';
 
 export default function handleInitialArmy() {
   const initialArray = [];

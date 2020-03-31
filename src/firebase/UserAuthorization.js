@@ -1,7 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import store from '../Redux/store';
-import UserChange from '../Redux/actions/UserChange';
+import UserChange from '../Redux/actions/UserChange/UserChange';
 import GetInitialData from './GetInitialData';
 
 function UserAuthorization() {

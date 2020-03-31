@@ -1,6 +1,7 @@
 const docData = {
   Name: 'Bob',
   Points: 0,
+  Codex: 'zzzzzzz',
   Date: { Day: 2, Month: 2, Year: 2 },
   SquadArray: [{
     Role: { id: '1111', Name: 'HQ', SortOrder: 0 },
@@ -28,6 +29,7 @@ const collection = jest.fn(() => ({
   add: jest.fn(),
   onSnapshot: jest.fn((success) => success(documents)),
 }));
-function firestore() { return { collection }; }
+
+const firestore = () => ({ collection });
 
 export default firestore;

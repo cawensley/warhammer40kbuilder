@@ -1,43 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import store from '../Redux/store';
-import findPreviousSquad from '../utilities/findPreviousSquad';
-import ArmyUnitQTYChange from '../Redux/actions/ArmyUnitQTYChange';
+import { findPreviousSquad } from '../utilities/findPrevious';
+import ArmyUnitQTYChange from '../Redux/actions/ArmyUnitQTYChange/ArmyUnitQTYChange';
 
-function UnitQuantity({ roleIndex, rowIndex }) {
-  const [choices, setChoices] = React.useState([]);
-  const minChoice = findPreviousSquad(roleIndex, rowIndex)[0].MinSize;
-  const maxChoice = findPreviousSquad(roleIndex, rowIndex)[0].MaxSize;
+const UnitQuantity = ({ roleIndex, rowIndex }) => {
+  let choices = [];
+  const minChoice = findPreviousSquad(roleIndex, rowIndex).MinSize;
+  const maxChoice = findPreviousSquad(roleIndex, rowIndex).MaxSize;
+  const currentChoice = store.getState().army.SquadArray[roleIndex].Squads[rowIndex].UnitQTY;
 
   React.useEffect(() => {
     const newChoices = [];
     for (let i = minChoice; i <= maxChoice; i += 1) { newChoices.push(i); }
-    setChoices(newChoices);
-    if (
-      !newChoices.includes(+store.getState().army.SquadArray[roleIndex].Squads[rowIndex].UnitQTY)
-    ) {
+    choices = newChoices;
+    if (!newChoices.includes(+currentChoice)) {
       store.dispatch(ArmyUnitQTYChange({ roleIndex, rowIndex, UnitQTY: newChoices[0] }));
     }
-    // eslint-disable-next-line
-  }, [maxChoice]);
+  }, [maxChoice, minChoice, roleIndex, rowIndex, currentChoice]);
 
   return (
     <select
       data-test="selectInput"
       className="bg-white col-2"
-      value={store.getState().army.SquadArray[roleIndex].Squads[rowIndex].UnitQTY}
+      value={currentChoice}
       onChange={(event) => store.dispatch(ArmyUnitQTYChange(
         { roleIndex, rowIndex, UnitQTY: event.target.value },
       ))}
     >
-      {(choices.length > 0)
-        ? choices.map(
-          (choice) => <option key={choice} value={choice}>{choice}</option>,
-        )
-        : <option key="0" value="0">No Array Provided</option>}
+      {choices.map((choice) => (<option key={choice} value={choice}>{choice}</option>))}
     </select>
   );
-}
+};
 
 UnitQuantity.propTypes = {
   roleIndex: PropTypes.number,

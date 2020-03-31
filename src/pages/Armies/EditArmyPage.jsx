@@ -1,20 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import firebase from 'firebase/app';
+import { v4 as uuidv4 } from 'uuid';
 import PageTitle from '../../atoms/PageTitle';
 import store from '../../Redux/store';
 import PageLoading from '../../atoms/PageLoading';
-import ArmyNameChange from '../../Redux/actions/ArmyNameChange';
-import ArmySquadChange from '../../Redux/actions/ArmySquadChange';
+import { ArmyNameChange, CodexChange } from '../../Redux/actions/index';
+import ArmySquadChange from '../../Redux/actions/ArmySquadChange/ArmySquadChange';
 import TextInputRow from '../../atoms/TextInputRow';
 import PointsRow from '../../atoms/PointsRow';
 import SubmitButton from '../../atoms/SubmitButton';
 import SquadRow from '../../organisms/SquadRow';
 import 'firebase/firestore';
-import handleArmySubmission from '../../utilities/handleArmySubmission';
-import CodexChange from '../../Redux/actions/CodexChange';
 
-function EditArmyPage({ match }) {
+const EditArmyPage = ({ match }) => {
   const editArmyID = match.params.ID;
   const [isLoading, setisLoading] = React.useState(false);
 
@@ -22,7 +21,10 @@ function EditArmyPage({ match }) {
 
   function getEditArmyInfo() {
     setisLoading(true);
-    firebase.firestore().collection('armies').doc(editArmyID).get()
+    firebase.firestore()
+      .collection('armies')
+      .doc(editArmyID)
+      .get()
       .then((doc) => {
         store.dispatch(ArmySquadChange(doc.data().SquadArray));
         store.dispatch(ArmyNameChange(doc.data().Name));
@@ -39,24 +41,40 @@ function EditArmyPage({ match }) {
     setisLoading(false);
   }
 
-  // eslint-disable-next-line
-  React.useEffect(()=>{getEditArmyInfo()},[]);
+  function handleArmySubmission() {
+    firebase.firestore().collection('armies').doc(editArmyID).set({
+      userID: store.getState().user.uid,
+      Name: store.getState().army.Name,
+      Points: store.getState().armyPoints,
+      Date: {
+        Day: new Date().getDate(),
+        Month: new Date().getMonth(),
+        Year: new Date().getFullYear(),
+      },
+      SquadArray: store.getState().army.SquadArray,
+    });
+    window.location.hash = '/armies/view';
+  }
 
-  return (isLoading) ? <PageLoading /> : (
+  React.useEffect(() => { getEditArmyInfo(); }, []);
+
+  if (isLoading) { return <PageLoading />; }
+
+  return (
     <div data-test="EditArmyPage" className="container-fluid p-padding text-center">
       <PageTitle Title="Edit Army Page" />
-      <form data-test="submitButton" onSubmit={() => handleArmySubmission(editArmyID)}>
+      <form data-test="submitButton" onSubmit={() => handleArmySubmission()}>
         <TextInputRow type="text" left="Army Name:" startValue={store.getState().army.Name} onInputChange={handleNameInput} />
         <PointsRow />
         <SubmitButton buttontext="Save Changes to Army" />
         {store.getState().army.SquadArray.map(
-          (row, index) => <SquadRow key={index} roleIndex={index} />,
+          (row, index) => <SquadRow key={uuidv4()} roleIndex={index} />,
         )}
         <SubmitButton buttontext="Save Changes to Army" />
       </form>
     </div>
   );
-}
+};
 
 EditArmyPage.propTypes = {
   match: PropTypes.shape({

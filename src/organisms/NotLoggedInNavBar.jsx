@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './NavBar.scss';
 
-function NotLoggedInNavBar() {
+const NotLoggedInNavBar = () => {
   const [show, setShow] = React.useState('');
 
   function handleNavClick() { if (show === '') { setShow('show'); } else setShow(''); }
@@ -36,6 +36,6 @@ function NotLoggedInNavBar() {
       </div>
     </nav>
   );
-}
+};
 
 export default NotLoggedInNavBar;
