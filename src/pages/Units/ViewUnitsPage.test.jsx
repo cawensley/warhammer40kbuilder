@@ -1,15 +1,10 @@
 import React from 'react';
-import Enzyme, { mount } from 'enzyme';
-import EnzymeAdapter from 'enzyme-adapter-react-16';
 import { Provider } from 'react-redux';
 import { HashRouter as Router } from 'react-router-dom';
 import store from '../../Redux/store';
-import { findByTestAttr } from '../../utilities/testutils';
+import { mount, findByTestAttr } from '../../utilities/setupTests';
 import ViewUnitsPage from './ViewUnitsPage';
-import CodexChange from '../../Redux/actions/CodexChange';
-import UnitsChange from '../../Redux/actions/UnitsChange';
-
-Enzyme.configure({ adapter: new EnzymeAdapter() });
+import { CodexChange, UnitsChange } from '../../Redux/actions/index';
 
 const setup = () => mount(
   <Provider store={store}>
@@ -28,12 +23,15 @@ const mockUnitsArray = [{
 test('it should render', () => {
   const wrapper = setup();
   const component = findByTestAttr(wrapper, 'ViewUnitsPage');
+
   expect(component.length).toBe(1);
 });
+
 test('View Units Page renders data when Codex and UnitsArray are in redux', () => {
   store.dispatch(CodexChange('Pirates'));
   store.dispatch(UnitsChange(mockUnitsArray));
   const wrapper = setup();
   const component = findByTestAttr(wrapper, 'unitsDisplay');
+
   expect(component.length).toBe(1);
 });

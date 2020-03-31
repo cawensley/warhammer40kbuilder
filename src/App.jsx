@@ -13,7 +13,7 @@ import ViewEquipmentPage from './pages/Equipment/ViewEquipmentPage';
 import NewEquipmentPage from './pages/Equipment/NewEquipmentPage';
 import NewUnitsPage from './pages/Units/NewUnitsPage';
 import NewSquadsPage from './pages/Squads/NewSquadsPage';
-import NewArmiesPage from './pages/Armies/NewArmiesPage';
+import NewArmiesPage from './pages/Armies/NewArmyPage';
 import EditEquipmentPage from './pages/Equipment/EditEquipmentPage';
 import EditUnitsPage from './pages/Units/EditUnitsPage';
 import EditSquadsPage from './pages/Squads/EditSquadsPage';
@@ -23,14 +23,18 @@ import store from './Redux/store';
 import user from './Redux/reducers/user';
 import UserAuthorization from './firebase/UserAuthorization';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
+import ViewArmyPage from './pages/Armies/ViewArmyPage';
+import EditArmyPage from './pages/Armies/EditArmyPage';
 
-function App() {
+const App = () => {
   React.useEffect(() => UserAuthorization(), []);
 
   return (store.getState().user) ? (
     <Router data-test="APPLoggedIn">
       <MainNavBar />
       <Switch>
+        <Route path="/armies/edit/:ID" component={EditArmyPage} />
+        <Route path="/armies/view/:ID" component={ViewArmyPage} />
         <Route path="/armies/view" component={ViewArmiesPage} />
         <Route path="/armies/new" component={NewArmiesPage} />
         <Route path="/squads/view" component={ViewSquadsPage} />
@@ -59,6 +63,6 @@ function App() {
       <Footer />
     </Router>
   );
-}
+};
 
 export default connect(user)(App);

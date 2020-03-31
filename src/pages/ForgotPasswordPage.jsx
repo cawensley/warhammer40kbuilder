@@ -5,7 +5,7 @@ import PageTitle from '../atoms/PageTitle';
 import TextInputRow from '../atoms/TextInputRow';
 import SubmitButton from '../atoms/SubmitButton';
 
-function ForgotPasswordPage() {
+const ForgotPasswordPage = () => {
   const [userInfo, setUserInfo] = React.useState({ Email: '', Message: '' });
 
   function handleEmailInput(input) { setUserInfo({ ...userInfo, Email: input }); }
@@ -22,12 +22,12 @@ function ForgotPasswordPage() {
     <div data-test="ForgotPasswordPage" className="container-fluid p-padding text-center">
       <PageTitle Title="Forgot Password?" />
       <form data-test="submitButton" onSubmit={ResetPassword}>
-        <TextInputRow left="Account Email:" startValue={userInfo.Email} onInputChange={handleEmailInput} />
+        <TextInputRow type="email" left="Account Email:" startValue={userInfo.Email} onInputChange={handleEmailInput} />
         <SubmitButton buttontext="Send Reset Password Email" />
       </form>
       <div className="text-info mt-4">{userInfo.Message}</div>
     </div>
   );
-}
+};
 
 export default ForgotPasswordPage;

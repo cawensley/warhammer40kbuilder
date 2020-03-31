@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function TextInputRow({
+const TextInputRow = ({
   type, left, onInputChange, startValue,
-}) {
+}) => {
   function handleInputChange(event) { onInputChange(event.target.value); }
 
   return (
@@ -23,7 +23,7 @@ function TextInputRow({
       </div>
     </div>
   );
-}
+};
 
 TextInputRow.propTypes = {
   left: PropTypes.string,

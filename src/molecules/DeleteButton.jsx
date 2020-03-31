@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 
-function DeleteButton({ collectionName, uniqueID }) {
+const DeleteButton = ({ collectionName, uniqueID }) => {
   function RemoveItem() {
     return firebase.firestore().collection(`${collectionName}`).doc(uniqueID).delete();
   }
@@ -19,7 +19,7 @@ function DeleteButton({ collectionName, uniqueID }) {
       Delete
     </button>
   );
-}
+};
 
 DeleteButton.propTypes = {
   uniqueID: PropTypes.string,

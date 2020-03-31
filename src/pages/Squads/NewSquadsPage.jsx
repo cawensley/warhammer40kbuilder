@@ -11,7 +11,7 @@ import store from '../../Redux/store';
 import codexFilter from '../../utilities/codexFilter';
 import NumberInputRow from '../../atoms/NumberInputRow';
 
-function NewSquadsPage() {
+const NewSquadsPage = () => {
   const [newSquad, setNewSquad] = React.useState({
     Codex: store.getState().codex, Name: '', Role: store.getState().role, MinSize: 0, MaxSize: 0, Units: [],
   });
@@ -41,7 +41,6 @@ function NewSquadsPage() {
     React.useEffect(()=>setNewSquad({...newSquad,Role:store.getState().role}),[store.getState().role]);
 
   return (
-
     <div data-test="newSquadsPage" className="container-fluid p-padding text-center">
       <PageTitle Title="New Squads Page" />
       <form data-test="submitButton" onSubmit={handleNewSquadSubmission}>
@@ -61,6 +60,6 @@ function NewSquadsPage() {
       </form>
     </div>
   );
-}
+};
 
 export default NewSquadsPage;

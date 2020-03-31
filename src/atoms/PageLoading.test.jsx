@@ -1,13 +1,10 @@
 import React from 'react';
-import Enzyme, { shallow } from 'enzyme';
-import EnzymeAdapter from 'enzyme-adapter-react-16';
-import { findByTestAttr } from '../utilities/testutils';
+import { findByTestAttr, shallow } from '../utilities/setupTests';
 import PageLoading from './PageLoading';
-
-Enzyme.configure({ adapter: new EnzymeAdapter() });
 
 test('it should render', () => {
   const wrapper = shallow(<PageLoading />);
   const component = findByTestAttr(wrapper, 'loadingSpinCog');
+
   expect(component.length).toBe(1);
 });

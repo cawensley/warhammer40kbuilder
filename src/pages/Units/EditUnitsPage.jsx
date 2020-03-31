@@ -12,7 +12,7 @@ import store from '../../Redux/store';
 import codexFilter from '../../utilities/codexFilter';
 import NumberInputRow from '../../atoms/NumberInputRow';
 
-function EditUnitsPage({ match }) {
+const EditUnitsPage = ({ match }) => {
   const editUnitID = match.params.ID;
   const [state, setState] = React.useState({
     isLoading: false,
@@ -86,7 +86,7 @@ function EditUnitsPage({ match }) {
       </form>
     </div>
   );
-}
+};
 
 EditUnitsPage.propTypes = {
   match: PropTypes.shape({

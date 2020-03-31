@@ -10,7 +10,7 @@ import store from '../../Redux/store';
 import codexFilter from '../../utilities/codexFilter';
 import NumberInputRow from '../../atoms/NumberInputRow';
 
-function NewUnitsPage() {
+const NewUnitsPage = () => {
   const [newUnit, setNewUnit] = React.useState({
     Codex: store.getState().codex, Name: '', Cost: 0, Abilities: 'None', Gear: [],
   });
@@ -55,6 +55,6 @@ function NewUnitsPage() {
       </form>
     </div>
   );
-}
+};
 
 export default NewUnitsPage;

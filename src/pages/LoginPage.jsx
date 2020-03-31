@@ -5,7 +5,7 @@ import PageTitle from '../atoms/PageTitle';
 import TextInputRow from '../atoms/TextInputRow';
 import SubmitButton from '../atoms/SubmitButton';
 
-function LoginPage() {
+const LoginPage = () => {
   const [userInfo, setUserInfo] = React.useState({ Email: '', Password: '', Error: '' });
 
   function handleEmailInput(input) { setUserInfo({ ...userInfo, Email: input }); }
@@ -30,6 +30,6 @@ function LoginPage() {
       <div className="text-danger mt-4">{userInfo.Error}</div>
     </div>
   );
-}
+};
 
 export default LoginPage;

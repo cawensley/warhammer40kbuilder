@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import IDtoName from '../atoms/IDtoName';
 import store from '../Redux/store';
 
-function SelectArray({
+const SelectArray = ({
   codexArray, left, onItemAdd, onItemRemove, arrayDisplay,
-}) {
+}) => {
   const [thingSelected, setThingSelected] = React.useState();
 
   // eslint-disable-next-line
@@ -50,7 +50,7 @@ function SelectArray({
       </div>
     </div>
   );
-}
+};
 
 SelectArray.propTypes = {
   codexArray: PropTypes.arrayOf(PropTypes.shape({

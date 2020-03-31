@@ -1,15 +1,10 @@
 import React from 'react';
-import Enzyme, { mount } from 'enzyme';
-import EnzymeAdapter from 'enzyme-adapter-react-16';
 import { Provider } from 'react-redux';
 import { HashRouter as Router } from 'react-router-dom';
 import store from '../../Redux/store';
-import { findByTestAttr } from '../../utilities/testutils';
+import { mount, findByTestAttr } from '../../utilities/setupTests';
 import ViewSquadsPage from './ViewSquadsPage';
-import CodexChange from '../../Redux/actions/CodexChange';
-import SquadsChange from '../../Redux/actions/SquadsChange';
-
-Enzyme.configure({ adapter: new EnzymeAdapter() });
+import { CodexChange, SquadsChange } from '../../Redux/actions/index';
 
 const setup = () => mount(
   <Provider store={store}>
@@ -31,12 +26,15 @@ const mockSquadsArray = [
 test('it should render', () => {
   const wrapper = setup();
   const component = findByTestAttr(wrapper, 'ViewSquadsPage');
+
   expect(component.length).toBe(1);
 });
+
 test('View Squads Page renders data when Codex and SquadsArray are in redux', () => {
   store.dispatch(CodexChange('Ninjas'));
   store.dispatch(SquadsChange(mockSquadsArray));
   const wrapper = setup();
   const component = findByTestAttr(wrapper, 'squadsDisplay');
+
   expect(component.length).toBe(1);
 });
