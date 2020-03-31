@@ -7,6 +7,9 @@ import roles from './roles';
 import units from './units';
 import squads from './squads';
 import user from './user';
+import army from './army';
+import armyPoints from './armyPoints';
+import userArmies from './userArmies';
 
 export default combineReducers({
   codex,
@@ -17,4 +20,7 @@ export default combineReducers({
   squads,
   units,
   user,
+  army,
+  armyPoints,
+  userArmies,
 });

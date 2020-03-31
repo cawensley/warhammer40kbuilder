@@ -10,7 +10,7 @@ import TextInputRow from '../../atoms/TextInputRow';
 import store from '../../Redux/store';
 import NumberInputRow from '../../atoms/NumberInputRow';
 
-function EditEquipmentPage({ match }) {
+const EditEquipmentPage = ({ match }) => {
   const editEquipmentID = match.params.ID;
   const [state, setState] = React.useState({ isLoading: false, Equipment: { Codex: store.getState().codex, Name: '', Cost: 0 } });
 
@@ -60,7 +60,7 @@ function EditEquipmentPage({ match }) {
       </form>
     </div>
   );
-}
+};
 
 EditEquipmentPage.propTypes = {
   match: PropTypes.shape({

@@ -5,9 +5,9 @@ import PageTitle from '../atoms/PageTitle';
 import TextInputRow from '../atoms/TextInputRow';
 import SubmitButton from '../atoms/SubmitButton';
 import store from '../Redux/store';
-import UserChange from '../Redux/actions/UserChange';
+import UserChange from '../Redux/actions/UserChange/UserChange';
 
-function RegisterPage() {
+const RegisterPage = () => {
   const [userInfo, setUserInfo] = React.useState({
     Name: '', Email: '', Password: '', Error: '',
   });
@@ -40,6 +40,6 @@ function RegisterPage() {
       <div className="text-danger mt-4">{userInfo.Error}</div>
     </div>
   );
-}
+};
 
 export default RegisterPage;

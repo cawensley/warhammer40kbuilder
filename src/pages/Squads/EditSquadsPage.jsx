@@ -11,10 +11,10 @@ import SelectArray from '../../molecules/SelectArray';
 import RoleRow from '../../molecules/RoleRow';
 import store from '../../Redux/store';
 import codexFilter from '../../utilities/codexFilter';
-import RoleChange from '../../Redux/actions/RoleChange';
+import RoleChange from '../../Redux/actions/RoleChange/RoleChange';
 import NumberInputRow from '../../atoms/NumberInputRow';
 
-function EditSquadsPage({ match }) {
+const EditSquadsPage = ({ match }) => {
   const editSquadID = match.params.ID;
   const [state, setState] = React.useState({
     isLoading: false,
@@ -95,7 +95,7 @@ function EditSquadsPage({ match }) {
       </form>
     </div>
   );
-}
+};
 
 EditSquadsPage.propTypes = {
   match: PropTypes.shape({

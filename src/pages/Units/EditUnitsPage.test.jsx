@@ -1,13 +1,9 @@
 import React from 'react';
-import Enzyme, { mount } from 'enzyme';
-import EnzymeAdapter from 'enzyme-adapter-react-16';
 import firebase from 'firebase/app';
-import { findByTestAttr } from '../../utilities/testutils';
-import firestore from '../../utilities/mockFirestore';
+import { mount, findByTestAttr, firestore } from '../../utilities/setupTests';
 import EditUnitsPage from './EditUnitsPage';
 
 firebase.firestore = firestore;
-Enzyme.configure({ adapter: new EnzymeAdapter() });
 
 const mockSetState = jest.fn();
 const mockUnit = {
@@ -23,23 +19,30 @@ const setup = (isLoading) => {
 test('it should render', () => {
   const wrapper = setup(false);
   const component = findByTestAttr(wrapper, 'editUnitsPage');
+
   expect(component.length).toBe(1);
 });
+
 test('Edit Units Page doesnt render when Loading', () => {
   const wrapper = setup(true);
   const component = findByTestAttr(wrapper, 'editUnitsPage');
+
   expect(component.length).toBe(0);
 });
+
 test('Edit Units submit button click calls SET function', () => {
   const wrapper = setup(false);
   const submitButton = findByTestAttr(wrapper, 'submitButton');
   submitButton.simulate('submit', { preventDefault() {} });
+
   expect(firestore().collection).toHaveBeenCalledWith('units');
 });
+
 test('Edit Units handleNameInput function works properly', () => {
   const wrapper = setup(false);
   const inputBox = findByTestAttr(wrapper, 'input-box').at(0);
   inputBox.simulate('change', { target: { value: 'Megatron' } });
+
   expect(mockSetState).toHaveBeenCalledWith({
     isLoading: false,
     Unit: {
@@ -47,10 +50,12 @@ test('Edit Units handleNameInput function works properly', () => {
     },
   });
 });
+
 test('Edit Units handleCostInput function works properly', () => {
   const wrapper = setup(false);
   const inputBox = findByTestAttr(wrapper, 'input-box').at(1);
   inputBox.simulate('change', { target: { value: 70 } });
+
   expect(mockSetState).toHaveBeenCalledWith({
     isLoading: false,
     Unit: {
@@ -58,10 +63,12 @@ test('Edit Units handleCostInput function works properly', () => {
     },
   });
 });
+
 test('Edit Units handleAbilitiesInput function works properly', () => {
   const wrapper = setup(false);
   const inputBox = findByTestAttr(wrapper, 'input-box').at(2);
   inputBox.simulate('change', { target: { value: 'Dive' } });
+
   expect(mockSetState).toHaveBeenCalledWith({
     isLoading: false,
     Unit: {
@@ -69,10 +76,12 @@ test('Edit Units handleAbilitiesInput function works properly', () => {
     },
   });
 });
+
 test('Edit Units Rem-Equipment Button works properly', () => {
   const wrapper = setup(false);
   const remButton = findByTestAttr(wrapper, 'remButton');
   remButton.simulate('click', { preventDefault() {} });
+
   expect(mockSetState).toHaveBeenCalledWith({
     isLoading: false,
     Unit: {
@@ -80,9 +89,11 @@ test('Edit Units Rem-Equipment Button works properly', () => {
     },
   });
 });
+
 test('Edit Units Add-Equipment Button works properly', () => {
   const wrapper = setup(false);
   const addButton = findByTestAttr(wrapper, 'addButton');
   addButton.simulate('click', { preventDefault() {} });
+
   expect(mockSetState).toHaveBeenCalled();
 });

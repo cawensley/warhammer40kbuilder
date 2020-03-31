@@ -1,15 +1,23 @@
 import React from 'react';
-import Enzyme, { shallow } from 'enzyme';
-import EnzymeAdapter from 'enzyme-adapter-react-16';
-import { findByTestAttr } from '../../utilities/testutils';
+import { shallow, findByTestAttr } from '../../utilities/setupTests';
 import ViewArmiesPage from './ViewArmiesPage';
-
-Enzyme.configure({ adapter: new EnzymeAdapter() });
+import UserArmiesChange from '../../Redux/actions/UserArmiesChange/UserArmiesChange';
+import store from '../../Redux/store';
+import { mockUserArmy1 } from '../../utilities/mockConstants';
 
 const setup = () => shallow(<ViewArmiesPage />);
 
 test('it should render', () => {
   const wrapper = setup();
   const component = findByTestAttr(wrapper, 'ViewArmiesPage');
+
+  expect(component.length).toBe(1);
+});
+
+test('renders userArmies on page', () => {
+  store.dispatch(UserArmiesChange(mockUserArmy1));
+  const wrapper = setup();
+  const component = findByTestAttr(wrapper, 'armyDisplay');
+
   expect(component.length).toBe(1);
 });

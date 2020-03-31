@@ -5,10 +5,10 @@ import PageTitle from '../atoms/PageTitle';
 import user from '../Redux/reducers/user';
 import TextInputRow from '../atoms/TextInputRow';
 import SubmitButton from '../atoms/SubmitButton';
-import UserChange from '../Redux/actions/UserChange';
+import UserChange from '../Redux/actions/UserChange/UserChange';
 import store from '../Redux/store';
 
-function ViewProfilePage() {
+const ViewProfilePage = () => {
   const [userInfo, setUserInfo] = React.useState({
     Name: store.getState().user.Name, Email: store.getState().user.Email, Password: '', Message: '',
   });
@@ -61,6 +61,6 @@ function ViewProfilePage() {
       <div className="text-info mt-4">{userInfo.Message}</div>
     </div>
   );
-}
+};
 
 export default connect(user)(ViewProfilePage);
