@@ -13,6 +13,7 @@ const UnitQuantity = ({ roleIndex, rowIndex }) => {
   React.useEffect(() => {
     const newChoices = [];
     for (let i = minChoice; i <= maxChoice; i += 1) { newChoices.push(i); }
+    // eslint-disable-next-line
     choices = newChoices;
     if (!newChoices.includes(+currentChoice)) {
       store.dispatch(ArmyUnitQTYChange({ roleIndex, rowIndex, UnitQTY: newChoices[0] }));

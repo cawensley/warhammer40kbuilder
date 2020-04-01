@@ -7,7 +7,7 @@ import {
   SquadsChange, UnitsChange, UserChange, RolesChange, CodexChange, EquipmentChange,
 } from '../../Redux/actions/index';
 import {
-  mockUnit, mockUser, mockRoles, mockCodex, mockSquad, mockEquipment,
+  mockUnit, mockUser, mockRoles, mockCodex, mockSquad, mockEquipment, mockWrongUser,
 } from '../../utilities/mockConstants';
 
 firebase.firestore = firestore;
@@ -61,5 +61,14 @@ describe('testing EditArmyPage.jsx with proper redux data loaded', () => {
     const component = findByTestAttr(wrapper, 'EditArmyPage');
 
     expect(component.length).toBe(0);
+  });
+  test('Doest allow edit if the User.uid doesnt match army UserID', () => {
+    global.window = Object.create(window);
+    const url = '/';
+    Object.defineProperty(window, 'location', { value: { hash: url } });
+    store.dispatch(UserChange(mockWrongUser));
+    setup(false);
+
+    expect(window.location.hash).toEqual(url);
   });
 });

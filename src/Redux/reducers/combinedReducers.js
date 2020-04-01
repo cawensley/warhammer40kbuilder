@@ -10,6 +10,7 @@ import user from './user';
 import army from './army';
 import armyPoints from './armyPoints';
 import userArmies from './userArmies';
+import homeArmies from './homeArmies';
 
 export default combineReducers({
   codex,
@@ -23,4 +24,5 @@ export default combineReducers({
   army,
   armyPoints,
   userArmies,
+  homeArmies,
 });

@@ -9,14 +9,14 @@ const ViewArmiesPage = () => (
   <div data-test="ViewArmiesPage" className="container-fluid p-padding text-center">
     <PageTitle Title="View Armies Page" />
     <RedirectButton redirect="/armies/new" buttontext="Add Army" />
-    <div className="row justify-content-center mt-4">
+    <div className="row justify-content-center mt-3">
       <div className="col-xl-8">
-        <div className="row h3 text-warning">
+        <h3 className="row text-warning">
           <div className="col-3">Name</div>
           <div className="col-3">Points</div>
           <div className="col-3">Date Created</div>
           <div className="col-3" />
-        </div>
+        </h3>
         {store.getState().userArmies.map((army) => (
           <div data-test="armyDisplay" key={army.id} className="row text-white align-items-center border border-secondary">
             <Link

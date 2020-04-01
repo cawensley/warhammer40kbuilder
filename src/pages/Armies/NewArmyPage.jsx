@@ -1,5 +1,5 @@
 import React from 'react';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import { v4 as uuidv4 } from 'uuid';
 import PageTitle from '../../atoms/PageTitle';
 import CodexFilter from '../../molecules/CodexFilter';
@@ -24,6 +24,7 @@ const NewArmyPage = () => {
         Month: new Date().getMonth(),
         Year: new Date().getFullYear(),
       },
+      exactDate: new Date(),
       SquadArray: store.getState().army.SquadArray,
     });
     window.location.hash = '/armies/view';
