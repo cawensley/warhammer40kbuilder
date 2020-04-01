@@ -12,25 +12,28 @@ import RedirectButton from '../../atoms/RedirectButton';
 
 const ViewArmyPage = ({ match }) => {
   const viewArmyID = match.params.ID;
-  const displayArmy = store.getState().userArmies.filter((army) => army.id === viewArmyID)[0];
+  const displayArmy = store.getState().userArmies.filter((army) => army.id === viewArmyID)[0]
+        || store.getState().homeArmies.filter((army) => army.id === viewArmyID)[0];
 
   if (!displayArmy) { return <PageLoading />; }
 
   return (
     <div data-test="ViewArmyPage" className="container-fluid p-padding text-center">
       <PageTitle Title="View Army Page" />
-      <RedirectButton redirect={`/armies/edit/${displayArmy.id}`} buttontext="Edit Army" />
+      {(displayArmy.userID === store.getState().user.uid)
+        ? (<RedirectButton redirect={`/armies/edit/${displayArmy.id}`} buttontext="Edit Army" />)
+        : <div />}
       <TextRow left="Army Name:" right={displayArmy.Name} />
       <TextRow left="Points:" right={`${displayArmy.Points}`} />
-      <div className="row justify-content-center mt-5">
+      <div className="row justify-content-center mt-4">
         <div className="col-xl-8">
-          <div className="row h4 text-warning">
+          <h3 className="row text-warning">
             <div className="col-2">Squad</div>
-            <div className="col-2">Unit Qty</div>
-            <div className="col-2">Unit</div>
+            <div className="col-1">Qty</div>
+            <div className="col-3">Unit</div>
             <div className="col-3">Unit Abilities</div>
             <div className="col-3">Gear</div>
-          </div>
+          </h3>
           {displayArmy.SquadArray.map((roleArray) => (
             <div key={roleArray.Role.id}>
               {(roleArray.Squads.length > 0) ? (
@@ -43,10 +46,10 @@ const ViewArmyPage = ({ match }) => {
                 </div>
               ) : <div />}
               {roleArray.Squads.map((squad) => (
-                <div key={uuidv4()} className="row text-white">
+                <div key={uuidv4()} className="row text-white align-items-center">
                   <div className="col-2">{(squad.Squad !== null) ? (findRealSquadName(squad.Squad)) : '' }</div>
-                  <div className="col-2">{(squad.UnitQTY !== null) ? (squad.UnitQTY) : ''}</div>
-                  <div className="col-2">{(squad.Unit !== null) ? (findRealUnitName(squad.Unit)) : ''}</div>
+                  <div className="col-1">{(squad.UnitQTY !== null) ? (squad.UnitQTY) : ''}</div>
+                  <div className="col-3">{(squad.Unit !== null) ? (findRealUnitName(squad.Unit)) : ''}</div>
                   <div className="col-3">{(squad.Unit !== null) ? (findUnitAbilities(squad.Unit)) : ''}</div>
                   <div className="col-3">{findRealEquipmentName(squad.Equipment)}</div>
                 </div>

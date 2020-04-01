@@ -20,6 +20,7 @@ import ArmyNameChange from './ArmyNameChange/ArmyNameChange';
 import ArmyEquipmentRowRemove from './ArmyEquipmentRowRemove/ArmyEquipmentRowRemove';
 import ArmyEquipmentRowAdd from './ArmyEquipmentRowAdd/ArmyEquipmentRowAdd';
 import ArmyEquipmentChoice from './ArmyEquipmentChoice/ArmyEquipmentChoice';
+import HomeArmiesChange from './HomeArmiesChange/HomeArmiesChange';
 
 export {
   UserChange,
@@ -44,4 +45,5 @@ export {
   ArmyEquipmentRowRemove,
   ArmyEquipmentRowAdd,
   ArmyEquipmentChoice,
+  HomeArmiesChange,
 };

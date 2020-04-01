@@ -17,19 +17,24 @@ const docData = {
   Abilities: 'None',
   Gear: [],
   Units: [],
+  userID: '2222',
 };
 const documents = { docs: [{ id: '1111', data: () => docData }] };
+const onSnapshot = jest.fn((success) => success(documents));
+const set = jest.fn();
+const add = jest.fn();
+const where = jest.fn(() => ({ onSnapshot }));
+const getDoc = jest.fn(() => Promise.resolve({ data: () => docData }));
+const getColl = jest.fn(() => Promise.resolve(documents));
+const orderBy = jest.fn(() => ({ get: getColl }));
+const limit = jest.fn(() => ({ orderBy }));
+const doc = jest.fn(() => ({
+  set, get: getDoc, delete: jest.fn(), onSnapshot,
+}));
 const collection = jest.fn(() => ({
-  doc: jest.fn(() => ({
-    set: jest.fn(),
-    get: jest.fn(() => Promise.resolve({ data: () => docData })),
-    delete: jest.fn(),
-  })),
-  get: jest.fn(() => Promise.resolve(documents)),
-  add: jest.fn(),
-  onSnapshot: jest.fn((success) => success(documents)),
+  where, doc, limit, get: getColl, add, onSnapshot,
 }));
 
-const firestore = () => ({ collection });
+function firestore() { return { collection }; }
 
 export default firestore;

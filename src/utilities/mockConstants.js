@@ -4,6 +4,8 @@ const mockRole = [{ id: '1111', Name: 'HQ', SortOrder: 0 }];
 
 const mockUser = { uid: '2222', displayName: 'BobbyJoe', Email: 'bobbyJoe@gmail.com' };
 
+const mockWrongUser = { uid: '3333', displayName: 'FakeUser', Email: 'fakeguy@gmail.com' };
+
 const mockCodex = 'zzzzzzz';
 
 const mockSquad = [{
@@ -35,6 +37,7 @@ const mockRowAdd = {
 const mockUserArmy1 = [{
   id: '5555',
   Name: 'coolArmy11',
+  userID: '2222',
   Date: { Day: 2, Month: 2, Year: 2222 },
   Points: 999,
   SquadArray: [
@@ -53,6 +56,7 @@ const mockUserArmy1 = [{
 const mockUserArmy2 = [{
   id: '5555',
   Name: 'coolArmy11',
+  userID: '2222',
   Date: { Day: 2, Month: 2, Year: 2222 },
   Points: 999,
   SquadArray: [{
@@ -64,5 +68,5 @@ const mockUserArmy2 = [{
 
 export {
   mockRoles, mockUser, mockCodex, mockSquad, mockUserArmy1, mockUserArmy2,
-  mockSquad2, mockUnit, mockUnit2, mockEquipment, mockRowAdd, mockRole,
+  mockSquad2, mockUnit, mockUnit2, mockEquipment, mockRowAdd, mockRole, mockWrongUser,
 };

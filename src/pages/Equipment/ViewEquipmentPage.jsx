@@ -14,22 +14,22 @@ const ViewEquipmentPage = () => (
     <PageTitle Title="View Equipment Page" />
     <CodexFilter />
     <RedirectButton redirect="/equipment/new" buttontext="Add Equipment" />
-    <div className="row justify-content-center mt-4">
+    <div className="row justify-content-center mt-3">
       <div className="col-xl-6 col-md-10">
-        <div className="row h3 text-warning">
-          <div className="col-5">Name</div>
-          <div className="col-4">Cost</div>
+        <h3 className="row text-warning">
+          <div className="col-6">Name</div>
+          <div className="col-3">Cost</div>
           <div className="col-3" />
-        </div>
+        </h3>
         {codexFilter(store.getState().equipment).map((item) => (
-          <div data-test="equipDisplay" key={item.id} className="row text-white border border-secondary">
+          <div data-test="equipDisplay" key={item.id} className="row text-white align-items-center border border-secondary">
             <Link
               to={`/equipment/edit/${item.id}`}
-              className="col-5 p-hyperlink-color"
+              className="col-6 p-hyperlink-color"
             >
               {item.Name}
             </Link>
-            <div className="col-4">{item.Cost}</div>
+            <div className="col-3">{item.Cost}</div>
             <div className="col-3"><DeleteButton collectionName="equipment" uniqueID={item.id} /></div>
           </div>
         ))}

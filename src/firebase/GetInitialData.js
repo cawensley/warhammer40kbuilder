@@ -3,7 +3,8 @@ import 'firebase/firestore';
 import store from '../Redux/store';
 import { nameAscend, numberAscend } from '../utilities/sortAscending';
 import {
-  RolesChange, CodicesChange, EquipmentChange, UnitsChange, SquadsChange, UserArmiesChange,
+  RolesChange, CodicesChange, EquipmentChange, UnitsChange,
+  SquadsChange, UserArmiesChange, HomeArmiesChange,
 } from '../Redux/actions/index';
 
 function GetInitialData() {
@@ -32,12 +33,19 @@ function GetInitialData() {
     rawdata.sort(nameAscend);
     store.dispatch(SquadsChange(rawdata));
   });
-  firebase.firestore().collection('armies').onSnapshot((snapshot) => {
-    const rawdata = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-    rawdata.sort(nameAscend);
-    store.dispatch(UserArmiesChange(rawdata
-      .filter((army) => army.userID === store.getState().user.uid)));
-  });
+  firebase.firestore().collection('armies')
+    .where('userID', '==', store.getState().user.uid).onSnapshot((snapshot) => {
+      const rawdata = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      rawdata.sort(nameAscend);
+      store.dispatch(UserArmiesChange(rawdata));
+    });
+  firebase.firestore().collection('armies').limit(10)
+    .orderBy('exactDate', 'desc')
+    .get()
+    .then((snapshot) => {
+      const rawdata = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      store.dispatch(HomeArmiesChange(rawdata));
+    });
 }
 
 export default GetInitialData;
