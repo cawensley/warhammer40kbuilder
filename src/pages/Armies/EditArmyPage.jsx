@@ -26,6 +26,7 @@ const EditArmyPage = ({ match }) => {
       .doc(editArmyID)
       .get()
       .then((doc) => {
+        if (store.getState().user.uid !== doc.data().userID) { window.location.hash = '/'; }
         store.dispatch(ArmySquadChange(doc.data().SquadArray));
         store.dispatch(ArmyNameChange(doc.data().Name));
         for (let i = 0; i < doc.data().SquadArray.length; i += 1) {
@@ -51,11 +52,13 @@ const EditArmyPage = ({ match }) => {
         Month: new Date().getMonth(),
         Year: new Date().getFullYear(),
       },
+      exactDate: new Date(),
       SquadArray: store.getState().army.SquadArray,
     });
     window.location.hash = '/armies/view';
   }
 
+  // eslint-disable-next-line
   React.useEffect(() => { getEditArmyInfo(); }, []);
 
   if (isLoading) { return <PageLoading />; }
