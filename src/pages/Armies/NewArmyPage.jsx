@@ -27,7 +27,7 @@ const NewArmyPage = () => {
       exactDate: new Date(),
       SquadArray: store.getState().army.SquadArray,
     });
-    window.location.hash = '/armies/view';
+    window.location = '/armies/view';
   }
 
   React.useEffect(() => { handleInitialArmy(); }, []);

@@ -70,7 +70,7 @@ const EditSquadsPage = ({ match }) => {
 
   function handleEditSquadSubmission() {
     firebase.firestore().collection('squads').doc(editSquadID).set(state.Squad);
-    window.location.hash = '/squads/view';
+    window.location = '/squads/view';
   }
 
   if (state.isLoading) { return (<PageLoading />); }
