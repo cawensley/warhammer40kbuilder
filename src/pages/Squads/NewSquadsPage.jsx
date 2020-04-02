@@ -32,7 +32,7 @@ const NewSquadsPage = () => {
 
   function handleNewSquadSubmission() {
     firebase.firestore().collection('squads').add(newSquad);
-    window.location = '/squads/view';
+    window.location.hash = '/squads/view';
   }
 
   // eslint-disable-next-line

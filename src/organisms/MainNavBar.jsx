@@ -19,7 +19,7 @@ const MainNavBar = () => {
 
   async function handleLogout() {
     await firebase.auth().signOut();
-    window.location = '/';
+    window.location.hash = '/';
   }
 
   return (
