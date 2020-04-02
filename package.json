@@ -1,5 +1,5 @@
 {
-  "homepage": "https://cawensley.github.io/warhammer40kbuilder/",
+  "homepage": "https://www.warhammer40kbuilder.info",
   "name": "warhammer40kbuilder",
   "jest": {
     "collectCoverageFrom": [
