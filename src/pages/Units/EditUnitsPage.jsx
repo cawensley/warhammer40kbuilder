@@ -62,7 +62,7 @@ const EditUnitsPage = ({ match }) => {
 
   function handleEditUnitSubmission() {
     firebase.firestore().collection('units').doc(editUnitID).set(state.Unit);
-    window.location.hash = '/units/view';
+    window.location = '/units/view';
   }
 
   if (state.isLoading) { return (<PageLoading />); }

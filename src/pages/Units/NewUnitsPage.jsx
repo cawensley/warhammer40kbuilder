@@ -30,7 +30,7 @@ const NewUnitsPage = () => {
   }
   function handleNewUnitSubmission() {
     firebase.firestore().collection('units').add(newUnit);
-    window.location.hash = '/units/view';
+    window.location = '/units/view';
   }
 
   // eslint-disable-next-line

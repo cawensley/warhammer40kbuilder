@@ -19,7 +19,7 @@ const NewEquipmentPage = () => {
 
   function newEquipmentSubmission() {
     firebase.firestore().collection('equipment').add(newEquipment);
-    window.location.hash = '/equipment/view';
+    window.location = '/equipment/view';
   }
 
   return (

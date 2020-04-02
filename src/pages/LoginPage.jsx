@@ -13,7 +13,7 @@ const LoginPage = () => {
 
   async function userLogin() {
     await firebase.auth().signInWithEmailAndPassword(userInfo.Email, userInfo.Password).then(() => {
-      window.location.hash = '/';
+      window.location = '/';
     }).catch((error) => {
       setUserInfo({ ...userInfo, Error: error.message });
     });
