@@ -69,6 +69,6 @@ describe('testing EditArmyPage.jsx with proper redux data loaded', () => {
     store.dispatch(UserChange(mockWrongUser));
     setup(false);
 
-    expect(window.location).toEqual(url);
+    expect(window.location.url).toEqual(url);
   });
 });
