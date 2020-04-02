@@ -4,19 +4,23 @@ import ArmyPointsChange from '../Redux/actions/ArmyPointsChange/ArmyPointsChange
 
 const PointsRow = () => {
   function GetUnitCost(unitID) {
+    let unitCost = 0;
     if (store.getState().units
       .filter((data) => data.id.includes(unitID)).length > 0) {
-      return store.getState().units
+      unitCost = store.getState().units
         .filter((data) => data.id.includes(unitID))[0].Cost;
-    } return 0;
+    }
+    return unitCost;
   }
 
   function GetGearCost(equipmentID) {
+    let gearCost = 0;
     if (store.getState().equipment
       .filter((data) => data.id.includes(equipmentID)).length > 0) {
-      return store.getState().equipment
+      gearCost = store.getState().equipment
         .filter((data) => data.id.includes(equipmentID))[0].Cost;
-    } return 0;
+    }
+    return gearCost;
   }
 
   function calculateArmyPoints() {
