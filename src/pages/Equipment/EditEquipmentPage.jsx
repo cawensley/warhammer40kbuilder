@@ -44,7 +44,7 @@ const EditEquipmentPage = ({ match }) => {
 
   function handleEditItemSubmission() {
     firebase.firestore().collection('equipment').doc(editEquipmentID).set(state.Equipment);
-    window.location = '/equipment/view';
+    window.location.hash = '/equipment/view';
   }
 
   if (state.isLoading) { return (<PageLoading />); }
