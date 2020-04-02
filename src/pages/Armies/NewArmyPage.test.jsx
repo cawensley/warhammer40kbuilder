@@ -11,6 +11,7 @@ import { handleEquipmentRowAdd } from '../../utilities/handleRowAdd';
 import {
   mockUser, mockRoles, mockCodex, mockSquad, mockUnit, mockEquipment, mockRowAdd,
 } from '../../utilities/mockConstants';
+import handleInitialArmy from '../../utilities/handleInitialArmy';
 
 firebase.firestore = firestore;
 const setup = () => mount(<NewArmyPage />);
@@ -43,6 +44,7 @@ describe('test full render functionality', () => {
   beforeEach(() => {
     store.dispatch(RolesChange(mockRoles));
     store.dispatch(CodexChange(mockCodex));
+    handleInitialArmy();
     store.dispatch(SquadsChange(mockSquad));
     store.dispatch(UnitsChange(mockUnit));
     store.dispatch(EquipmentChange(mockEquipment));
@@ -56,7 +58,7 @@ describe('test full render functionality', () => {
 
     expect(component.length).toBe(1);
   });
-  test('it should render 0 points cost', () => {
+  test('renders 0 points when equipment in redux is empty', () => {
     const wrapper = setup();
     store.dispatch(ArmySquadRowAdd(mockRowAdd));
     store.dispatch(EquipmentChange([]));

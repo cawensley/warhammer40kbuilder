@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import store from '../Redux/store';
 import { findPreviousSquad } from '../utilities/findPrevious';
 import ArmyUnitQTYChange from '../Redux/actions/ArmyUnitQTYChange/ArmyUnitQTYChange';
+import PageLoading from '../atoms/PageLoading';
 
 const UnitQuantity = ({ roleIndex, rowIndex }) => {
-  let choices = [];
+  const [choices, setChoices] = React.useState([]);
   const minChoice = findPreviousSquad(roleIndex, rowIndex).MinSize;
   const maxChoice = findPreviousSquad(roleIndex, rowIndex).MaxSize;
   const currentChoice = store.getState().army.SquadArray[roleIndex].Squads[rowIndex].UnitQTY;
@@ -13,12 +14,13 @@ const UnitQuantity = ({ roleIndex, rowIndex }) => {
   React.useEffect(() => {
     const newChoices = [];
     for (let i = minChoice; i <= maxChoice; i += 1) { newChoices.push(i); }
-    // eslint-disable-next-line
-    choices = newChoices;
+    setChoices(newChoices);
     if (!newChoices.includes(+currentChoice)) {
       store.dispatch(ArmyUnitQTYChange({ roleIndex, rowIndex, UnitQTY: newChoices[0] }));
     }
   }, [maxChoice, minChoice, roleIndex, rowIndex, currentChoice]);
+
+  if (!Array.isArray(choices)) { return <PageLoading />; }
 
   return (
     <select
