@@ -27,10 +27,10 @@ const EditSquadsPage = ({ match }) => {
     setState({ ...state, Squad: { ...state.Squad, Name: input } });
   }
   function handleMinSizeInput(input) {
-    setState({ ...state, Squad: { ...state.Squad, MinSize: input } });
+    setState({ ...state, Squad: { ...state.Squad, MinSize: +input } });
   }
   function handleMaxSizeInput(input) {
-    setState({ ...state, Squad: { ...state.Squad, MaxSize: input } });
+    setState({ ...state, Squad: { ...state.Squad, MaxSize: +input } });
   }
   function handleUnitRemove() {
     const NewUnits = state.Squad.Units;
@@ -51,8 +51,8 @@ const EditSquadsPage = ({ match }) => {
           Squad: {
             ...state.Squad,
             Name: doc.data().Name,
-            MinSize: doc.data().MinSize,
-            MaxSize: doc.data().MaxSize,
+            MinSize: +doc.data().MinSize,
+            MaxSize: +doc.data().MaxSize,
             Units: doc.data().Units,
           },
         });
