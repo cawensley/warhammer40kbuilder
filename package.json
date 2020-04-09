@@ -30,7 +30,8 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
     "check-prop-types": "^1.1.2",
-    "firebase": "^7.7.0",
+    "firebase": "^7.13.2",
+    "fsevents": "^2.1.2",
     "node-sass": "^4.13.1",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
@@ -78,15 +79,15 @@
     "enzyme-adapter-react-16": "^1.15.2",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.0.1",
-    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.18.3",
     "eslint-plugin-react-hooks": "^1.7.0",
     "gh-pages": "^2.2.0",
-    "husky": "^4.2.3",
+    "husky": "^4.2.4",
     "jest-enzyme": "^7.1.2",
-    "stylelint": "^13.1.0",
+    "stylelint": "^13.3.1",
     "stylelint-config-standard": "^20.0.0",
-    "stylelint-scss": "^3.14.2"
+    "stylelint-scss": "^3.16.1"
   }
 }
