@@ -5,7 +5,7 @@ const Footer = () => {
 
   return (
     <div data-test="Footer" className="bg-secondary fixed-bottom text-center text-primary">
-      Copyright &copy; WH40k Army Builder&nbsp;
+      Copyright &copy; warhammer40kbuilder.info&nbsp;
       {currentYear}
     </div>
   );
