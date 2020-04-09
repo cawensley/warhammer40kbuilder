@@ -45,7 +45,7 @@ describe('testing UnitQuantity.jsx with proper redux data loaded', () => {
     expect(store.getState().army.SquadArray[0].Squads[0].UnitQTY).toBe(3);
   });
 
-  test('Test UseEffect does not set UnitQTY Choice to [0]', () => {
+  test('Test UseEffect does not set UnitQTY Choice to 1', () => {
     store.dispatch(SquadsChange(mockSquad));
     store.dispatch(ArmyUnitQTYChange({ roleIndex: 0, rowIndex: 0, UnitQTY: 2 }));
     React.useEffect = jest.spyOn(React, 'useEffect').mockImplementation((f) => f());
@@ -54,7 +54,7 @@ describe('testing UnitQuantity.jsx with proper redux data loaded', () => {
     expect(store.getState().army.SquadArray[0].Squads[0].UnitQTY).toBe(2);
   });
 
-  test('Test UseEffect sets Unit Choice to [0]', () => {
+  test('Test UseEffect sets Unit Choice to 1', () => {
     store.dispatch(SquadsChange(mockSquad));
     store.dispatch(ArmyUnitQTYChange({ roleIndex: 0, rowIndex: 0, UnitQTY: 9 }));
     React.useEffect = jest.spyOn(React, 'useEffect').mockImplementation((f) => f());

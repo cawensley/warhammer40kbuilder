@@ -23,7 +23,14 @@ const SquadChoice = ({ roleIndex, rowIndex }) => {
       ))}
     >
       {choices.map((choice) => (
-        <option key={choice.id} value={choice.id}>{choice.Name}</option>
+        <option key={choice.id} value={choice.id}>
+          {choice.Name}
+&nbsp;(
+          {choice.MinSize}
+          -
+          {choice.MaxSize}
+          )
+        </option>
       ))}
     </select>
   );

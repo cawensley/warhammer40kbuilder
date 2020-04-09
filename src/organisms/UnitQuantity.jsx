@@ -7,16 +7,16 @@ import PageLoading from '../atoms/PageLoading';
 
 const UnitQuantity = ({ roleIndex, rowIndex }) => {
   const [choices, setChoices] = React.useState([]);
-  const minChoice = findPreviousSquad(roleIndex, rowIndex).MinSize;
   const maxChoice = findPreviousSquad(roleIndex, rowIndex).MaxSize;
+  const minChoice = findPreviousSquad(roleIndex, rowIndex).MinSize;
   const currentChoice = store.getState().army.SquadArray[roleIndex].Squads[rowIndex].UnitQTY;
 
   React.useEffect(() => {
     const newChoices = [];
-    for (let i = minChoice; i <= maxChoice; i += 1) { newChoices.push(i); }
+    for (let i = 1; i <= maxChoice; i += 1) { newChoices.push(i); }
     setChoices(newChoices);
     if (!newChoices.includes(+currentChoice)) {
-      store.dispatch(ArmyUnitQTYChange({ roleIndex, rowIndex, UnitQTY: newChoices[0] }));
+      store.dispatch(ArmyUnitQTYChange({ roleIndex, rowIndex, UnitQTY: minChoice }));
     }
   }, [maxChoice, minChoice, roleIndex, rowIndex, currentChoice]);
 

@@ -31,7 +31,10 @@ const SquadRow = ({ roleIndex }) => {
           ? (
             <div>
               <div className="row">
-                <div className="col-2 text-warning">Squads</div>
+                <div className="col-2 text-warning">
+                  Squad&nbsp;
+                  <small>(min-max)</small>
+                </div>
                 <div className="col-1 text-warning">Qty</div>
                 <div className="col-2 text-warning">Units</div>
                 <div className="col-2 text-warning">Unit +/-</div>
