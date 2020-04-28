@@ -1,13 +1,17 @@
 import React from 'react';
 import firebase from 'firebase/app';
+import store from '../../Redux/store';
 import { mount, findByTestAttr, firestore } from '../../utilities/setupTests';
 import EditEquipmentPage from './EditEquipmentPage';
+import { mockUser } from '../../utilities/mockConstants';
+import { UserChange } from '../../Redux/actions/index';
 
 firebase.firestore = firestore;
 
 const mockSetState = jest.fn();
 
 const setup = (isLoading) => {
+  store.dispatch(UserChange(mockUser));
   const mockEquipment = { Codex: 'Pirates', Name: 'PirateSword', Cost: 0 };
   jest.clearAllMocks();
   React.useState = jest.fn(() => [{ isLoading, Equipment: mockEquipment }, mockSetState]);

@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const RedirectButton = ({ redirect, buttontext }) => (
-  <div className="mt-3" data-test="component-button">
+  <div className="my-3 text-center" data-test="component-button">
     <NavLink to={redirect} className="btn btn-success">{buttontext}</NavLink>
   </div>
 );

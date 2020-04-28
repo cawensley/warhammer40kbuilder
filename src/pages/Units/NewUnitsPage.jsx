@@ -12,15 +12,14 @@ import NumberInputRow from '../../atoms/NumberInputRow';
 
 const NewUnitsPage = () => {
   const [newUnit, setNewUnit] = React.useState({
-    Codex: store.getState().codex, Name: '', Cost: 0, Abilities: 'None', Gear: [],
+    Codex: store.getState().codex, Name: '', Cost: 0, Abilities: 'None', Gear: [], userID: store.getState().user.uid,
   });
 
   function handleNameInput(input) { setNewUnit({ ...newUnit, Name: input }); }
   function handleCostInput(input) { setNewUnit({ ...newUnit, Cost: +input }); }
   function handleAbilitiesInput(input) { setNewUnit({ ...newUnit, Abilities: input }); }
-  function handleGearRemove() {
-    const NewGear = newUnit.Gear;
-    NewGear.pop();
+  function handleGearRemove(input) {
+    const NewGear = newUnit.Gear.filter((item) => item !== input);
     setNewUnit({ ...newUnit, Gear: NewGear });
   }
   function handleGearAdd(input) {

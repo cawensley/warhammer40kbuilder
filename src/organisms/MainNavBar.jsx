@@ -37,8 +37,10 @@ const MainNavBar = () => {
         tabIndex={0}
       >
         <ul className="navbar-nav">
-          <li className="navbar-brand">
-            <NavLink to="/" className="nav-link px-3 py-1">Home Page</NavLink>
+          <li className="mt-3 mt-md-0 o-navbar-hover">
+            <NavLink to="/">
+              <img alt="Error Loading" src={require('../utilities/wh40klogo.png')} />
+            </NavLink>
           </li>
           <li className="navbar-brand">
             <NavLink to="/armies/view" className="nav-link px-3 py-1" activeClassName="chosen">Armies</NavLink>
@@ -54,7 +56,7 @@ const MainNavBar = () => {
           </li>
         </ul>
       </div>
-      <div className="btn-group ml-auto">
+      <div className="btn-group ml-auto mr-1">
         <button
           data-test="rightdropdownButton"
           type="button"

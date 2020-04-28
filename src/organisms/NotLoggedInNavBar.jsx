@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import './NavBar.scss';
 
 const NotLoggedInNavBar = () => {
@@ -9,9 +9,9 @@ const NotLoggedInNavBar = () => {
 
   return (
     <nav data-test="NotLoggedInNavBar" className="navbar navbar-expand-sm bg-secondary fixed-top p-1">
-      <div className="navbar-nav navbar-brand">
-        <Link to="/" className="nav-link px-3 py-1">Home Page</Link>
-      </div>
+      <NavLink to="/" className="o-navbar-hover">
+        <img alt="Error Loading" src={require('../utilities/wh40klogo.png')} />
+      </NavLink>
       <div className="btn-group ml-auto">
         <button
           data-test="dropdownButton"

@@ -4,22 +4,29 @@ import { HashRouter as Router } from 'react-router-dom';
 import store from '../../Redux/store';
 import { mount, findByTestAttr } from '../../utilities/setupTests';
 import ViewSquadsPage from './ViewSquadsPage';
-import { CodexChange, SquadsChange } from '../../Redux/actions/index';
+import { CodexChange, SquadsChange, UserChange } from '../../Redux/actions/index';
+import { mockUser } from '../../utilities/mockConstants';
 
-const setup = () => mount(
-  <Provider store={store}>
-    <Router>
-      <ViewSquadsPage />
-    </Router>
-  </Provider>,
-);
+const setup = () => {
+  store.dispatch(UserChange(mockUser));
+  return mount(
+    <Provider store={store}>
+      <Router>
+        <ViewSquadsPage />
+      </Router>
+    </Provider>,
+  );
+};
 
 const mockSquadsArray = [
   {
-    id: '11', Codex: 'Ninjas', Role: 'troops', Name: 'SquadSneaky', Units: ['sneakyGuys'],
+    id: '11', Codex: 'Ninjas', Role: 'troops', Name: 'SquadSneaky', Units: ['sneakyGuys'], userID: '2222',
   },
   {
-    id: '22', Codex: 'Pirates', Role: 'elites', Name: 'SquadSwash', Units: ['burglers'],
+    id: '12', Codex: 'Ninjas', Role: 'troops', Name: 'SquadSneaky', Units: ['sneakyGuys'], userID: '4444',
+  },
+  {
+    id: '22', Codex: 'Pirates', Role: 'elites', Name: 'SquadSwash', Units: ['burglers'], userID: '3333',
   },
 ];
 
@@ -36,5 +43,5 @@ test('View Squads Page renders data when Codex and SquadsArray are in redux', ()
   const wrapper = setup();
   const component = findByTestAttr(wrapper, 'squadsDisplay');
 
-  expect(component.length).toBe(1);
+  expect(component.length).toBe(2);
 });

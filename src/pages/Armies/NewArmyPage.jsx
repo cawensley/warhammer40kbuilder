@@ -33,7 +33,7 @@ const NewArmyPage = () => {
   React.useEffect(() => { handleInitialArmy(); }, []);
 
   return (
-    <div data-test="NewArmyPage" className="container-fluid p-padding text-center">
+    <div data-test="NewArmyPage" className="container p-padding text-center">
       <PageTitle Title="New Armies Page" />
       <form data-test="submitButton" onSubmit={() => handleArmySubmission()}>
         <CodexFilter />

@@ -5,8 +5,8 @@ import handleInitialArmy from '../utilities/handleInitialArmy';
 
 const CodexFilter = () => (
   <div data-test="codexFilter" className="row mt-3">
-    <div className="text-warning col-6 text-right">Codex:</div>
-    <div className="col-6 text-left">
+    <div className="text-warning col-4 col-md-6 text-right">Codex:</div>
+    <div className="col-8 col-md-6 text-left">
       <select
         data-test="inputbox"
         id="PageSelection"

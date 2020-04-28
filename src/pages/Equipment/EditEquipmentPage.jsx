@@ -12,7 +12,12 @@ import NumberInputRow from '../../atoms/NumberInputRow';
 
 const EditEquipmentPage = ({ match }) => {
   const editEquipmentID = match.params.ID;
-  const [state, setState] = React.useState({ isLoading: false, Equipment: { Codex: store.getState().codex, Name: '', Cost: 0 } });
+  const [state, setState] = React.useState({
+    isLoading: false,
+    Equipment: {
+      Codex: store.getState().codex, Name: '', Cost: 0, userID: store.getState().user.uid,
+    },
+  });
 
   function handleNameInput(input) {
     setState({ ...state, Equipment: { ...state.Equipment, Name: input } });

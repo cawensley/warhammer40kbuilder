@@ -5,8 +5,8 @@ import RoleChange from '../Redux/actions/RoleChange/RoleChange';
 
 const RoleRow = ({ left }) => (
   <div data-test="RoleRow" className="row mt-4">
-    <div className="text-warning col-6 text-right">{left}</div>
-    <div className="col-6 text-left">
+    <div className="text-warning col-4 col-md-6 text-right">{left}</div>
+    <div className="col-8 col-md-6 text-left">
       <select
         data-test="RoleRowSelect"
         id="Role"

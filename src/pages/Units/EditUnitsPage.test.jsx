@@ -2,6 +2,9 @@ import React from 'react';
 import firebase from 'firebase/app';
 import { mount, findByTestAttr, firestore } from '../../utilities/setupTests';
 import EditUnitsPage from './EditUnitsPage';
+import { mockUser } from '../../utilities/mockConstants';
+import store from '../../Redux/store';
+import { UserChange } from '../../Redux/actions/index';
 
 firebase.firestore = firestore;
 
@@ -12,6 +15,7 @@ const mockUnit = {
 
 const setup = (isLoading) => {
   jest.clearAllMocks();
+  store.dispatch(UserChange(mockUser));
   React.useState = jest.fn(() => [{ isLoading, Unit: mockUnit }, mockSetState]);
   return mount(<EditUnitsPage match={{ params: { ID: '4444' } }} />);
 };

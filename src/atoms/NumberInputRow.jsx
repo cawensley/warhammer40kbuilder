@@ -6,8 +6,8 @@ const NumberInputRow = ({ left, onInputChange, startValue }) => {
 
   return (
     <div className="row mt-4" data-test="inputRow">
-      <div className="text-warning col-6 text-right">{left}</div>
-      <div className="text-white col-6 text-left">
+      <div className="text-warning col-4 col-md-6 text-right">{left}</div>
+      <div className="text-white col-8 col-md-6 text-left d-flex align-items-center">
         <input
           data-test="input-box"
           min="0"

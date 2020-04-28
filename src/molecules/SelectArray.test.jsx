@@ -36,8 +36,8 @@ test('SelectArray Add-button calls function provided by Parent', () => {
 
 test('SelectArray Remove-button calls function provided by Parent', () => {
   const mockonItemRem = jest.fn();
-  const wrapper = setup(mockCodexArray, [], jest.fn(), mockonItemRem);
-  const remButton = findByTestAttr(wrapper, 'remButton');
+  const wrapper = setup(mockCodexArray, mockArrayDisplay, jest.fn(), mockonItemRem);
+  const remButton = findByTestAttr(wrapper, 'remButton').at(1);
   remButton.simulate('click', { preventDefault() {} });
 
   expect(mockonItemRem).toHaveBeenCalled();

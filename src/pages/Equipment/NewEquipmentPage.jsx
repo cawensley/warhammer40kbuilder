@@ -9,13 +9,15 @@ import 'firebase/firestore';
 import NumberInputRow from '../../atoms/NumberInputRow';
 
 const NewEquipmentPage = () => {
-  const [newEquipment, setNewEquipment] = React.useState({ Codex: store.getState().codex, Name: '', Cost: 0 });
+  const [newEquipment, setNewEquipment] = React.useState({
+    Codex: store.getState().codex, Name: '', Cost: 0, userID: store.getState().user.uid,
+  });
 
   function handleNameInput(input) { setNewEquipment({ ...newEquipment, Name: input }); }
   function handleCostInput(input) { setNewEquipment({ ...newEquipment, Cost: +input }); }
 
   // eslint-disable-next-line
-    React.useEffect(()=>setNewEquipment({...newEquipment,Codex:store.getState().codex}),[store.getState().codex]);
+  React.useEffect(()=>setNewEquipment({...newEquipment,Codex:store.getState().codex}),[store.getState().codex]);
 
   function newEquipmentSubmission() {
     firebase.firestore().collection('equipment').add(newEquipment);

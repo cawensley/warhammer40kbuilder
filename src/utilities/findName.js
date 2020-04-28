@@ -17,3 +17,9 @@ export function findRealUnitName(input) {
   if (realUnit.length > 0) { return realUnit[0].Name; }
   return input;
 }
+
+export function findRealRoleName(input) {
+  const realRole = store.getState().roles.filter((data) => data.id.includes(input));
+  if (realRole.length > 0) { return realRole[0].Name; }
+  return input;
+}

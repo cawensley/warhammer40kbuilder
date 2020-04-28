@@ -10,6 +10,7 @@ const UnitQuantity = ({ roleIndex, rowIndex }) => {
   const maxChoice = findPreviousSquad(roleIndex, rowIndex).MaxSize;
   const minChoice = findPreviousSquad(roleIndex, rowIndex).MinSize;
   const currentChoice = store.getState().army.SquadArray[roleIndex].Squads[rowIndex].UnitQTY;
+  const currentUnit = store.getState().army.SquadArray[roleIndex].Squads[rowIndex].Unit;
 
   React.useEffect(() => {
     const newChoices = [];
@@ -22,17 +23,29 @@ const UnitQuantity = ({ roleIndex, rowIndex }) => {
 
   if (!Array.isArray(choices)) { return <PageLoading />; }
 
+  if (!currentUnit) {
+    return <div className="col-1" />;
+  }
+
   return (
-    <select
-      data-test="selectInput"
-      className="bg-white col-2"
-      value={currentChoice}
-      onChange={(event) => store.dispatch(ArmyUnitQTYChange(
-        { roleIndex, rowIndex, UnitQTY: event.target.value },
-      ))}
-    >
-      {choices.map((choice) => (<option key={choice} value={choice}>{choice}</option>))}
-    </select>
+    <div className="col-md-1">
+      <div className="row p-selector-minheight">
+        <div className="d-md-none text-warning col-2 p-1 text-left">
+          Qty
+          :&nbsp;
+        </div>
+        <select
+          data-test="selectInput"
+          className="bg-white col-2 col-md-12"
+          value={currentChoice}
+          onChange={(event) => store.dispatch(ArmyUnitQTYChange(
+            { roleIndex, rowIndex, UnitQTY: event.target.value },
+          ))}
+        >
+          {choices.map((choice) => (<option key={choice} value={choice}>{choice}</option>))}
+        </select>
+      </div>
+    </div>
   );
 };
 
