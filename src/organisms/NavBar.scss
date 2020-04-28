@@ -8,3 +8,11 @@
   color: $primary;
   &:hover { color: $warning; }
 }
+
+.o-navbar-logoheight {
+  max-height: 10px;
+}
+
+.o-navbar-hover:hover {
+  transform: scale(1.05);
+}

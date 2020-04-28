@@ -13,15 +13,14 @@ import NumberInputRow from '../../atoms/NumberInputRow';
 
 const NewSquadsPage = () => {
   const [newSquad, setNewSquad] = React.useState({
-    Codex: store.getState().codex, Name: '', Role: store.getState().role, MinSize: 0, MaxSize: 0, Units: [],
+    Codex: store.getState().codex, Name: '', Role: store.getState().role, MinSize: 0, MaxSize: 0, Units: [], userID: store.getState().user.uid,
   });
 
   function handleNameInput(input) { setNewSquad({ ...newSquad, Name: input }); }
   function handleMinSizeInput(input) { setNewSquad({ ...newSquad, MinSize: +input }); }
   function handleMaxSizeInput(input) { setNewSquad({ ...newSquad, MaxSize: +input }); }
-  function handleUnitRemove() {
-    const NewUnit = newSquad.Units;
-    NewUnit.pop();
+  function handleUnitRemove(input) {
+    const NewUnit = newSquad.Units.filter((item) => item !== input);
     setNewSquad({ ...newSquad, Units: NewUnit });
   }
   function handleUnitAdd(input) {

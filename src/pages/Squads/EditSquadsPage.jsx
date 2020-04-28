@@ -19,7 +19,7 @@ const EditSquadsPage = ({ match }) => {
   const [state, setState] = React.useState({
     isLoading: false,
     Squad: {
-      Codex: store.getState().codex, Name: '', Role: store.getState().role, MinSize: 0, MaxSize: 0, Units: [],
+      Codex: store.getState().codex, Name: '', Role: store.getState().role, MinSize: 0, MaxSize: 0, Units: [], userID: store.getState().user.uid,
     },
   });
 
@@ -32,9 +32,8 @@ const EditSquadsPage = ({ match }) => {
   function handleMaxSizeInput(input) {
     setState({ ...state, Squad: { ...state.Squad, MaxSize: +input } });
   }
-  function handleUnitRemove() {
-    const NewUnits = state.Squad.Units;
-    NewUnits.pop();
+  function handleUnitRemove(input) {
+    const NewUnits = state.Squad.Units.filter((item) => item !== input);
     setState({ ...state, Squad: { ...state.Squad, Units: NewUnits } });
   }
   function handleUnitAdd(input) {

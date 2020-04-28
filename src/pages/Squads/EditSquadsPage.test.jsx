@@ -3,8 +3,8 @@ import firebase from 'firebase/app';
 import store from '../../Redux/store';
 import { mount, findByTestAttr, firestore } from '../../utilities/setupTests';
 import EditSquadsPage from './EditSquadsPage';
-import { CodexChange } from '../../Redux/actions';
-import { mockCodex } from '../../utilities/mockConstants';
+import { CodexChange, UserChange } from '../../Redux/actions';
+import { mockCodex, mockUser } from '../../utilities/mockConstants';
 
 firebase.firestore = firestore;
 
@@ -15,6 +15,7 @@ const mockSquad = {
 
 const setup = (isLoading) => {
   jest.clearAllMocks();
+  store.dispatch(UserChange(mockUser));
   store.dispatch(CodexChange(mockCodex));
   React.useState = jest.fn(() => [{ isLoading, Squad: mockSquad }, mockSetState]);
   return mount(<EditSquadsPage match={{ params: { ID: '5555' } }} />);

@@ -10,29 +10,37 @@ const SquadChoice = ({ roleIndex, rowIndex }) => {
   const currentChoice = store.getState().army.SquadArray[roleIndex].Squads[rowIndex].Squad;
 
   if (!currentChoice) {
-    return <div className="col-2" />;
+    return <div className="col-3" />;
   }
 
   return (
-    <select
-      data-test="selectInput"
-      className="bg-white col-2"
-      value={currentChoice}
-      onChange={(event) => store.dispatch(ArmySquadChoice(
-        { roleIndex, rowIndex, SquadID: event.target.value },
-      ))}
-    >
-      {choices.map((choice) => (
-        <option key={choice.id} value={choice.id}>
-          {choice.Name}
+    <div className="col-md-3 pt-4 pt-md-0">
+      <div className="row p-selector-minheight">
+        <div className="d-md-none text-warning col-2 p-1 text-left">
+          Squad
+          :&nbsp;
+        </div>
+        <select
+          data-test="selectInput"
+          className="bg-white col-6 col-md-12"
+          value={currentChoice}
+          onChange={(event) => store.dispatch(ArmySquadChoice(
+            { roleIndex, rowIndex, SquadID: event.target.value },
+          ))}
+        >
+          {choices.map((choice) => (
+            <option key={choice.id} value={choice.id}>
+              {choice.Name}
 &nbsp;(
-          {choice.MinSize}
-          -
-          {choice.MaxSize}
-          )
-        </option>
-      ))}
-    </select>
+              {choice.MinSize}
+              -
+              {choice.MaxSize}
+              )
+            </option>
+          ))}
+        </select>
+      </div>
+    </div>
   );
 };
 

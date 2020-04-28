@@ -3,59 +3,54 @@ import { Link } from 'react-router-dom';
 import PageTitle from '../atoms/PageTitle';
 import store from '../Redux/store';
 import './HomePage.scss';
-import useWindowDimensions from '../utilities/windowDimensions';
+import DisplayText from '../atoms/DisplayText';
+import DisplayLink from '../atoms/DisplayLink';
+import RedirectButton from '../atoms/RedirectButton';
 
 const HomePage = () => {
-  const { width, height } = useWindowDimensions();
+  if (!store.getState().user) {
+    return (
+      <div data-test="HomePage" className="container p-padding text-center">
+        <PageTitle Title="Home Page" />
+        <h3 className="text-warning"><i>Login to see the Most Recent Armies Added</i></h3>
+        <RedirectButton redirect="/auth/login" buttontext="Login" />
+        <Link to="/auth/register" className="p-hyperlink-color">
+          Dont have an account? Register here
+        </Link>
+        <br />
+        <Link to="/auth/passwordreset" className="p-hyperlink-color">
+          Forgot your account password?  Reset password here
+        </Link>
+        <br />
+        <img
+          className="border border-secondary p-image-sizeBig mt-4"
+          alt="Error Loading"
+          src={require('../utilities/Necron_Frontpage.jpg')}
+        />
+      </div>
+    );
+  }
 
   return (
-    <div data-test="HomePage" className="container-fluid p-padding text-center">
+    <div data-test="HomePage" className="container p-padding text-md-center">
       <PageTitle Title="Home Page" />
-      {(store.getState().user) ? (
-        <div>
-          <h3 className="text-white-50"><i>Most Recent Armies Added</i></h3>
-          <div className="row justify-content-center mt-4">
-            <div className="col-xl-8">
-              <h3 className="row text-warning">
-                <div className="col-4">Name</div>
-                <div className="col-4">Points</div>
-                <div className="col-4">Date Created</div>
-              </h3>
-              {store.getState().homeArmies.map((army) => (
-                <div data-test="armyDisplay" key={army.id} className="row text-white align-items-center border border-secondary">
-                  <Link
-                    to={`/armies/view/${army.id}`}
-                    className="col-4 p-hyperlink-color"
-                  >
-                    {army.Name}
-                  </Link>
-                  <div className="col-4">{army.Points}</div>
-                  <div className="col-4">
-                    {army.Date.Month + 1}
-                    /
-                    {army.Date.Day}
-                    /
-                    {army.Date.Year}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          {(width < height || width <= 767) ? (
-            <img
-              data-test="smallImage"
-              className="border border-secondary p-image-sizeSmall mt-4"
-              alt="Error Loading"
-              src={require('../utilities/Necron_Frontpage.jpg')}
-            />
-          ) : <div />}
+      <h3 className="text-white-50 text-center"><i>Most Recent Armies Added</i></h3>
+      <h3 className="d-none d-md-flex row text-warning mt-4">
+        <div className="col-4">Name</div>
+        <div className="col-4">Points</div>
+        <div className="col-4">Date Created</div>
+      </h3>
+      {store.getState().homeArmies.map((army) => (
+        <div
+          data-test="armyDisplay"
+          key={army.id}
+          className="row text-white align-items-center border border-secondary py-2 py-md-0"
+        >
+          <DisplayLink columns={4} leftText="Name" rightText={army.Name} linkID={`/armies/view/${army.id}`} userID="99999" />
+          <DisplayText columns={4} leftText="Points" rightText={`${army.Points}`} />
+          <DisplayText columns={4} leftText="Date Created" rightText={`${army.Date.Month + 1}/${army.Date.Day}/${army.Date.Year}`} />
         </div>
-      ) : (
-        <div>
-          <h3 className="text-info"><i>Login to see the Most Recent Armies Added</i></h3>
-          <img className="border border-secondary p-image-sizeBig mt-4" alt="Error Loading" src={require('../utilities/Necron_Frontpage.jpg')} />
-        </div>
-      )}
+      ))}
     </div>
   );
 };

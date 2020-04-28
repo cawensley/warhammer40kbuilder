@@ -7,7 +7,6 @@ import { findRealUnitName } from '../utilities/findName';
 import { handleUnitRowAdd } from '../utilities/handleRowAdd';
 import GreyButton from '../atoms/GreyButton';
 import { handleUnitRowRemove } from '../utilities/handleRowRemove';
-import UnitQuantity from './UnitQuantity';
 
 const UnitChoice = ({ roleIndex, rowIndex }) => {
   const choices = findPreviousSquad(roleIndex, rowIndex).Units;
@@ -21,16 +20,19 @@ const UnitChoice = ({ roleIndex, rowIndex }) => {
   [choices, rowIndex, roleIndex, currentChoice]);
 
   if (!currentChoice) {
-    return <div className="col-5" />;
+    return <div className="col-4" />;
   }
 
   return (
-    <div className="col-5">
-      <div className="row">
-        <UnitQuantity roleIndex={roleIndex} rowIndex={rowIndex} />
+    <div className="col-md-4">
+      <div className="row p-selector-minheight">
+        <div className="d-md-none text-warning col-2 p-1 text-left">
+          Unit
+          :&nbsp;
+        </div>
         <select
           data-test="selectInput"
-          className="bg-white col-6"
+          className="bg-white col-6 col-md-8"
           value={currentChoice}
           onChange={(event) => store.dispatch(ArmyUnitChoice(
             { roleIndex, rowIndex, UnitID: event.target.value },

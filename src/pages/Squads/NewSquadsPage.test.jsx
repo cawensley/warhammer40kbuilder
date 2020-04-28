@@ -2,6 +2,9 @@ import React from 'react';
 import firebase from 'firebase/app';
 import { mount, findByTestAttr, firestore } from '../../utilities/setupTests';
 import NewSquadsPage from './NewSquadsPage';
+import { mockUser } from '../../utilities/mockConstants';
+import store from '../../Redux/store';
+import { UserChange } from '../../Redux/actions/index';
 
 firebase.firestore = firestore;
 
@@ -12,6 +15,7 @@ const mocknewSquad = {
 
 const setup = () => {
   mocksetNewSquad.mockClear();
+  store.dispatch(UserChange(mockUser));
   React.useState = jest.fn(() => [mocknewSquad, mocksetNewSquad]);
   return mount(<NewSquadsPage />);
 };

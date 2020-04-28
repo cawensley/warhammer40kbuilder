@@ -64,7 +64,7 @@ const EditArmyPage = ({ match }) => {
   if (isLoading) { return <PageLoading />; }
 
   return (
-    <div data-test="EditArmyPage" className="container-fluid p-padding text-center">
+    <div data-test="EditArmyPage" className="container p-padding text-center">
       <PageTitle Title="Edit Army Page" />
       <form data-test="submitButton" onSubmit={() => handleArmySubmission()}>
         <TextInputRow type="text" left="Army Name:" startValue={store.getState().army.Name} onInputChange={handleNameInput} />

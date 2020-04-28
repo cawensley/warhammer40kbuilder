@@ -17,7 +17,7 @@ const EditUnitsPage = ({ match }) => {
   const [state, setState] = React.useState({
     isLoading: false,
     Unit: {
-      Codex: store.getState().codex, Name: '', Cost: 0, Abilities: '', Gear: [],
+      Codex: store.getState().codex, Name: '', Cost: 0, Abilities: '', Gear: [], userID: store.getState().user.uid,
     },
   });
 
@@ -26,9 +26,8 @@ const EditUnitsPage = ({ match }) => {
   function handleAbilitiesInput(input) {
     setState({ ...state, Unit: { ...state.Unit, Abilities: input } });
   }
-  function handleGearRemove() {
-    const NewGear = state.Unit.Gear;
-    NewGear.pop();
+  function handleGearRemove(input) {
+    const NewGear = state.Unit.Gear.filter((item) => item !== input);
     setState({ ...state, Unit: { ...state.Unit, Gear: NewGear } });
   }
   function handleGearAdd(input) {
