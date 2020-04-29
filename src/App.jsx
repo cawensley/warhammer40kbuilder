@@ -46,6 +46,9 @@ const App = () => {
         <Route path="/equipment/view" component={ViewEquipmentPage} />
         <Route path="/equipment/new" component={NewEquipmentPage} />
         <Route path="/equipment/edit/:ID" component={EditEquipmentPage} />
+        <Route path="/auth/login" component={LoginPage} />
+        <Route path="/auth/register" component={RegisterPage} />
+        <Route path="/auth/passwordreset" component={ForgotPasswordPage} />
         <Route path="/userprofile" component={ViewProfilePage} />
         <Route path="/" component={HomePage} />
       </Switch>

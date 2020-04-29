@@ -29,7 +29,8 @@ const NewSquadsPage = () => {
     setNewSquad({ ...newSquad, Units: NewUnit });
   }
 
-  function handleNewSquadSubmission() {
+  function handleNewSquadSubmission(event) {
+    event.preventDefault();
     firebase.firestore().collection('squads').add(newSquad);
     window.location.hash = '/squads/view';
   }
@@ -42,7 +43,7 @@ const NewSquadsPage = () => {
   return (
     <div data-test="newSquadsPage" className="container-fluid p-padding text-center">
       <PageTitle Title="New Squads Page" />
-      <form data-test="submitButton" onSubmit={handleNewSquadSubmission}>
+      <form data-test="submitButton" onSubmit={(e) => handleNewSquadSubmission(e)}>
         <CodexFilter />
         <TextInputRow type="text" left="New Squad Name:" startValue={newSquad.Name} onInputChange={handleNameInput} />
         <RoleRow left="Army Role:" />

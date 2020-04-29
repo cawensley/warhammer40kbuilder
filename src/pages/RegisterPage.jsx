@@ -16,7 +16,8 @@ const RegisterPage = () => {
   function handleEmailInput(input) { setUserInfo({ ...userInfo, Email: input }); }
   function handlePasswordInput(input) { setUserInfo({ ...userInfo, Password: input }); }
 
-  async function newUserSubmission() {
+  async function newUserSubmission(event) {
+    event.preventDefault();
     await firebase.auth().createUserWithEmailAndPassword(userInfo.Email, userInfo.Password)
       .then(async () => {
         await firebase.auth().currentUser.updateProfile({ displayName: userInfo.Name });
@@ -31,7 +32,7 @@ const RegisterPage = () => {
   return (
     <div data-test="RegisterPage" className="container-fluid p-padding text-center">
       <PageTitle Title="Register Page" />
-      <form data-test="submitButton" onSubmit={newUserSubmission}>
+      <form data-test="submitButton" onSubmit={(e) => newUserSubmission(e)}>
         <TextInputRow type="text" left="Your Name:" startValue={userInfo.Name} onInputChange={handleNameInput} />
         <TextInputRow type="email" left="New Account Login Email:" startValue={userInfo.Email} onInputChange={handleEmailInput} />
         <TextInputRow type="password" left="New Account Login Password:" startValue={userInfo.Password} onInputChange={handlePasswordInput} />

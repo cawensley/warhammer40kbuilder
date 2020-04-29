@@ -59,7 +59,8 @@ const EditUnitsPage = ({ match }) => {
   // eslint-disable-next-line
     React.useEffect(()=>setState({...state,Unit:{...state.Unit,Codex:store.getState().codex}}),[store.getState().codex]);
 
-  function handleEditUnitSubmission() {
+  function handleEditUnitSubmission(event) {
+    event.preventDefault();
     firebase.firestore().collection('units').doc(editUnitID).set(state.Unit);
     window.location.hash = '/units/view';
   }
@@ -69,7 +70,7 @@ const EditUnitsPage = ({ match }) => {
   return (
     <div data-test="editUnitsPage" className="container-fluid p-padding text-center">
       <PageTitle Title="Edit Units Page" />
-      <form data-test="submitButton" onSubmit={handleEditUnitSubmission}>
+      <form data-test="submitButton" onSubmit={(e) => handleEditUnitSubmission(e)}>
         <CodexFilter />
         <TextInputRow type="text" left="Edit Unit Name:" startValue={state.Unit.Name} onInputChange={handleNameInput} />
         <NumberInputRow left="Edit Unit Cost:" startValue={state.Unit.Cost} onInputChange={handleCostInput} />

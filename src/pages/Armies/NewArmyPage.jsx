@@ -14,7 +14,8 @@ import handleInitialArmy from '../../utilities/handleInitialArmy';
 const NewArmyPage = () => {
   function handleNameInput(input) { store.dispatch(ArmyNameChange(input)); }
 
-  function handleArmySubmission() {
+  function handleArmySubmission(event) {
+    event.preventDefault();
     firebase.firestore().collection('armies').add({
       userID: store.getState().user.uid,
       Name: store.getState().army.Name,
@@ -35,7 +36,7 @@ const NewArmyPage = () => {
   return (
     <div data-test="NewArmyPage" className="container p-padding text-center">
       <PageTitle Title="New Armies Page" />
-      <form data-test="submitButton" onSubmit={() => handleArmySubmission()}>
+      <form data-test="submitButton" onSubmit={(e) => handleArmySubmission(e)}>
         <CodexFilter />
         <TextInputRow type="text" left="Army Name:" startValue={store.getState().army.Name} onInputChange={handleNameInput} />
         <PointsRow />

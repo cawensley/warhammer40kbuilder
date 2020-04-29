@@ -11,7 +11,8 @@ const LoginPage = () => {
   function handleEmailInput(input) { setUserInfo({ ...userInfo, Email: input }); }
   function handlePasswordInput(input) { setUserInfo({ ...userInfo, Password: input }); }
 
-  async function userLogin() {
+  async function userLogin(event) {
+    event.preventDefault();
     await firebase.auth().signInWithEmailAndPassword(userInfo.Email, userInfo.Password).then(() => {
       window.location.hash = '/';
     }).catch((error) => {
@@ -22,7 +23,7 @@ const LoginPage = () => {
   return (
     <div data-test="LoginPage" className="container-fluid p-padding text-center">
       <PageTitle Title="Login Page" />
-      <form data-test="submitButton" onSubmit={userLogin}>
+      <form data-test="submitButton" onSubmit={(e) => userLogin(e)}>
         <TextInputRow type="email" left="Account Email:" startValue={userInfo.Email} onInputChange={handleEmailInput} />
         <TextInputRow type="password" left="Account Password:" startValue={userInfo.Password} onInputChange={handlePasswordInput} />
         <SubmitButton buttontext="Login" />

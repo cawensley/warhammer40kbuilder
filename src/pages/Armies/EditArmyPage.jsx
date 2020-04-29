@@ -42,7 +42,8 @@ const EditArmyPage = ({ match }) => {
     setisLoading(false);
   }
 
-  function handleArmySubmission() {
+  function handleArmySubmission(event) {
+    event.preventDefault();
     firebase.firestore().collection('armies').doc(editArmyID).set({
       userID: store.getState().user.uid,
       Name: store.getState().army.Name,
@@ -66,7 +67,7 @@ const EditArmyPage = ({ match }) => {
   return (
     <div data-test="EditArmyPage" className="container p-padding text-center">
       <PageTitle Title="Edit Army Page" />
-      <form data-test="submitButton" onSubmit={() => handleArmySubmission()}>
+      <form data-test="submitButton" onSubmit={(e) => handleArmySubmission(e)}>
         <TextInputRow type="text" left="Army Name:" startValue={store.getState().army.Name} onInputChange={handleNameInput} />
         <PointsRow />
         <SubmitButton buttontext="Save Changes to Army" />
