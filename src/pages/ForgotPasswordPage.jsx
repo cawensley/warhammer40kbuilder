@@ -10,7 +10,8 @@ const ForgotPasswordPage = () => {
 
   function handleEmailInput(input) { setUserInfo({ ...userInfo, Email: input }); }
 
-  async function ResetPassword() {
+  async function ResetPassword(event) {
+    event.preventDefault();
     await firebase.auth().sendPasswordResetEmail(userInfo.Email).then(() => {
       setUserInfo({ ...userInfo, Message: 'Check your Email for password reset instructions' });
     }).catch((error) => {
@@ -21,7 +22,7 @@ const ForgotPasswordPage = () => {
   return (
     <div data-test="ForgotPasswordPage" className="container-fluid p-padding text-center">
       <PageTitle Title="Forgot Password?" />
-      <form data-test="submitButton" onSubmit={ResetPassword}>
+      <form data-test="submitButton" onSubmit={(e) => ResetPassword(e)}>
         <TextInputRow type="email" left="Account Email:" startValue={userInfo.Email} onInputChange={handleEmailInput} />
         <SubmitButton buttontext="Send Reset Password Email" />
       </form>

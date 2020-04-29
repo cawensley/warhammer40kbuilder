@@ -27,7 +27,8 @@ const NewUnitsPage = () => {
     NewGear.push(input);
     setNewUnit({ ...newUnit, Gear: NewGear });
   }
-  function handleNewUnitSubmission() {
+  function handleNewUnitSubmission(event) {
+    event.preventDefault();
     firebase.firestore().collection('units').add(newUnit);
     window.location.hash = '/units/view';
   }
@@ -38,7 +39,7 @@ const NewUnitsPage = () => {
   return (
     <div data-test="newUnitsPage" className="container-fluid p-padding text-center">
       <PageTitle Title="New Units Page" />
-      <form data-test="submitButton" onSubmit={handleNewUnitSubmission}>
+      <form data-test="submitButton" onSubmit={(e) => handleNewUnitSubmission(e)}>
         <CodexFilter />
         <TextInputRow type="text" left="New Unit Name:" startValue={newUnit.Name} onInputChange={handleNameInput} />
         <NumberInputRow left="New Unit Cost:" startValue={newUnit.Cost} onInputChange={handleCostInput} />

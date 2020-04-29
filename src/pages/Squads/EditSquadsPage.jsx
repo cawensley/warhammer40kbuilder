@@ -67,7 +67,8 @@ const EditSquadsPage = ({ match }) => {
   // eslint-disable-next-line
     React.useEffect(()=>setState({...state,Squad:{...state.Squad,Role:store.getState().role}}),[store.getState().role]);
 
-  function handleEditSquadSubmission() {
+  function handleEditSquadSubmission(event) {
+    event.preventDefault();
     firebase.firestore().collection('squads').doc(editSquadID).set(state.Squad);
     window.location.hash = '/squads/view';
   }
@@ -77,7 +78,7 @@ const EditSquadsPage = ({ match }) => {
   return (
     <div data-test="editSquadsPage" className="container-fluid p-padding text-center">
       <PageTitle Title="Edit Squads Page" />
-      <form data-test="submitButton" onSubmit={handleEditSquadSubmission}>
+      <form data-test="submitButton" onSubmit={(e) => handleEditSquadSubmission(e)}>
         <CodexFilter />
         <TextInputRow type="text" left="Edit Squad Name:" startValue={state.Squad.Name} onInputChange={handleNameInput} />
         <RoleRow left="Edit Army Role:" />
