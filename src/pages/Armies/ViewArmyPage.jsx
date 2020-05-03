@@ -1,0 +1,77 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import { v4 as uuidv4 } from 'uuid';
+import PageTitle from '../../atoms/PageTitle';
+import store from '../../Redux/store';
+import PageLoading from '../../atoms/PageLoading';
+import TextRow from '../../atoms/TextRow';
+import { findRealSquadName, findRealEquipmentName, findRealUnitName } from '../../utilities/findName';
+import findUnitAbilities from '../../utilities/findUnitAbilities';
+import calcSquadNumber from '../../utilities/calcSquadNumber';
+import RedirectButton from '../../atoms/RedirectButton';
+import DisplayText from '../../atoms/DisplayText';
+
+const ViewArmyPage = ({ match }) => {
+  const viewArmyID = match.params.ID;
+  const displayArmy = store.getState().userArmies.filter((army) => army.id === viewArmyID)[0]
+        || store.getState().homeArmies.filter((army) => army.id === viewArmyID)[0];
+
+  if (!displayArmy) { return <PageLoading />; }
+
+  return (
+    <div data-test="ViewArmyPage" className="container p-padding text-md-center">
+      <PageTitle Title="View Army Page" />
+      {(displayArmy.userID === store.getState().user.uid)
+        ? (<RedirectButton redirect={`/armies/edit/${displayArmy.id}`} buttontext="Edit Army" />)
+        : <div />}
+      <TextRow left="Army Name:" right={displayArmy.Name} />
+      <TextRow left="Points:" right={`${displayArmy.Points}`} />
+      <h3 className="d-none d-md-flex row text-warning mt-4">
+        <div className="col-2">Squad</div>
+        <div className="col-1">Qty</div>
+        <div className="col-3">Unit</div>
+        <div className="col-3">Abilities</div>
+        <div className="col-3">Gear</div>
+      </h3>
+      {displayArmy.SquadArray.map((roleArray) => (
+        <div key={roleArray.Role.id}>
+          {(roleArray.Squads.length > 0) ? (
+            <div className="row mt-4 border border-secondary">
+              <div className="col-6 text-right text-warning">
+                {roleArray.Role.Name}
+                :
+              </div>
+              <div className="col-6 text-left text-white">{calcSquadNumber(roleArray.Squads)}</div>
+            </div>
+          ) : <div />}
+          {roleArray.Squads.map((squad) => (
+            <div key={uuidv4()} className="row text-white align-items-center">
+              {(squad.Squad !== null) ? <DisplayText columns={2} leftText="Squad" rightText={findRealSquadName(squad.Squad)} /> : <div className="col-2" /> }
+              {(squad.UnitQTY !== null) ? <DisplayText columns={1} leftText="Unit Qty" rightText={`${squad.UnitQTY}`} /> : <div className="col-1" /> }
+              {(squad.Unit !== null) ? <DisplayText columns={3} leftText="Unit" rightText={findRealUnitName(squad.Unit)} /> : <div className="col-3" /> }
+              {(squad.Unit !== null) ? <DisplayText columns={3} leftText="Abilities" rightText={findUnitAbilities(squad.Unit)} /> : <div className="col-3" /> }
+              <DisplayText columns={3} leftText="Gear" rightText={findRealEquipmentName(squad.Equipment)} />
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+ViewArmyPage.propTypes = {
+  match: PropTypes.shape({
+    path: PropTypes.string,
+    url: PropTypes.string,
+    isExact: PropTypes.bool,
+    params: PropTypes.shape({
+      ID: PropTypes.string,
+    }),
+  }),
+};
+
+ViewArmyPage.defaultProps = {
+  match: null,
+};
+
+export default ViewArmyPage;

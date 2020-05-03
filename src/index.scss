@@ -1,0 +1,52 @@
+$primary: #000 !default;
+$secondary: gray !default;
+$font-family-sans-serif: "Lato", -apple-system, blinkmacsystemfont, "Segoe UI", roboto, "Helvetica Neue", arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", 'Noto Color Emoji' !default;
+$headings-font-family: "Montserrat", -apple-system, blinkmacsystemfont, "Segoe UI", roboto, "Helvetica Neue", arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", 'Noto Color Emoji' !default;
+$headings-font-weight: 700 !default;
+
+@import 'bootstrap/scss/bootstrap.scss';
+
+body {
+  background-color: $primary;
+}
+
+.p-padding {
+  padding-top: 5rem;
+  padding-bottom: 3rem;
+  min-height: 100vh;
+}
+
+.p-hyperlink-color {
+  color: #00b9ff;
+  background-color: transparent;
+  text-decoration-line: underline;
+  font-style: italic;
+  &:hover { color: $secondary; }
+}
+
+.p-selector-minheight {
+  min-height: 2rem;
+}
+
+.p-buttonpaddingEquivalent {
+  padding-top: 39px;
+}
+
+@media (max-width: 767px) {
+  body { font-size: $font-size-base * 0.75; }
+  h1 { font-size: $h1-font-size * 0.75; }
+  h2 { font-size: $h2-font-size * 0.75; }
+  h3 { font-size: $h3-font-size * 0.75; }
+  h4 { font-size: $h4-font-size * 0.75; }
+  h5 { font-size: $h5-font-size * 0.75; }
+  h6 { font-size: $h6-font-size * 0.75; }
+
+  .btn {
+    font-size: 12px;
+    padding: 4px 6px;
+  }
+
+  .p-buttonpaddingEquivalent {
+    padding-top: 0;
+  }
+}

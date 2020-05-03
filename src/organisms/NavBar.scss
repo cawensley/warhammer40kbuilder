@@ -1,0 +1,18 @@
+@import "../index.scss";
+
+.navbar-brand a.chosen { color: $warning; }
+
+.navbar-brand a:hover { color: $warning; }
+
+.dropdown-item {
+  color: $primary;
+  &:hover { color: $warning; }
+}
+
+.o-navbar-logoheight {
+  max-height: 10px;
+}
+
+.o-navbar-hover:hover {
+  transform: scale(1.05);
+}
