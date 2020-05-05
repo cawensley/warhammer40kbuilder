@@ -3,7 +3,7 @@
 1. Download the files to your hard-drive.
 1. Install Node.js as the runtime engine (https://nodejs.org/en/).
 1. In the console, navigate to the downloaded directory, then run  `npm install` to install the dependent Node modules.
-1. The firebase config.js file contains sensitive API key information and is not included on Github.  Contact me at <alex@wensley.dev> for a copy of the file if you want to install this probject.  The file will go in /src/firebase/.
+1. The firebase config.js file contains sensitive API key information and is not included on Github.  Contact me at <alex@wensley.dev> for a copy of the file if you want to install this project.  The file will go in /src/firebase/.
 1. Run `npm start` to initialize the website.
 1. Run `npm run lint` to run ESLint.
 1. Run `npm run style` to run StyleLint.
