@@ -30,7 +30,7 @@
     "bootstrap": "^4.4.1",
     "check-prop-types": "^1.1.2",
     "firebase": "^7.13.2",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dev-utils": "^10.2.1",
